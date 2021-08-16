@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Release" representedClassName="Release" syncable="YES">
+        <attribute name="artist" attributeType="String"/>
+        <attribute name="artists" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="descriptions" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="formats" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="genres" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="releaseYear" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="resourceUrl" optional="YES" attributeType="String"/>
+        <attribute name="styles" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="urlString" optional="YES" attributeType="String"/>
+        <relationship name="collection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReleaseCollection" inverseName="releaseItem" inverseEntity="ReleaseCollection"/>
+    </entity>
+    <entity name="ReleaseCollection" representedClassName="ReleaseCollection" syncable="YES">
+        <relationship name="releaseItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Release" inverseName="collection" inverseEntity="Release"/>
+    </entity>
+    <elements>
+        <element name="Release" positionX="-36" positionY="9" width="128" height="194"/>
+        <element name="ReleaseCollection" positionX="0" positionY="72" width="128" height="44"/>
+    </elements>
+</model>
