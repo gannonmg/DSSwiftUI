@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import var CommonCrypto.CC_MD5_DIGEST_LENGTH
 import func CommonCrypto.CC_MD5
 import typealias CommonCrypto.CC_LONG
@@ -83,3 +84,23 @@ extension Array where Element: Hashable {
         return buffer
     }
 }
+
+//MARK: - Color
+extension Color {
+    
+    static let navBar = Color(hex: 0x000009)
+    static let backgroundColor = Color(hex: 0x22242E)
+    static let textPrimary = Color(hex: 0xEDEEE5)
+    static let textSecondary = Color(hex: 0x94969C)
+    static let separator = Color(hex: 0x484D5B)
+
+    init(hex: UInt, alpha: Double = 1) {
+        self.init(.sRGB,
+                  red: Double((hex >> 16) & 0xff) / 255,
+                  green: Double((hex >> 08) & 0xff) / 255,
+                  blue: Double((hex >> 00) & 0xff) / 255,
+                  opacity: alpha)
+    }
+    
+}
+

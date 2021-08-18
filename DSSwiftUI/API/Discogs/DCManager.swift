@@ -95,10 +95,10 @@ class DCManager {
                 completion([])
                 return
             }
-            
-            let releaseViewModels = releases.map { ReleaseViewModel(from: $0) }
-            CoreDataManager.shared.saveCollection(of: releaseViewModels)
-            completion(releaseViewModels)
+
+            CoreDataManager.shared.saveCollection(of: releases)
+            let collection = CoreDataManager.shared.fetchCollection() ?? []
+            completion(collection)
         }
     }
     

@@ -28,32 +28,18 @@ struct CoreDataManager {
         }
     }
     
-    func saveCollection(of releases: [ReleaseViewModel]) {
-        
+    func saveCollection(of releases: [DCRelease]) {
+ 
         let context = container.viewContext
-        
         let collection = ReleaseCollection(context: context)
         
         releases.forEach {
-            let release = Release(context: context)
-            release.title = $0.title
-            release.artist = $0.firstArtist
-            release.urlString = $0.imageUrl?.absoluteString
-            
-            release.releaseYear = Int16($0.releaseYear)
-            release.artists = $0.artists
-            release.resourceUrl = $0.resourceUrl
-
-            release.formats = $0.formats
-            release.genres = $0.genres
-            release.styles = $0.styles
-            release.descriptions = $0.descriptions
-
-            release.collection = collection
+            let release = Release(context: context, release: $0, collection: collection)
             collection.addToReleaseItem(release)
         }
         
         try! context.save()
+
     }
     
     func fetchCollection() -> [ReleaseViewModel]? {

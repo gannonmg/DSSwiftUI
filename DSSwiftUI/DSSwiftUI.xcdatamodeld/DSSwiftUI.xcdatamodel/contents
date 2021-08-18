@@ -2,15 +2,15 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Release" representedClassName="Release" syncable="YES">
         <attribute name="artist" attributeType="String"/>
-        <attribute name="artists" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="artists" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="descriptions" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="formats" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="genres" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="releaseYear" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="resourceUrl" optional="YES" attributeType="String"/>
+        <attribute name="resourceUrl" attributeType="String"/>
         <attribute name="styles" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="title" attributeType="String"/>
-        <attribute name="urlString" optional="YES" attributeType="String"/>
+        <attribute name="urlString" attributeType="String"/>
         <relationship name="collection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReleaseCollection" inverseName="releaseItem" inverseEntity="ReleaseCollection"/>
     </entity>
     <entity name="ReleaseCollection" representedClassName="ReleaseCollection" syncable="YES">

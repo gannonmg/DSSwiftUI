@@ -38,7 +38,7 @@ struct RefreshControl: View {
                     ForEach(0..<8) { tick in
                           VStack {
                               Rectangle()
-                                .fill(Color(UIColor.tertiaryLabel))
+                                .fill(Color.white)
                                 .opacity((Int((geo.frame(in: coordinateSpace).midY)/7) < tick) ? 0 : 1)
                                   .frame(width: 3, height: 7)
                                 .cornerRadius(3)

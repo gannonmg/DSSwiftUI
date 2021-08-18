@@ -16,17 +16,20 @@ extension Release {
         return NSFetchRequest<Release>(entityName: "Release")
     }
 
-    @NSManaged var artist: String?
-    @NSManaged var artists: [String]?
-    @NSManaged var descriptions: [String]?
-    @NSManaged var formats: [String]?
-    @NSManaged var genres: [String]?
-    @NSManaged var styles: [String]?
-    @NSManaged var title: String?
-    @NSManaged var urlString: String?
+    @NSManaged var title: String
+    @NSManaged var artist: String
+    @NSManaged var artists: [String]
     @NSManaged var releaseYear: Int16
+
+    @NSManaged var urlString: String
+    @NSManaged var resourceUrl: String
+    
+    @NSManaged var descriptions: [String]
+    @NSManaged var formats: [String]
+    @NSManaged var genres: [String]
+    @NSManaged var styles: [String]
+    
     @NSManaged var collection: ReleaseCollection?
-    @NSManaged var resourceUrl: String?
 
 }
 

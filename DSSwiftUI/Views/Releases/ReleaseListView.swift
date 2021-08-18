@@ -55,56 +55,63 @@ struct ReleaseListView: View {
         NavigationView {
             ZStack {
                 ScrollView {
-                    RefreshControl(coordinateSpace: .named("RefreshControl"),
-                                   onRefresh: onRefresh)
-                    
-                    if releaseListViewModel.releases.isEmpty {
-                        Button("Get releases") {
-                            releaseListViewModel.getReleases()
-                        }
-                    } else {
-                        LazyVStack(pinnedViews: .sectionHeaders) {
-                            Section(header: searchBar) {
-                                let filtered = releaseListViewModel.filterController.filteredReleases
-                                ForEach(filtered, id: \.uuid) { release in
-                                    ReleaseItemView(release: release)
-                                        .onTapGesture {
-                                            releaseListViewModel.selectedRelease = release
-                                        }
-                                }
+                    VStack(spacing: 0) {
+                        RefreshControl(coordinateSpace: .named("RefreshControl"),
+                                       onRefresh: onRefresh)
+                        
+                        if releaseListViewModel.releases.isEmpty {
+                            Button("Get releases") {
+                                releaseListViewModel.getReleases()
                             }
+                        } else {
+                            releaseList
                         }
-                        .padding(.horizontal, 8)
                     }
                 }
-                
-                if let release = releaseListViewModel.selectedRelease {
-                    ReleaseDetailView(release: release) {
-                        releaseListViewModel.selectedRelease = nil
-                    }
-                }
-                
+
+//                if let release = releaseListViewModel.selectedRelease {
+//                    ReleaseDetailView(release: release) {
+//                        releaseListViewModel.selectedRelease = nil
+//                    }
+//                }
             }
             .coordinateSpace(name: "RefreshControl")
             .navigationTitle("Releases")
             .navigationBarTitleDisplayMode(.inline)
+            .background(Color.backgroundColor)
         }
         .sheet(isPresented: $showingFilters) {
             FilterView(filterController: releaseListViewModel.filterController)
         }
+        .sheet(item: $releaseListViewModel.selectedRelease) { release in
+            ReleaseDetailView(release: release)
+        }
+    }
+    
+    var releaseList: some View {
+        LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
+            Section(header: searchBar) {
+                let filtered = releaseListViewModel.filterController.filteredReleases
+                    .sorted(by: { $0.artist < $1.artist })
+                ForEach(filtered, id: \.uuid) { release in
+                    ReleaseItemView(release: release)
+                        .onTapGesture {
+                            releaseListViewModel.selectedRelease = release
+                        }
+                }
+            }
+        }
+        .padding(.all, 0)
     }
     
     var searchBar: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 4)
-                .foregroundColor(.gray)
-                .height(48)
-
+        VStack(spacing: 0) {
             HStack {
                 let count = releaseListViewModel.releases.count
                 let string = "\(count) Release\(count == 1 ? "" : "s")"
                 TextField("Search \(string)", text: releaseListViewModel.$filterController.searchQuery)
                     .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 let filterCount = releaseListViewModel.filterController.selectedFilters.count
                 let filterString = filterCount == 0 ? "Filters" : "Filters (\(filterCount))"
@@ -113,6 +120,12 @@ struct ReleaseListView: View {
                 }
                 .padding(.trailing, 12)
             }
+            .background(Color.backgroundColor
+                            .opacity(0.95))
+            .height(52)
+            
+            Color.separator
+                .height(1)
         }
     }
     
@@ -127,27 +140,28 @@ struct ReleaseItemView: View {
     let release:ReleaseViewModel
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .foregroundColor(.white)
-                .standardShadow()
-            
-            HStack(alignment: .top) {
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 12) {
                 RemoteImageView(url: release.imageUrl,
                                 placeholder: UIImage(systemName: "music.note.list")!)
-                    .height(60)
-                    .width(60)
+                    .height(68)
+                    .width(68)
                 
                 VStack(alignment: .leading) {
                     Text(release.title)
                         .font(.headline)
+                        .foregroundColor(.textPrimary)
                     Text(release.artistList)
                         .font(.subheadline)
+                        .foregroundColor(.textSecondary)
                 }
                 
                 Spacer()
             }
             .padding()
+            
+            Color.separator
+                .height(1)
         }
     }
     
@@ -156,59 +170,30 @@ struct ReleaseItemView: View {
 struct ReleaseDetailView: View {
     
     @ObservedObject private(set) var release:ReleaseViewModel
-    let close:StandardAction
-    
-    @State private var draggedOffset:CGSize = .zero
-    
-    let radius:CGFloat = 24
-    
+
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: radius)
-                .foregroundColor(.black)
-            
-            ScrollView {
-                VStack(alignment: .leading) {
-                    RemoteImageView(url: release.imageUrl,
-                                    placeholder: UIImage(systemName: "music.note.list")!)
-                    Text(release.title)
-                        .font(.headline)
-                        .foregroundColor(.pink)
-                    Text(release.artistList)
-                        .font(.subheadline)
-                        .foregroundColor(.pink)
-                    Button("Close", action: close)
-                    
-                    if let tracks = release.tracks {
-                        ForEach(tracks, id: \.self) {
-                            Text($0.displayText)
-                                .foregroundColor(.pink)
-                        }
+        ScrollView {
+            VStack(alignment: .leading) {
+                RemoteImageView(url: release.imageUrl,
+                                placeholder: UIImage(systemName: "music.note.list")!)
+                Text(release.title)
+                    .font(.headline)
+                    .foregroundColor(.pink)
+                Text(release.artistList)
+                    .font(.subheadline)
+                    .foregroundColor(.pink)
+                
+                if let tracks = release.tracks {
+                    ForEach(tracks, id: \.self) {
+                        Text($0.displayText)
+                            .foregroundColor(.pink)
                     }
                 }
             }
         }
-        .height(400)
-        .cornerRadius(radius)
         .onAppear {
             release.getDetail()
         }
-        .offset(draggedOffset)
-        .gesture(
-            DragGesture()
-                .onChanged { value in
-                    print("Change value is \(value.translation)")
-                    let xChange = abs(value.translation.width)
-                    if draggedOffset == .zero && xChange <= 20 { return }
-                    self.draggedOffset = value.translation
-                }
-                .onEnded{ value in
-                    print("End value is \(value.translation)")
-                    withAnimation(.easeIn) {
-                        self.draggedOffset = .zero
-                    }
-                }
-        )
         
     }
     
