@@ -58,4 +58,9 @@ class ReleaseViewModel: ObservableObject, Identifiable {
         }
     }
     
+    //MARK: - Geometry IDs
+    var geoImage:String { "\(uuid).image" }
+    var geoTitle:String { "\(uuid).title" }
+    var geoArtist:String { "\(uuid).artist" }
+
 }

@@ -55,18 +55,20 @@ class UIImageDownloader: NSObject {
 struct RemoteImageView: View {
     
     let placeholder: UIImage
+    let contentMode: ContentMode
     @State var downloader: UIImageDownloader
     @State var image: UIImage?
 
-    init(url: URL?, placeholder: UIImage) {
+    init(url: URL?, placeholder: UIImage, contentMode: ContentMode = .fit) {
         self.placeholder = placeholder
         self._downloader = State(initialValue: UIImageDownloader(from: url, placeholder: placeholder))
+        self.contentMode = contentMode
     }
 
     var body: some View {
         Image(uiImage: self.image ?? self.placeholder)
             .resizable()
-            .aspectRatio(contentMode: .fit)
+            .aspectRatio(contentMode: contentMode)
             .onAppear() {
                 self.downloader.fetch {
                     self.image = $0!

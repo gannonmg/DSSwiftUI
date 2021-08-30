@@ -10,7 +10,6 @@ import Combine
 
 class ReleaseListViewModel: ObservableObject {
     
-    @Published var selectedRelease:ReleaseViewModel? = nil
     @Published var releases:[ReleaseViewModel] {
         didSet {
             filterController.unfilteredReleases = releases
@@ -18,6 +17,8 @@ class ReleaseListViewModel: ObservableObject {
     }
     
     @ObservedObject var filterController: FilterController
+    @Published var showingFilters: Bool = false
+    @Published var selected: ReleaseViewModel? = nil
     var filterCancellable:AnyCancellable?
     
     //MARK: Init
@@ -48,63 +49,156 @@ class ReleaseListViewModel: ObservableObject {
 
 struct ReleaseListView: View {
     
-    @StateObject private var releaseListViewModel:ReleaseListViewModel = .init()
-    @State private var showingFilters = false
+    @Namespace private var namespace
+    @StateObject private var releaseListViewModel: ReleaseListViewModel = .init()
     
     var body: some View {
         NavigationView {
-            ZStack {
-                ScrollView {
-                    VStack(spacing: 0) {
-                        RefreshControl(coordinateSpace: .named("RefreshControl"),
-                                       onRefresh: onRefresh)
-                        
-                        if releaseListViewModel.releases.isEmpty {
-                            Button("Get releases") {
-                                releaseListViewModel.getReleases()
-                            }
-                        } else {
-                            releaseList
-                        }
-                    }
-                }
-
-//                if let release = releaseListViewModel.selectedRelease {
-//                    ReleaseDetailView(release: release) {
-//                        releaseListViewModel.selectedRelease = nil
-//                    }
-//                }
+            if let selected = releaseListViewModel.selected {
+                ReleaseDetailView(namespace: namespace,
+                                  release: selected,
+                                  onClose: { releaseListViewModel.selected = nil })
+            } else {
+                CollectionView(releaseListViewModel: releaseListViewModel,
+                               namespace: namespace,
+                               tappedRelease: tappedRelease(_:))
             }
-            .coordinateSpace(name: "RefreshControl")
-            .navigationTitle("Releases")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(Color.backgroundColor)
         }
-        .sheet(isPresented: $showingFilters) {
+        .sheet(isPresented: $releaseListViewModel.showingFilters) {
             FilterView(filterController: releaseListViewModel.filterController)
-        }
-        .sheet(item: $releaseListViewModel.selectedRelease) { release in
-            ReleaseDetailView(release: release)
         }
     }
     
-    var releaseList: some View {
+    func tappedRelease(_ release: ReleaseViewModel) {
+        withAnimation(.easeInOut) {
+            releaseListViewModel.selected = release
+        }
+    }
+    
+}
+
+struct CollectionView: View {
+    
+    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    let namespace: Namespace.ID
+    var tappedRelease: ((ReleaseViewModel)->Void)
+
+//    @State private var showingGridView = true
+    
+    var body: some View {
+        ZStack(alignment: .bottomTrailing) {
+            ScrollView {
+                VStack(spacing: 0) {
+                    RefreshControl(coordinateSpace: .named("RefreshControl"),
+                                   onRefresh: onRefresh)
+                    
+                    if releaseListViewModel.releases.isEmpty {
+                        Button("Get releases") {
+                            releaseListViewModel.getReleases()
+                        }
+                    } else {
+//                        if showingGridView {
+//                            ReleaseGridView(releaseListViewModel: releaseListViewModel,
+//                                            namespace: namespace,
+//                                            tappedRelease: tappedRelease)
+//                        } else {
+                            CollectionListView(releaseListViewModel: releaseListViewModel,
+                                               namespace: namespace,
+                                               tappedRelease: tappedRelease)
+//                        }
+                    }
+                }
+            }
+            
+//            DisplayStyleButton(showingGridView: $showingGridView)
+        }
+        .coordinateSpace(name: "RefreshControl")
+        .navigationTitle("Releases")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.backgroundColor)
+    }
+    
+    private struct DisplayStyleButton: View {
+        
+        @Binding var showingGridView: Bool
+        
+        var body: some View {
+            Button {
+                withAnimation(.easeInOut) {
+                    showingGridView.toggle()
+                }
+            } label: {
+                Text("S")
+                    .foregroundColor(.white)
+                    .height(32)
+                    .width(32)
+                    .background(Color.blue.cornerRadius(16))
+            }
+            
+        }
+    }
+    
+    func onRefresh() {
+        releaseListViewModel.getReleases()
+    }
+    
+}
+
+struct CollectionListView: View {
+    
+    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    let namespace: Namespace.ID
+    var tappedRelease: ((ReleaseViewModel)->Void)
+
+    var body: some View {
         LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
-            Section(header: searchBar) {
+            let header = SearchBarView(releaseListViewModel: releaseListViewModel,
+                                       showingFilters: $releaseListViewModel.showingFilters)
+            Section(header: header) {
                 let filtered = releaseListViewModel.filterController.filteredReleases
                     .sorted(by: { $0.artist < $1.artist })
                 ForEach(filtered, id: \.uuid) { release in
-                    ReleaseItemView(release: release)
-                        .onTapGesture {
-                            releaseListViewModel.selectedRelease = release
-                        }
+                    ReleaseItemView(namespace: namespace, release: release)
+                        .onTapGesture { tappedRelease(release) }
                 }
             }
         }
         .padding(.all, 0)
     }
     
-    var searchBar: some View {
+}
+
+struct ReleaseGridView: View {
+    
+    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    let namespace: Namespace.ID
+    var tappedRelease: ((ReleaseViewModel)->Void)
+    
+    let columns:[GridItem] = Array(repeating: .init(spacing: 0), count: 3)
+    
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 0, pinnedViews: .sectionHeaders) {
+            let header = SearchBarView(releaseListViewModel: releaseListViewModel,
+                                       showingFilters: $releaseListViewModel.showingFilters)
+            Section(header: header) {
+                let filtered = releaseListViewModel.filterController.filteredReleases
+                    .sorted(by: { $0.artist < $1.artist })
+                ForEach(filtered, id: \.uuid) { release in
+                    ReleaseGridItem(namespace: namespace, release: release)
+                        .onTapGesture { tappedRelease(release) }
+                }
+            }
+        }
+    }
+    
+}
+
+struct SearchBarView: View {
+    
+    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    @Binding var showingFilters: Bool
+    
+    var body: some View {
         VStack(spacing: 0) {
             HStack {
                 let count = releaseListViewModel.releases.count
@@ -116,27 +210,36 @@ struct ReleaseListView: View {
                 let filterCount = releaseListViewModel.filterController.selectedFilters.count
                 let filterString = filterCount == 0 ? "Filters" : "Filters (\(filterCount))"
                 Button(filterString) {
-                    self.showingFilters = true
+                    showingFilters = true
                 }
                 .padding(.trailing, 12)
             }
-            .background(Color.backgroundColor
-                            .opacity(0.95))
-            .height(52)
-            
-            Color.separator
-                .height(1)
+            Color.separator.height(1)
         }
+        .background(Color.backgroundColor
+                        .opacity(0.99))
+        //.height(52)
     }
     
-    func onRefresh() {
-        releaseListViewModel.getReleases()
+}
+
+struct ReleaseGridItem: View {
+    
+    let namespace:Namespace.ID
+    let release:ReleaseViewModel
+    
+    var body: some View {
+        RemoteImageView(url: release.imageUrl,
+                        placeholder: UIImage(systemName: "music.note.list")!)
+            .matchedGeometryEffect(id: release.geoImage, in: namespace)
+            .aspectRatio(CGSize(width: 1, height: 1), contentMode: .fill)
     }
     
 }
 
 struct ReleaseItemView: View {
     
+    let namespace:Namespace.ID
     let release:ReleaseViewModel
 
     var body: some View {
@@ -144,14 +247,17 @@ struct ReleaseItemView: View {
             HStack(alignment: .top, spacing: 12) {
                 RemoteImageView(url: release.imageUrl,
                                 placeholder: UIImage(systemName: "music.note.list")!)
+                    .matchedGeometryEffect(id: release.geoImage, in: namespace)
                     .height(68)
                     .width(68)
                 
                 VStack(alignment: .leading) {
                     Text(release.title)
+                        .matchedGeometryEffect(id: release.geoTitle, in: namespace)
                         .font(.headline)
                         .foregroundColor(.textPrimary)
                     Text(release.artistList)
+                        .matchedGeometryEffect(id: release.geoArtist, in: namespace)
                         .font(.subheadline)
                         .foregroundColor(.textSecondary)
                 }
@@ -169,28 +275,44 @@ struct ReleaseItemView: View {
 
 struct ReleaseDetailView: View {
     
-    @ObservedObject private(set) var release:ReleaseViewModel
+    let namespace: Namespace.ID
+    @ObservedObject var release: ReleaseViewModel
+    var onClose: StandardAction
 
+    var tracks:[DCTrack] { release.tracks ?? [] }
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 RemoteImageView(url: release.imageUrl,
                                 placeholder: UIImage(systemName: "music.note.list")!)
+                    .matchedGeometryEffect(id: release.geoImage, in: namespace)
+
                 Text(release.title)
+                    .matchedGeometryEffect(id: release.geoTitle, in: namespace)
                     .font(.headline)
                     .foregroundColor(.pink)
                 Text(release.artistList)
+                    .matchedGeometryEffect(id: release.geoArtist, in: namespace)
                     .font(.subheadline)
                     .foregroundColor(.pink)
+                
+                Button("Close", action: onClose)
                 
                 if let tracks = release.tracks {
                     ForEach(tracks, id: \.self) {
                         Text($0.displayText)
                             .foregroundColor(.pink)
                     }
+                    .onChange(of: release.tracks) { value in
+                        print("Value is \(String(describing: value))")
+                    }
                 }
             }
         }
+        .navigationTitle("Releases")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.backgroundColor)
         .onAppear {
             release.getDetail()
         }
