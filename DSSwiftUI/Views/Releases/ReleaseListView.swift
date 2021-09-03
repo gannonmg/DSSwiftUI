@@ -8,70 +8,31 @@
 import SwiftUI
 import Combine
 
-class ReleaseListViewModel: ObservableObject {
-    
-    @Published var releases:[ReleaseViewModel] {
-        didSet {
-            filterController.unfilteredReleases = releases
-        }
-    }
-    
-    @ObservedObject var filterController: FilterController
-    @Published var showingFilters: Bool = false
-    @Published var selected: ReleaseViewModel? = nil
-    var filterCancellable:AnyCancellable?
-    
-    //MARK: Init
-    init() {
-        let releases = CoreDataManager.shared.fetchCollection() ?? []
-        self.releases = releases
-        self.filterController = FilterController(releases: releases)
-        
-        //Pass along changes from the filter controller
-        filterCancellable = filterController.objectWillChange.sink { [weak self] (_) in
-            self?.objectWillChange.send()
-        }
-    }
-    
-    func getReleases() {
-        DCManager.shared.getAllReleasesForUser(forceRefresh: true) { releases in
-            if releases.isEmpty {
-                print("Releases was empty")
-            } else {
-                print("Got \(releases.count) releases")
-                self.releases = releases
-            }
-        }
-    }
-    
-}
-
-
 struct ReleaseListView: View {
     
     @Namespace private var namespace
-    @StateObject private var releaseListViewModel: ReleaseListViewModel = .init()
+    @StateObject private var releaseCollectionViewModel: ReleaseCollectionViewModel = .init()
     
     var body: some View {
         NavigationView {
-            if let selected = releaseListViewModel.selected {
+            if let selected = releaseCollectionViewModel.selected {
                 ReleaseDetailView(namespace: namespace,
                                   release: selected,
-                                  onClose: { releaseListViewModel.selected = nil })
+                                  onClose: { releaseCollectionViewModel.selected = nil })
             } else {
-                CollectionView(releaseListViewModel: releaseListViewModel,
+                CollectionView(releaseCollectionViewModel: releaseCollectionViewModel,
                                namespace: namespace,
                                tappedRelease: tappedRelease(_:))
             }
         }
-        .sheet(isPresented: $releaseListViewModel.showingFilters) {
-            FilterView(filterController: releaseListViewModel.filterController)
+        .sheet(isPresented: $releaseCollectionViewModel.showingFilters) {
+            FilterView(filterController: releaseCollectionViewModel.filterController)
         }
     }
     
     func tappedRelease(_ release: ReleaseViewModel) {
         withAnimation(.easeInOut) {
-            releaseListViewModel.selected = release
+            releaseCollectionViewModel.selected = release
         }
     }
     
@@ -79,7 +40,7 @@ struct ReleaseListView: View {
 
 struct CollectionView: View {
     
-    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    @ObservedObject var releaseCollectionViewModel: ReleaseCollectionViewModel
     let namespace: Namespace.ID
     var tappedRelease: ((ReleaseViewModel)->Void)
 
@@ -92,17 +53,17 @@ struct CollectionView: View {
                     RefreshControl(coordinateSpace: .named("RefreshControl"),
                                    onRefresh: onRefresh)
                     
-                    if releaseListViewModel.releases.isEmpty {
+                    if releaseCollectionViewModel.releases.isEmpty {
                         Button("Get releases") {
-                            releaseListViewModel.getReleases()
+                            releaseCollectionViewModel.getReleases()
                         }
                     } else {
 //                        if showingGridView {
-//                            ReleaseGridView(releaseListViewModel: releaseListViewModel,
+//                            ReleaseGridView(releaseCollectionViewModel: releaseCollectionViewModel,
 //                                            namespace: namespace,
 //                                            tappedRelease: tappedRelease)
 //                        } else {
-                            CollectionListView(releaseListViewModel: releaseListViewModel,
+                            CollectionListView(releaseCollectionViewModel: releaseCollectionViewModel,
                                                namespace: namespace,
                                                tappedRelease: tappedRelease)
 //                        }
@@ -139,26 +100,26 @@ struct CollectionView: View {
     }
     
     func onRefresh() {
-        releaseListViewModel.getReleases()
+        releaseCollectionViewModel.getReleases()
     }
     
 }
 
 struct CollectionListView: View {
     
-    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    @ObservedObject var releaseCollectionViewModel: ReleaseCollectionViewModel
     let namespace: Namespace.ID
     var tappedRelease: ((ReleaseViewModel)->Void)
 
     var body: some View {
         LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
-            let header = SearchBarView(releaseListViewModel: releaseListViewModel,
-                                       showingFilters: $releaseListViewModel.showingFilters)
+            let header = SearchBarView(releaseCollectionViewModel: releaseCollectionViewModel,
+                                       showingFilters: $releaseCollectionViewModel.showingFilters)
             Section(header: header) {
-                let filtered = releaseListViewModel.filterController.filteredReleases
+                let filtered = releaseCollectionViewModel.filterController.filteredReleases
                     .sorted(by: { $0.artist < $1.artist })
                 ForEach(filtered, id: \.uuid) { release in
-                    ReleaseItemView(namespace: namespace, release: release)
+                    ReleaseListItemView(namespace: namespace, release: release)
                         .onTapGesture { tappedRelease(release) }
                 }
             }
@@ -168,9 +129,9 @@ struct CollectionListView: View {
     
 }
 
-struct ReleaseGridView: View {
+struct CollectionGridView: View {
     
-    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    @ObservedObject var releaseCollectionViewModel: ReleaseCollectionViewModel
     let namespace: Namespace.ID
     var tappedRelease: ((ReleaseViewModel)->Void)
     
@@ -178,13 +139,13 @@ struct ReleaseGridView: View {
     
     var body: some View {
         LazyVGrid(columns: columns, spacing: 0, pinnedViews: .sectionHeaders) {
-            let header = SearchBarView(releaseListViewModel: releaseListViewModel,
-                                       showingFilters: $releaseListViewModel.showingFilters)
+            let header = SearchBarView(releaseCollectionViewModel: releaseCollectionViewModel,
+                                       showingFilters: $releaseCollectionViewModel.showingFilters)
             Section(header: header) {
-                let filtered = releaseListViewModel.filterController.filteredReleases
+                let filtered = releaseCollectionViewModel.filterController.filteredReleases
                     .sorted(by: { $0.artist < $1.artist })
                 ForEach(filtered, id: \.uuid) { release in
-                    ReleaseGridItem(namespace: namespace, release: release)
+                    ReleaseGridItemView(namespace: namespace, release: release)
                         .onTapGesture { tappedRelease(release) }
                 }
             }
@@ -193,21 +154,22 @@ struct ReleaseGridView: View {
     
 }
 
-struct SearchBarView: View {
+private struct SearchBarView: View {
     
-    @ObservedObject var releaseListViewModel: ReleaseListViewModel
+    @ObservedObject var releaseCollectionViewModel: ReleaseCollectionViewModel
     @Binding var showingFilters: Bool
     
     var body: some View {
+        
         VStack(spacing: 0) {
             HStack {
-                let count = releaseListViewModel.releases.count
+                let count = releaseCollectionViewModel.releases.count
                 let string = "\(count) Release\(count == 1 ? "" : "s")"
-                TextField("Search \(string)", text: releaseListViewModel.$filterController.searchQuery)
+                TextField("Search \(string)", text: releaseCollectionViewModel.$filterController.searchQuery)
                     .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
-                let filterCount = releaseListViewModel.filterController.selectedFilters.count
+                let filterCount = releaseCollectionViewModel.filterController.selectedFilters.count
                 let filterString = filterCount == 0 ? "Filters" : "Filters (\(filterCount))"
                 Button(filterString) {
                     showingFilters = true
@@ -218,12 +180,11 @@ struct SearchBarView: View {
         }
         .background(Color.backgroundColor
                         .opacity(0.99))
-        //.height(52)
     }
     
 }
 
-struct ReleaseGridItem: View {
+struct ReleaseGridItemView: View {
     
     let namespace:Namespace.ID
     let release:ReleaseViewModel
@@ -237,7 +198,7 @@ struct ReleaseGridItem: View {
     
 }
 
-struct ReleaseItemView: View {
+struct ReleaseListItemView: View {
     
     let namespace:Namespace.ID
     let release:ReleaseViewModel
@@ -269,54 +230,6 @@ struct ReleaseItemView: View {
             Color.separator
                 .height(1)
         }
-    }
-    
-}
-
-struct ReleaseDetailView: View {
-    
-    let namespace: Namespace.ID
-    @ObservedObject var release: ReleaseViewModel
-    var onClose: StandardAction
-
-    var tracks:[DCTrack] { release.tracks ?? [] }
-    
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                RemoteImageView(url: release.imageUrl,
-                                placeholder: UIImage(systemName: "music.note.list")!)
-                    .matchedGeometryEffect(id: release.geoImage, in: namespace)
-
-                Text(release.title)
-                    .matchedGeometryEffect(id: release.geoTitle, in: namespace)
-                    .font(.headline)
-                    .foregroundColor(.pink)
-                Text(release.artistList)
-                    .matchedGeometryEffect(id: release.geoArtist, in: namespace)
-                    .font(.subheadline)
-                    .foregroundColor(.pink)
-                
-                Button("Close", action: onClose)
-                
-                if let tracks = release.tracks {
-                    ForEach(tracks, id: \.self) {
-                        Text($0.displayText)
-                            .foregroundColor(.pink)
-                    }
-                    .onChange(of: release.tracks) { value in
-                        print("Value is \(String(describing: value))")
-                    }
-                }
-            }
-        }
-        .navigationTitle("Releases")
-        .navigationBarTitleDisplayMode(.inline)
-        .background(Color.backgroundColor)
-        .onAppear {
-            release.getDetail()
-        }
-        
     }
     
 }
