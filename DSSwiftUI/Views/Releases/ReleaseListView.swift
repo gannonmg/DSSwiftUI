@@ -166,7 +166,6 @@ private struct SearchBarView: View {
                 let count = releaseCollectionViewModel.releases.count
                 let string = "\(count) Release\(count == 1 ? "" : "s")"
                 TextField("Search \(string)", text: releaseCollectionViewModel.$filterController.searchQuery)
-                    .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 let filterCount = releaseCollectionViewModel.filterController.selectedFilters.count
@@ -176,10 +175,34 @@ private struct SearchBarView: View {
                 }
                 .padding(.trailing, 12)
             }
+            .padding(.all, 8)
             Color.separator.height(1)
         }
-        .background(Color.backgroundColor
-                        .opacity(0.99))
+        .background(searchBackground)
+    }
+    
+    private var searchBackground: some View {
+        ZStack {
+            Blur(style: .systemThinMaterial).opacity(0.7)
+            Color.navBar.opacity(0.8)
+        }
+    }
+    
+    private struct Blur: UIViewRepresentable {
+        
+        init(style: UIBlurEffect.Style) {
+            self.style = style
+        }
+        
+        let style: UIBlurEffect.Style
+        
+        func makeUIView(context: Context) -> UIVisualEffectView {
+            return UIVisualEffectView(effect: UIBlurEffect(style: style))
+        }
+        
+        func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+            uiView.effect = UIBlurEffect(style: style)
+        }
     }
     
 }
