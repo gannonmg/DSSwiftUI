@@ -46,3 +46,4 @@ struct LFAuthInfo {
 - [ ] Smooth out user flow from login to release loading.
 - [ ] Add Scrobble button to release detail view
 - [ ] Use Matched Geometry Effect to present ReleaseDetailView in style
+- [ ] Explore @FetchRequest property wrapper for CoreData
