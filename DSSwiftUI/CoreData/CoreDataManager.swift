@@ -31,14 +31,15 @@ struct CoreDataManager {
     func saveCollection(of releases: [DCRelease]) {
  
         let context = container.viewContext
-        let collection = ReleaseCollection(context: context)
-        
-        releases.forEach {
-            let release = Release(context: context, release: $0, collection: collection)
-            collection.addToReleaseItem(release)
+        let collection = (try? context.fetch(ReleaseCollection.fetchRequest()).first) ?? ReleaseCollection(context: context)
+        collection.releaseItem?.forEach { item in
+            guard let item = item as? NSManagedObject else { return }
+            context.delete(item)
         }
         
-        try! context.save()
+        let newReleases = releases.map { Release(context: context, release: $0, collection: collection) }
+        newReleases.forEach { collection.addToReleaseItem($0) }
+        try? context.save()
 
     }
     
