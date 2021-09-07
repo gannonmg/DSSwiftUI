@@ -40,6 +40,7 @@
 		2D622CB426CCCC73009F7D55 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D622CA726CCCC73009F7D55 /* Roboto-Thin.ttf */; };
 		2D622CB526CCCC73009F7D55 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D622CA826CCCC73009F7D55 /* Roboto-Black.ttf */; };
 		2D622CB726CCCC90009F7D55 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D622CB626CCCC90009F7D55 /* Fonts.swift */; };
+		2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 2D6EE05C26E7EAF300F98B43 /* ReadMe.md */; };
 		2DA3BB2526BF04BC00AEAB48 /* RefreshControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3BB2426BF04BC00AEAB48 /* RefreshControlView.swift */; };
 		2DCC292926BB451A0062B56F /* ReleaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC292826BB451A0062B56F /* ReleaseViewModel.swift */; };
 		2DCC292B26BB46D40062B56F /* ReleaseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC292A26BB46D40062B56F /* ReleaseListView.swift */; };
@@ -88,6 +89,7 @@
 		2D622CA726CCCC73009F7D55 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		2D622CA826CCCC73009F7D55 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		2D622CB626CCCC90009F7D55 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		2D6EE05C26E7EAF300F98B43 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		2DA3BB2426BF04BC00AEAB48 /* RefreshControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlView.swift; sourceTree = "<group>"; };
 		2DCC292826BB451A0062B56F /* ReleaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseViewModel.swift; sourceTree = "<group>"; };
 		2DCC292A26BB46D40062B56F /* ReleaseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseListView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		2D44EF9A26B4CD3700E4A1FE = {
 			isa = PBXGroup;
 			children = (
+				2D6EE05C26E7EAF300F98B43 /* ReadMe.md */,
 				2D44EFA526B4CD3800E4A1FE /* DSSwiftUI */,
 				2D44EFA426B4CD3800E4A1FE /* Products */,
 			);
@@ -345,6 +348,7 @@
 				2D622CB326CCCC73009F7D55 /* Roboto-Bold.ttf in Resources */,
 				2D44EFAE26B4CD3A00E4A1FE /* Preview Assets.xcassets in Resources */,
 				2D44EFAB26B4CD3A00E4A1FE /* Assets.xcassets in Resources */,
+				2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */,
 				2D622CAE26CCCC73009F7D55 /* Roboto-BoldItalic.ttf in Resources */,
 				2D622CAB26CCCC73009F7D55 /* Roboto-Regular.ttf in Resources */,
 				2D622CAD26CCCC73009F7D55 /* Roboto-ThinItalic.ttf in Resources */,
