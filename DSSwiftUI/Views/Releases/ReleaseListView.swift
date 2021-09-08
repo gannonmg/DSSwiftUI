@@ -15,15 +15,9 @@ struct ReleaseListView: View {
     
     var body: some View {
         NavigationView {
-            if let selected = releaseCollectionViewModel.selected {
-                ReleaseDetailView(namespace: namespace,
-                                  release: selected,
-                                  onClose: { releaseCollectionViewModel.selected = nil })
-            } else {
-                CollectionView(releaseCollectionViewModel: releaseCollectionViewModel,
-                               namespace: namespace,
-                               tappedRelease: tappedRelease(_:))
-            }
+            CollectionView(releaseCollectionViewModel: releaseCollectionViewModel,
+                           namespace: namespace,
+                           tappedRelease: tappedRelease(_:))
         }
         .sheet(isPresented: $releaseCollectionViewModel.showingFilters) {
             FilterView(filterController: releaseCollectionViewModel.filterController)
@@ -31,9 +25,9 @@ struct ReleaseListView: View {
     }
     
     func tappedRelease(_ release: ReleaseViewModel) {
-        withAnimation(.easeInOut) {
+        //withAnimation(.easeInOut) {
             releaseCollectionViewModel.selected = release
-        }
+        //}
     }
     
 }
@@ -43,12 +37,13 @@ struct CollectionView: View {
     @ObservedObject var releaseCollectionViewModel: ReleaseCollectionViewModel
     let namespace: Namespace.ID
     var tappedRelease: ((ReleaseViewModel)->Void)
+    let coordinateSpaceName = "RefreshControl"
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ScrollView {
                 VStack(spacing: 0) {
-                    RefreshControl(coordinateSpace: .named("RefreshControl"),
+                    RefreshControl(coordinateSpace: .named(coordinateSpaceName),
                                    onRefresh: onRefresh)
                     
                     if releaseCollectionViewModel.releases.isEmpty {
@@ -63,8 +58,13 @@ struct CollectionView: View {
                 }
             }
             
+            if let selected = releaseCollectionViewModel.selected {
+                ReleaseDetailView(namespace: namespace,
+                                  release: selected,
+                                  onClose: { releaseCollectionViewModel.selected = nil })
+            }
         }
-        .coordinateSpace(name: "RefreshControl")
+        .coordinateSpace(name: coordinateSpaceName)
         .navigationTitle("Releases")
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.backgroundColor)

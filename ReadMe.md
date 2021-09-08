@@ -43,7 +43,7 @@ struct LFAuthInfo {
 - [x] Fix bug where CoreData creates multiple Collections instead of updating the existing one
 - [x] Store Release tracks in CoreData
 - [x] Save user credentials in Keychain instead of user defaults
-- [ ] Bug: Collection list scrolls to top after closing detail view
+- [x] Bug: Collection list scrolls to top after closing detail view
 - [ ] Add welcome screen
 - [ ] Smooth out user flow from login to release loading.
 - [ ] Add Scrobble button to release detail view
