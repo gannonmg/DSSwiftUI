@@ -44,8 +44,6 @@ struct CollectionView: View {
     let namespace: Namespace.ID
     var tappedRelease: ((ReleaseViewModel)->Void)
 
-//    @State private var showingGridView = true
-    
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ScrollView {
