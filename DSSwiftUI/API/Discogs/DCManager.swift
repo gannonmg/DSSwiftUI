@@ -21,8 +21,8 @@ class DCManager {
                                       authorizeUrl:    "https://www.discogs.com/oauth/authorize",
                                       accessTokenUrl:  "https://api.discogs.com/oauth/access_token")
         
-        if let userToken = UserDefaults.standard.discogsUserToken,
-           let userTokenSecret = UserDefaults.standard.discogsUserSecret
+        if let userToken = KeychainManager.shared.get(for: .discogsUserToken),
+           let userTokenSecret = KeychainManager.shared.get(for: .discogsUserSecret)
         {
             oauthswift.client.credential.oauthToken = userToken
             oauthswift.client.credential.oauthTokenSecret = userTokenSecret
@@ -46,8 +46,8 @@ class DCManager {
         let _ = oauthswift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
             switch result {
             case .success(let (credential, _ /*response*/, _/*parameters*/)):
-                UserDefaults.standard.discogsUserToken = credential.oauthToken
-                UserDefaults.standard.discogsUserSecret = credential.oauthTokenSecret
+                KeychainManager.shared.save(key: .discogsUserToken, string: credential.oauthToken)
+                KeychainManager.shared.save(key: .discogsUserSecret, string: credential.oauthTokenSecret)
                 completion(nil)
             case .failure(let error):
                 completion(error)
@@ -62,7 +62,7 @@ class DCManager {
             case .success(let response):
                 do {
                     let user = try JSONDecoder().decode(DCUser.self, from: response.data)
-                    UserDefaults.standard.discogsUsername = user.username
+                    KeychainManager.shared.save(key: .discogsUsername, string: user.username)
                     completion(nil)
                 } catch {
                     completion(error)
@@ -84,7 +84,7 @@ class DCManager {
             return
         }
         
-        guard let username = UserDefaults.standard.discogsUsername else {
+        guard let username = KeychainManager.shared.get(for: .discogsUsername) else {
             completion([])
             return
         }
@@ -155,27 +155,6 @@ class DCManager {
                 completion(nil)
             }
         }
-    }
-    
-}
-
-
-#warning("Switch to keychain")
-extension UserDefaults {
-    
-    @objc var discogsUserToken: String? {
-        get { string(forKey: "discogsUserToken") }
-        set { setValue(newValue, forKey: "discogsUserToken") }
-    }
-    
-    @objc var discogsUserSecret: String? {
-        get { string(forKey: "discogsUserSecret") }
-        set { setValue(newValue, forKey: "discogsUserSecret") }
-    }
-    
-    @objc var discogsUsername: String? {
-        get { string(forKey: "discogsUsername") }
-        set { setValue(newValue, forKey: "discogsUsername") }
     }
     
 }

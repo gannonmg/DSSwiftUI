@@ -93,6 +93,7 @@ extension Color {
     static let textPrimary = Color(hex: 0xEDEEE5)
     static let textSecondary = Color(hex: 0x94969C)
     static let separator = Color(hex: 0x484D5B)
+    static let lightGreyColor = Color(.sRGB, white: 239/255, opacity: 1)
 
     init(hex: UInt, alpha: Double = 1) {
         self.init(.sRGB,

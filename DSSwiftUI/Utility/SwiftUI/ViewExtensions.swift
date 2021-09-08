@@ -51,7 +51,7 @@ struct LoginFieldModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
-            .background(lightGreyColor)
+            .background(Color.lightGreyColor)
             .cornerRadius(5.0)
     }
 }
@@ -59,23 +59,5 @@ struct LoginFieldModifier: ViewModifier {
 extension TextField {
     func loginFieldStyle() -> TextField {
         self.modifier(LoginFieldModifier()).content
-    }
-}
-
-//MARK: - Login Button
-struct LoginButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .frame(maxWidth: .infinity)
-            .height(48)
-            .background(Color.green)
-            .cornerRadius(8)
-            .padding(.horizontal, 16)
-    }
-}
-
-extension Button {
-    func loginButtonStyle() -> Button {
-        self.modifier(LoginButtonModifier()).content
     }
 }
