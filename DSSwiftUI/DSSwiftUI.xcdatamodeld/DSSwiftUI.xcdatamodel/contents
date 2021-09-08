@@ -11,13 +11,21 @@
         <attribute name="styles" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="urlString" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="collection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReleaseCollection" inverseName="releaseItem" inverseEntity="ReleaseCollection"/>
+        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="album" inverseEntity="Track"/>
     </entity>
     <entity name="ReleaseCollection" representedClassName="ReleaseCollection" syncable="YES">
         <relationship name="releaseItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Release" inverseName="collection" inverseEntity="Release"/>
     </entity>
+    <entity name="Track" representedClassName="Track" syncable="YES">
+        <attribute name="duration" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Release" inverseName="tracks" inverseEntity="Release"/>
+    </entity>
     <elements>
-        <element name="Release" positionX="-36" positionY="9" width="128" height="194"/>
-        <element name="ReleaseCollection" positionX="0" positionY="72" width="128" height="44"/>
+        <element name="Release" positionX="-36" positionY="9" width="128" height="224"/>
+        <element name="ReleaseCollection" positionX="75.283447265625" positionY="463.2131958007812" width="128" height="58"/>
+        <element name="Track" positionX="-135.322021484375" positionY="330.4776916503906" width="128" height="88"/>
     </elements>
 </model>

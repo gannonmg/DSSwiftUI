@@ -41,7 +41,7 @@ struct LFAuthInfo {
 - [x] Rough initial CoreData implementation
 - [x] Implement Searching and Filtering of releases
 - [x] Fix bug where CoreData creates multiple Collections instead of updating the existing one
-- [ ] Store Release tracks in CoreData
+- [x] Store Release tracks in CoreData
 - [ ] Add welcome screen
 - [ ] Smooth out user flow from login to release loading.
 - [ ] Add Scrobble button to release detail view

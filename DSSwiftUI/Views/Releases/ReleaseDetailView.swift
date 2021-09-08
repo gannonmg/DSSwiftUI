@@ -13,7 +13,7 @@ struct ReleaseDetailView: View {
     @ObservedObject var release: ReleaseViewModel
     var onClose: StandardAction
 
-    var tracks:[DCTrack] { release.tracks ?? [] }
+    var tracks:[TrackItem] { release.tracks ?? [] }
     
     var body: some View {
         ScrollView {
@@ -34,12 +34,9 @@ struct ReleaseDetailView: View {
                 Button("Close", action: onClose)
                 
                 if let tracks = release.tracks {
-                    ForEach(tracks, id: \.self) {
+                    ForEach(tracks, id: \.uuid) {
                         Text($0.displayText)
                             .foregroundColor(.pink)
-                    }
-                    .onChange(of: release.tracks) { value in
-                        print("Value is \(String(describing: value))")
                     }
                 }
             }

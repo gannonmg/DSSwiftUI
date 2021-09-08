@@ -368,13 +368,6 @@ struct DCTrack: Codable, Hashable {
         case title, extraartists, duration
     }
     
-    var displayText: String {
-        if duration.trimmingWhitespaces.isEmpty {
-            return title
-        } else {
-            return "\(title) (\(duration))"
-        }
-    }
 }
 
 // MARK: - Video

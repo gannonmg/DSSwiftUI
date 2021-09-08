@@ -29,8 +29,6 @@ struct CoreDataManager {
     }
     
     func saveCollection(of releases: [DCRelease]) {
- 
-        let context = container.viewContext
         let collection = (try? context.fetch(ReleaseCollection.fetchRequest()).first) ?? ReleaseCollection(context: context)
         collection.releaseItem?.forEach { item in
             guard let item = item as? NSManagedObject else { return }
@@ -44,7 +42,6 @@ struct CoreDataManager {
     }
     
     func fetchCollection() -> [ReleaseViewModel]? {
-        let context = container.viewContext
         do {
             let collections:[ReleaseCollection] = try context.fetch(ReleaseCollection.fetchRequest())
             print("Found \(collections.count) collections")
@@ -66,9 +63,22 @@ struct CoreDataManager {
             return nil
         }
     }
+
+    func fetchRelease(uuid: UUID) -> Release? {
+        let collections:[ReleaseCollection]? = try? context.fetch(ReleaseCollection.fetchRequest())
+        guard let collection = collections?.first else { return nil }
+        let storedReleases:[Release] = collection.releaseItem?.compactMap { $0 as? Release } ?? []
+        return storedReleases.first(where: { uuid == $0.uuid })
+    }
+    
+    func addTracksToRelease(uuid: UUID, tracks: [DCTrack]) {
+        guard let release = fetchRelease(uuid: uuid) else { return }
+        let tracks:[Track] = tracks.map { Track(context: context, track: $0, release: release) }
+        tracks.forEach { release.addToTracks($0) }
+        try? context.save()
+    }
     
     func deleteCollections(emptyOnly: Bool) {
-        let context = container.viewContext
         let collections:[ReleaseCollection]? = try? context.fetch(ReleaseCollection.fetchRequest())
         for collection in collections ?? [] {
             let count = collection.releaseItem?.count ?? 0
@@ -76,7 +86,7 @@ struct CoreDataManager {
             context.delete(collection)
         }
         
-        try! context.save()
+        try? context.save()
     }
     
 }

@@ -9,7 +9,7 @@ import Foundation
 
 class ReleaseViewModel: ObservableObject, Identifiable {
     
-    let uuid = UUID()
+    let uuid: UUID
     
     let imageUrl: URL?
     let title: String
@@ -19,7 +19,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     private let artists: [String]
     
     let releaseYear: Int
-    @Published private(set) var tracks: [DCTrack]?
+    @Published private(set) var tracks: [TrackItem]?
 
     let resourceUrl: String
     
@@ -31,6 +31,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     //MARK: - Initializers
     init?(from storedRelease: Release) {
 
+        self.uuid = storedRelease.uuid
         self.imageUrl = URL(string: storedRelease.urlString)
         self.title = storedRelease.title
         self.artist = storedRelease.artist
@@ -42,19 +43,21 @@ class ReleaseViewModel: ObservableObject, Identifiable {
         self.styles = storedRelease.styles
         self.descriptions = storedRelease.formats
         
+        if let tracks = storedRelease.getTrackItems() {
+            self.tracks = tracks
+        }
+        
         self.releaseYear = Int(storedRelease.releaseYear)
     }
     
     //MARK: - Detail
     func getDetail() {
+        guard tracks == nil || tracks?.isEmpty == true else { return }
+        
         DCManager.shared.getDetail(for: resourceUrl) { detail in
-            guard let detail = detail else {
-                print("Did not get detail")
-                return
-            }
-            print("Got detail")
-            print("Tracklist: \(detail.tracklist)")
-            self.tracks = detail.tracklist
+            guard let detail = detail else { return }
+            self.tracks = detail.tracklist.map { TrackItem(from: $0) }
+            CoreDataManager.shared.addTracksToRelease(uuid: self.uuid, tracks: detail.tracklist)
         }
     }
     
@@ -62,5 +65,32 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     var geoImage:String { "\(uuid).image" }
     var geoTitle:String { "\(uuid).title" }
     var geoArtist:String { "\(uuid).artist" }
+
+}
+
+struct TrackItem {
+    
+    let uuid = UUID()
+    
+    let title: String
+    let duration: String
+    
+    var displayText: String {
+        if duration.trimmingWhitespaces.isEmpty {
+            return title
+        } else {
+            return "\(title) (\(duration))"
+        }
+    }
+    
+    init(from track: DCTrack) {
+        self.title = track.title
+        self.duration = track.duration
+    }
+    
+    init(from track: Track) {
+        self.title = track.title
+        self.duration = track.duration
+    }
 
 }

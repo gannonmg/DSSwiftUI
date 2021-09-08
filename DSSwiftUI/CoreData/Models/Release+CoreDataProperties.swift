@@ -16,6 +16,8 @@ extension Release {
         return NSFetchRequest<Release>(entityName: "Release")
     }
 
+    @NSManaged var uuid: UUID
+    
     @NSManaged var title: String
     @NSManaged var artist: String
     @NSManaged var artists: [String]
@@ -29,9 +31,28 @@ extension Release {
     @NSManaged var genres: [String]
     @NSManaged var styles: [String]
     
+    @NSManaged var tracks: NSSet?
+    
     @NSManaged var collection: ReleaseCollection?
 
 }
+
+extension Release {
+
+    @objc(addTracksObject:)
+    @NSManaged public func addToTracks(_ value: Track)
+
+    @objc(removeTracksObject:)
+    @NSManaged public func removeFromTracks(_ value: Track)
+
+    @objc(addTracks:)
+    @NSManaged public func addToTracks(_ values: NSSet)
+
+    @objc(removeTracks:)
+    @NSManaged public func removeFromTracks(_ values: NSSet)
+
+}
+
 
 extension Release : Identifiable {
 
