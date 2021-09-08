@@ -58,20 +58,13 @@ struct CollectionView: View {
                             releaseCollectionViewModel.getReleases()
                         }
                     } else {
-//                        if showingGridView {
-//                            ReleaseGridView(releaseCollectionViewModel: releaseCollectionViewModel,
-//                                            namespace: namespace,
-//                                            tappedRelease: tappedRelease)
-//                        } else {
-                            CollectionListView(releaseCollectionViewModel: releaseCollectionViewModel,
-                                               namespace: namespace,
-                                               tappedRelease: tappedRelease)
-//                        }
+                        CollectionListView(releaseCollectionViewModel: releaseCollectionViewModel,
+                                           namespace: namespace,
+                                           tappedRelease: tappedRelease)
                     }
                 }
             }
             
-//            DisplayStyleButton(showingGridView: $showingGridView)
         }
         .coordinateSpace(name: "RefreshControl")
         .navigationTitle("Releases")
