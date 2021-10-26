@@ -41,9 +41,7 @@ struct ReleaseDetailView: View {
                 }
             }
         }
-        .navigationTitle("Releases")
-        .navigationBarTitleDisplayMode(.inline)
-        .background(Color.backgroundColor)
+        .background(Color(.backgroundColor))
         .onAppear {
             release.getDetail()
         }

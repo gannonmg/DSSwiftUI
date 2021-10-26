@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 import var CommonCrypto.CC_MD5_DIGEST_LENGTH
 import func CommonCrypto.CC_MD5
 import typealias CommonCrypto.CC_LONG
@@ -86,15 +87,29 @@ extension Array where Element: Hashable {
 }
 
 //MARK: - Color
+
+enum HexColor: UInt {
+    case navBar = 0x000009
+    case backgroundColor = 0x22242E
+    case textPrimary = 0xEDEEE5
+    case textSecondary = 0x94969C
+    case dsSeparator = 0x484D5B
+    case lightGreyColor = 0xEFEFEF
+}
+
 extension Color {
     
-    static let navBar = Color(hex: 0x000009)
-    static let backgroundColor = Color(hex: 0x22242E)
-    static let textPrimary = Color(hex: 0xEDEEE5)
-    static let textSecondary = Color(hex: 0x94969C)
-    static let separator = Color(hex: 0x484D5B)
-    static let lightGreyColor = Color(.sRGB, white: 239/255, opacity: 1)
+//    static let navBar = Color(hex: 0x000009)
+//    static let backgroundColor = Color(hex: 0x22242E)
+//    static let textPrimary = Color(hex: 0xEDEEE5)
+//    static let textSecondary = Color(hex: 0x94969C)
+//    static let separator = Color(hex: 0x484D5B)
+//    static let lightGreyColor = Color(.sRGB, white: 239/255, opacity: 1)
 
+    init(_ hexColor: HexColor, alpha: Double = 1) {
+        self.init(hex: hexColor.rawValue, alpha: alpha)
+    }
+    
     init(hex: UInt, alpha: Double = 1) {
         self.init(.sRGB,
                   red: Double((hex >> 16) & 0xff) / 255,
@@ -105,3 +120,19 @@ extension Color {
     
 }
 
+extension UIColor {
+    
+//    static let navBar = UIColor(hex: 0x000009)
+//    static let textPrimary = UIColor(hex: 0xEDEEE5)
+
+    convenience init(_ hexColor: HexColor, alpha: CGFloat = 1) {
+        self.init(hex: hexColor.rawValue, alpha: alpha)
+    }
+
+    convenience init(hex: UInt, alpha: CGFloat = 1.0) {
+        self.init(red: CGFloat((hex >> 16) & 0xFF)/256,
+                  green: CGFloat((hex >> 8) & 0xFF)/256,
+                  blue: CGFloat(hex & 0xFF)/256,
+                  alpha: alpha)
+    }
+}

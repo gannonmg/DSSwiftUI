@@ -12,10 +12,7 @@ import OAuthSwift
 struct DSSwiftUIApp: App {
 
     init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.textPrimary)]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.textPrimary)]
-        UINavigationBar.appearance().barTintColor = UIColor(Color.navBar)
-        UITabBar.appearance().barTintColor = UIColor(Color.navBar)
+        setGlobalAppearances()
     }
     
     var body: some Scene {
@@ -30,4 +27,18 @@ struct DSSwiftUIApp: App {
                 }
         }
     }
+}
+
+func setGlobalAppearances() {
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithDefaultBackground()
+    appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(.textPrimary)]
+    appearance.titleTextAttributes = [.foregroundColor: UIColor(.textPrimary)]
+    appearance.backgroundColor = UIColor(.navBar)
+    UINavigationBar.appearance().barTintColor = UIColor(.navBar)
+    
+    UINavigationBar.appearance().standardAppearance = appearance
+    UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    
+    UITabBar.appearance().barTintColor = UIColor(.navBar)
 }

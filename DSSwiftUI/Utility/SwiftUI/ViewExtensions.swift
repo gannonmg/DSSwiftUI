@@ -51,7 +51,7 @@ struct LoginFieldModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
-            .background(Color.lightGreyColor)
+            .background(Color(.lightGreyColor))
             .cornerRadius(5.0)
     }
 }

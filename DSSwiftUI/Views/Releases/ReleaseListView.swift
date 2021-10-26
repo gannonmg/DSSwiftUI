@@ -67,7 +67,7 @@ struct CollectionView: View {
         .coordinateSpace(name: coordinateSpaceName)
         .navigationTitle("Releases")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color.backgroundColor)
+        .background(Color(.backgroundColor))
     }
     
     private struct DisplayStyleButton: View {
@@ -167,7 +167,8 @@ private struct SearchBarView: View {
                 .padding(.trailing, 12)
             }
             .padding(.all, 8)
-            Color.separator.height(1)
+            Color(.dsSeparator)
+                .height(1)
         }
         .background(searchBackground)
     }
@@ -175,7 +176,7 @@ private struct SearchBarView: View {
     private var searchBackground: some View {
         ZStack {
             Blur(style: .systemThinMaterial).opacity(0.7)
-            Color.navBar.opacity(0.8)
+            Color(.navBar).opacity(0.8)
         }
     }
     
@@ -230,18 +231,18 @@ struct ReleaseListItemView: View {
                     Text(release.title)
                         .matchedGeometryEffect(id: release.geoTitle, in: namespace)
                         .font(.headline)
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(Color(.textPrimary))
                     Text(release.artistList)
                         .matchedGeometryEffect(id: release.geoArtist, in: namespace)
                         .font(.subheadline)
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(Color(.textSecondary))
                 }
                 
                 Spacer()
             }
             .padding()
             
-            Color.separator
+            Color(.dsSeparator)
                 .height(1)
         }
     }
