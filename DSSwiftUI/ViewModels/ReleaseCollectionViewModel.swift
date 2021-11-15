@@ -23,9 +23,8 @@ class ReleaseCollectionViewModel: ObservableObject {
     
     //MARK: Init
     init() {
-        let releases = CoreDataManager.shared.fetchCollection() ?? []
-        self.releases = releases
-        self.filterController = FilterController(releases: releases)
+        self.releases = []
+        self.filterController = FilterController(releases: [])
         
         //Pass along changes from the filter controller
         filterCancellable = filterController.objectWillChange.sink { [weak self] (_) in
@@ -34,14 +33,14 @@ class ReleaseCollectionViewModel: ObservableObject {
     }
     
     func getReleases() {
-        DCManager.shared.getAllReleasesForUser(forceRefresh: true) { releases in
-            if releases.isEmpty {
-                print("Releases was empty")
-            } else {
-                print("Got \(releases.count) releases")
-                self.releases = releases
-            }
-        }
+//        DCManager.shared.getAllReleasesForUser(forceRefresh: true) { releases in
+//            if releases.isEmpty {
+//                print("Releases was empty")
+//            } else {
+//                print("Got \(releases.count) releases")
+//                self.releases = releases
+//            }
+//        }
     }
     
 }

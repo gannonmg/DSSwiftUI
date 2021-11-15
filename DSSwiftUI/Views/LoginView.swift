@@ -29,12 +29,8 @@ struct LoginView: View {
                     viewModel.getIdentity()
                 }
                 
-                Button("Empty Empties") {
-                    CoreDataManager.shared.deleteCollections(emptyOnly: true)
-                }
-                
-                Button("Delete all CoreData") {
-                    CoreDataManager.shared.deleteCollections(emptyOnly: false)
+                Button("Get releases") {
+                    getReleases()
                 }
 
                 Spacer()
@@ -43,6 +39,17 @@ struct LoginView: View {
             
         }
     }
+    
+    func getReleases() {
+        DCManager.shared.getAllReleasesForUser(forceRefresh: true) { releases in
+            if releases.isEmpty {
+                print("Releases was empty")
+            } else {
+                print("Got \(releases.count) releases")
+            }
+        }
+    }
+
 }
 
 struct LoginView_Previews: PreviewProvider {

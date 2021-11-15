@@ -74,15 +74,7 @@ class DCManager {
     }
     
     //MARK: Releases
-    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([ReleaseViewModel])->Void) {
-        
-        if forceRefresh == false,
-           let releases = CoreDataManager.shared.fetchCollection(),
-           releases.isEmpty == false
-        {
-            completion(releases)
-            return
-        }
+    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([RealmReleaseCodable])->Void) {
         
         guard let username = KeychainManager.shared.get(for: .discogsUsername) else {
             completion([])
@@ -96,21 +88,23 @@ class DCManager {
                 return
             }
 
-            CoreDataManager.shared.saveCollection(of: releases)
-            let collection = CoreDataManager.shared.fetchCollection() ?? []
-            completion(collection)
+            completion(releases)
         }
     }
     
-    private func getAllReleases(initialReleases: [DCRelease], pageUrl: String, completion: @escaping ([DCRelease])->Void) {
+    private func getAllReleases(initialReleases: [RealmReleaseCodable], pageUrl: String, completion: @escaping ([RealmReleaseCodable])->Void) {
         oauthswift.client.get(pageUrl) { result in
             switch result {
             case .success(let response):
                 
                 //Decode our data response to the release object
                 do {
-                    let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
+//                    let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
+//                                                            from: response.data)
+                    
+                    let response = try JSONDecoder().decode(RealmCollectionReleasesResponse.self,
                                                             from: response.data)
+
                     
                     //Add our newly collected releases to what we've passed in
                     let releases = initialReleases + response.releases

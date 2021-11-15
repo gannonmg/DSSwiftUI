@@ -5,8 +5,8 @@
 //  Created by Matt Gannon on 7/30/21.
 //
 
-import SwiftUI
 import OAuthSwift
+import SwiftUI
 
 @main
 struct DSSwiftUIApp: App {
@@ -17,6 +17,7 @@ struct DSSwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
+//            RealmListView()
             MainView()
 //                .environment(\.managedObjectContext,
 //                             CoreDataManager.shared.container.viewContext)
@@ -27,6 +28,7 @@ struct DSSwiftUIApp: App {
                 }
         }
     }
+        
 }
 
 func setGlobalAppearances() {

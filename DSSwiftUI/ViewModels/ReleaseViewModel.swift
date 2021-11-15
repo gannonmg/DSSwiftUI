@@ -29,27 +29,22 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     let descriptions: [String]
 
     //MARK: - Initializers
-    init?(from storedRelease: Release) {
+    init(from dcRelease: DCRelease) {
+        self.uuid = UUID()
+        self.imageUrl = URL(string: dcRelease.basicInformation.coverImage)
+        self.title = dcRelease.basicInformation.title
+        self.artist = dcRelease.basicInformation.artists.first?.name ?? ""
+        self.artists = dcRelease.basicInformation.artists.map { $0.name }
+        self.resourceUrl = dcRelease.basicInformation.resourceURL
+        
+        self.formats = dcRelease.basicInformation.formats.map { $0.name.lowercased() }
+        self.genres = dcRelease.basicInformation.genres.map { $0.lowercased() }
+        self.styles = dcRelease.basicInformation.styles.map { $0.lowercased() }
+        self.descriptions = dcRelease.basicInformation.formats.map { $0.descriptions }.flatMap { $0 }.map { $0.lowercased() }
 
-        self.uuid = storedRelease.uuid
-        self.imageUrl = URL(string: storedRelease.urlString)
-        self.title = storedRelease.title
-        self.artist = storedRelease.artist
-        self.artists = storedRelease.artists
-        self.resourceUrl = storedRelease.resourceUrl
-        
-        self.formats = storedRelease.formats
-        self.genres = storedRelease.genres
-        self.styles = storedRelease.styles
-        self.descriptions = storedRelease.formats
-        
-        if let tracks = storedRelease.getTrackItems() {
-            self.tracks = tracks
-        }
-        
-        self.releaseYear = Int(storedRelease.releaseYear)
+        self.releaseYear = dcRelease.basicInformation.year
     }
-    
+
     //MARK: - Detail
     func getDetail() {
         guard tracks == nil || tracks?.isEmpty == true else { return }
@@ -57,7 +52,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
         DCManager.shared.getDetail(for: resourceUrl) { detail in
             guard let detail = detail else { return }
             self.tracks = detail.tracklist.map { TrackItem(from: $0) }
-            CoreDataManager.shared.addTracksToRelease(uuid: self.uuid, tracks: detail.tracklist)
+//            CoreDataManager.shared.addTracksToRelease(uuid: self.uuid, tracks: detail.tracklist)
         }
     }
     
@@ -88,9 +83,4 @@ struct TrackItem {
         self.duration = track.duration
     }
     
-    init(from track: Track) {
-        self.title = track.title
-        self.duration = track.duration
-    }
-
 }

@@ -19,7 +19,8 @@ struct MainView: View {
                     Text("Collection")
                 }
                 .tag(1)
-            ReleaseListView()
+//            ReleaseListView()
+            RealmListView()
                 .tabItem {
                     Image(systemName: "2.square.fill")
                     Text("Release List")
