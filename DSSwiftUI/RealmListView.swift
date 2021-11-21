@@ -55,7 +55,7 @@ class RealmReleaseViewModel: ObservableObject, Identifiable {
         self.artist = release.basicInformation.artists.first?.name ?? ""
     }
     
-    lazy var itemString: String = { title + " - " }()
+    lazy var itemString: String = { title + " - " + artist}()
     
 }
 
