@@ -31,7 +31,7 @@ class RealmBasicInformation: Object, Codable {
     @Persisted private(set) var coverImage: String
     
     enum CodingKeys: String, CodingKey {
-        case title, year//, artists
+        case title, year, artists
         case coverImage = "cover_image"
     }
 
