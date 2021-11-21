@@ -13,7 +13,7 @@ import Security
 class KeychainManager {
     
     enum KeychainKey: String {
-        case discogsUserToken, discogsUserSecret, discogsUsername
+        case discogsUserToken, discogsUserSecret, discogsUsername, testKey
     }
     
     static let shared = KeychainManager()
@@ -29,7 +29,7 @@ class KeychainManager {
         return String(data: data, encoding: .utf8)
     }
     
-    func remove(for key: KeychainKey) {
+    func remove(key: KeychainKey) {
         remove(key: key.rawValue)
     }
 
