@@ -98,9 +98,9 @@ struct RealmListView: View {
             Button("Get Releases", action: getReleases)
             SwiftUI.List {
                 ForEach(releases.freeze()) { release in
-                    Text(release.basicInformation.title)
-//                    let vm = RealmReleaseViewModel(from: release)
-//                    Text(vm.itemString)
+//                    Text(release.basicInformation.title)
+                    let vm = RealmReleaseViewModel(from: release)
+                    Text(vm.itemString)
                 }
             }
         }
