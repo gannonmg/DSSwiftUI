@@ -40,6 +40,12 @@ class LoginViewModel: ObservableObject {
         }
     }
     
+    func killUserInfo() {
+        KeychainManager.shared.remove(for: .discogsUsername)
+        KeychainManager.shared.remove(for: .discogsUserToken)
+        KeychainManager.shared.remove(for: .discogsUserSecret)
+    }
+    
     @objc func checkForToken() {
         self.token = KeychainManager.shared.get(for: .discogsUserToken)
     }

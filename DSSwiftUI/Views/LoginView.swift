@@ -29,8 +29,8 @@ struct LoginView: View {
                     viewModel.getIdentity()
                 }
                 
-                Button("Get releases") {
-                    getReleases()
+                Button("Log Out") {
+                    logOut()
                 }
 
                 Spacer()
@@ -40,14 +40,8 @@ struct LoginView: View {
         }
     }
     
-    func getReleases() {
-        DCManager.shared.getAllReleasesForUser(forceRefresh: true) { releases in
-            if releases.isEmpty {
-                print("Releases was empty")
-            } else {
-                print("Got \(releases.count) releases")
-            }
-        }
+    func logOut() {
+        viewModel.killUserInfo()
     }
 
 }

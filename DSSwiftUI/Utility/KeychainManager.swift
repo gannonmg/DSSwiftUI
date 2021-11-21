@@ -28,6 +28,10 @@ class KeychainManager {
         guard let data = load(key: key.rawValue) else { return nil }
         return String(data: data, encoding: .utf8)
     }
+    
+    func remove(for key: KeychainKey) {
+        remove(key: key.rawValue)
+    }
 
     @discardableResult
     private func save(key: String, data: Data) -> OSStatus {
@@ -54,6 +58,24 @@ class KeychainManager {
         } else {
             return nil
         }
+    }
+    
+    private func remove(key: String) {
+        let query:[String : Any] = [kSecClass as String       : kSecClassGenericPassword,
+                                    kSecAttrAccount as String : key]
+
+        // Delete any existing items
+        let status = SecItemDelete(query as CFDictionary)
+        if (status != errSecSuccess) {
+            if let err = SecCopyErrorMessageString(status, nil) {
+                print("Remove failed for key \(key): \(err)")
+            } else {
+                print("Remove failed for key \(key)")
+            }
+        } else {
+            print("Successfully removed key \(key)")
+        }
+        
     }
     
 }
