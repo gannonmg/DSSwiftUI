@@ -17,10 +17,7 @@ struct DSSwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            RealmListView()
             MainView()
-//                .environment(\.managedObjectContext,
-//                             CoreDataManager.shared.container.viewContext)
                 .onOpenURL { url in
                     if url.host == "oauth-callback" {
                         OAuthSwift.handle(url: url)
