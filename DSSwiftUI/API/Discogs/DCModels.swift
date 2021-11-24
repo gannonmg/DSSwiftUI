@@ -117,7 +117,7 @@ struct BasicInformation: Codable, Hashable {
     let title: String
     let year: Int
     let formats: [Format]
-    let labels: [Label]
+    let labels: [DCLabel]
     let artists: [Artist]
     let genres: [String]
     let styles: [String]
@@ -181,7 +181,7 @@ struct Format: Codable, Hashable {
 }
 
 // MARK: - Label
-struct Label: Codable, Hashable {
+struct DCLabel: Codable, Hashable {
     let name, entityType: String
     let entityTypeName: String
     let id: Int
@@ -197,7 +197,7 @@ struct Label: Codable, Hashable {
     
     //MARK: Label Hashable Conformance
     let uuid:UUID = UUID()
-    static func == (lhs: Label, rhs: Label) -> Bool {
+    static func == (lhs: DCLabel, rhs: DCLabel) -> Bool {
         return lhs.uuid == rhs.uuid
     }
     

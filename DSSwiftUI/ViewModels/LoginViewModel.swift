@@ -10,7 +10,6 @@ import SwiftUI
 class LoginViewModel: ObservableObject {
     
     @Published var token:String? = KeychainManager.shared.get(for: .discogsUserToken)
-    @Published var thing:Bool = false
     
     init() {
         NotificationCenter.default.addObserver(self,

@@ -33,7 +33,7 @@ struct LoginView: View {
                     logOut()
                 }
 
-                Spacer()
+//                RealmListView()
             }
             .padding(24)
             

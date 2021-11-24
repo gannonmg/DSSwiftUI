@@ -10,12 +10,11 @@ import OAuthSwift
 
 class DCManager {
     
-    
-    let oauthswift: OAuth1Swift!
+    private var oauthSwift: OAuth1Swift!
     static let shared = DCManager()
     
     private init() {
-        self.oauthswift = OAuth1Swift(consumerKey:     DCAuthInfo.key,
+        self.oauthSwift = OAuth1Swift(consumerKey:     DCAuthInfo.key,
                                       consumerSecret:  DCAuthInfo.secret,
                                       requestTokenUrl: "https://api.discogs.com/oauth/request_token",
                                       authorizeUrl:    "https://www.discogs.com/oauth/authorize",
@@ -24,8 +23,8 @@ class DCManager {
         if let userToken = KeychainManager.shared.get(for: .discogsUserToken),
            let userTokenSecret = KeychainManager.shared.get(for: .discogsUserSecret)
         {
-            oauthswift.client.credential.oauthToken = userToken
-            oauthswift.client.credential.oauthTokenSecret = userTokenSecret
+            oauthSwift.client.credential.oauthToken = userToken
+            oauthSwift.client.credential.oauthTokenSecret = userTokenSecret
         }
     }
     
@@ -43,7 +42,7 @@ class DCManager {
     
     //Allows user to authenticate the app via oauth
     private func sendToWebLogin(completion: @escaping ((Error?)->Void)) {
-        let _ = oauthswift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
+        let _ = oauthSwift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
             switch result {
             case .success(let (credential, _ /*response*/, _/*parameters*/)):
                 KeychainManager.shared.save(key: .discogsUserToken, string: credential.oauthToken)
@@ -57,7 +56,7 @@ class DCManager {
     
     //Gets the user's username after oauth login
     func getUserIdentity(completion: @escaping ((Error?)->Void)) {
-        oauthswift.client.get("https://api.discogs.com/oauth/identity") { result in
+        oauthSwift.client.get("https://api.discogs.com/oauth/identity") { result in
             switch result {
             case .success(let response):
                 do {
@@ -71,6 +70,17 @@ class DCManager {
                 completion(error)
             }
         }
+    }
+    
+    func resetOauth() {
+        self.oauthSwift = OAuth1Swift(consumerKey:     DCAuthInfo.key,
+                                      consumerSecret:  DCAuthInfo.secret,
+                                      requestTokenUrl: "https://api.discogs.com/oauth/request_token",
+                                      authorizeUrl:    "https://www.discogs.com/oauth/authorize",
+                                      accessTokenUrl:  "https://api.discogs.com/oauth/access_token")
+
+        
+        
     }
     
     //MARK: Releases
@@ -93,14 +103,12 @@ class DCManager {
     }
     
     private func getAllReleases(initialReleases: [RealmReleaseCodable], pageUrl: String, completion: @escaping ([RealmReleaseCodable])->Void) {
-        oauthswift.client.get(pageUrl) { result in
+        oauthSwift.client.get(pageUrl) { result in
             switch result {
             case .success(let response):
                 
                 //Decode our data response to the release object
                 do {
-//                    let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
-//                                                            from: response.data)
                     
                     let response = try JSONDecoder().decode(RealmCollectionReleasesResponse.self,
                                                             from: response.data)
@@ -132,7 +140,7 @@ class DCManager {
     }
     
     func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetail?)->Void) {
-        oauthswift.client.get(resourceUrl) { result in
+        oauthSwift.client.get(resourceUrl) { result in
             switch result {
             case .success(let response):
                 do {

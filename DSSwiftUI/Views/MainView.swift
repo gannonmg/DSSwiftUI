@@ -20,12 +20,12 @@ struct MainView: View {
                 }
                 .tag(1)
 //            ReleaseListView()
-            RealmListView()
-                .tabItem {
-                    Image(systemName: "2.square.fill")
-                    Text("Release List")
-                }
-                .tag(2)
+//            RealmListView()
+//                .tabItem {
+//                    Image(systemName: "2.square.fill")
+//                    Text("Release List")
+//                }
+//                .tag(2)
             MenuView()
                 .tabItem {
                     Image(systemName: "3.square.fill")

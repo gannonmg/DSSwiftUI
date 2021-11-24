@@ -7,19 +7,6 @@
 
 import Foundation
 
-enum FilterCategory: String {
-    case genres, styles, formats, descriptions
-}
-
-struct FilterOption: Hashable {
-    
-    let id:UUID = UUID()
-    
-    let title: String
-    var selected: Bool = false
-    
-}
-
 class FilterController: ObservableObject {
     
     var unfilteredReleases:[ReleaseViewModel]
