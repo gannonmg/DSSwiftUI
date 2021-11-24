@@ -23,7 +23,6 @@
 		2D44EFD426B5C6FB00E4A1FE /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D44EFD326B5C6FB00E4A1FE /* Secret.swift */; };
 		2D44EFD626B5C7ED00E4A1FE /* LFModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D44EFD526B5C7ED00E4A1FE /* LFModels.swift */; };
 		2D44EFD826B5CEE000E4A1FE /* DCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D44EFD726B5CEE000E4A1FE /* DCModels.swift */; };
-		2D4E2DF0273C6F0E00662540 /* RealmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4E2DEF273C6F0E00662540 /* RealmListView.swift */; };
 		2D66A30B273DD86C00473FAA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2D66A30A273DD86C00473FAA /* Realm */; };
 		2D66A30D273DD86C00473FAA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2D66A30C273DD86C00473FAA /* RealmSwift */; };
 		2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 2D6EE05C26E7EAF300F98B43 /* ReadMe.md */; };
@@ -31,6 +30,7 @@
 		2D6EE06526E945EA00F98B43 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EE06426E945EA00F98B43 /* LoginViewModel.swift */; };
 		2D8922CA274C3DC30013C9F4 /* AppMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922C9274C3DC30013C9F4 /* AppMainView.swift */; };
 		2D8922CC274C4CD20013C9F4 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */; };
+		2D8922CE274EC0900013C9F4 /* RealmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922CD274EC0900013C9F4 /* RealmListView.swift */; };
 		2DA3BB2526BF04BC00AEAB48 /* RefreshControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3BB2426BF04BC00AEAB48 /* RefreshControlView.swift */; };
 		2DC892D4274ACD4400010F6C /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC892D3274ACD4400010F6C /* KeychainManagerTests.swift */; };
 		2DCAF99B272871B900649636 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2DCAF99A272871B900649636 /* OAuthSwift */; };
@@ -71,12 +71,12 @@
 		2D44EFD326B5C6FB00E4A1FE /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		2D44EFD526B5C7ED00E4A1FE /* LFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFModels.swift; sourceTree = "<group>"; };
 		2D44EFD726B5CEE000E4A1FE /* DCModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCModels.swift; sourceTree = "<group>"; };
-		2D4E2DEF273C6F0E00662540 /* RealmListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmListView.swift; sourceTree = "<group>"; };
 		2D6EE05C26E7EAF300F98B43 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		2D6EE06226E9413500F98B43 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		2D6EE06426E945EA00F98B43 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		2D8922C9274C3DC30013C9F4 /* AppMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMainView.swift; sourceTree = "<group>"; };
 		2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelTests.swift; sourceTree = "<group>"; };
+		2D8922CD274EC0900013C9F4 /* RealmListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmListView.swift; path = ../../../../../../Downloads/RealmListView.swift; sourceTree = "<group>"; };
 		2DA3BB2426BF04BC00AEAB48 /* RefreshControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlView.swift; sourceTree = "<group>"; };
 		2DC892CA274ACCFA00010F6C /* DSSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DC892D3274ACD4400010F6C /* KeychainManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerTests.swift; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 			children = (
 				2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */,
 				2D8922C9274C3DC30013C9F4 /* AppMainView.swift */,
-				2D4E2DEF273C6F0E00662540 /* RealmListView.swift */,
+				2D8922CD274EC0900013C9F4 /* RealmListView.swift */,
 				2D44EFBC26B4D2F600E4A1FE /* DCManager.swift */,
 				2D44EFD326B5C6FB00E4A1FE /* Secret.swift */,
 				2D6EE06226E9413500F98B43 /* KeychainManager.swift */,
@@ -357,10 +357,10 @@
 				2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */,
 				2DCC292B26BB46D40062B56F /* ReleaseListView.swift in Sources */,
 				2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */,
+				2D8922CE274EC0900013C9F4 /* RealmListView.swift in Sources */,
 				2DCC292926BB451A0062B56F /* ReleaseViewModel.swift in Sources */,
 				2D44EFC426B5A36B00E4A1FE /* MainView.swift in Sources */,
 				2D8922CA274C3DC30013C9F4 /* AppMainView.swift in Sources */,
-				2D4E2DF0273C6F0E00662540 /* RealmListView.swift in Sources */,
 				2DCC292E26BC42040062B56F /* RemoteImage.swift in Sources */,
 				2D44EFD226B5C66100E4A1FE /* Common.swift in Sources */,
 				2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */,
