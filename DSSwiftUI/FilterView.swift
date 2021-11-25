@@ -9,8 +9,8 @@ import SwiftUI
 
 struct FilterView: View {
     
-    @StateObject var filterController: FilterController
-    
+    @StateObject var filterController: RealmFilterController
+
     var body: some View {
         NavigationView {
             List {
@@ -36,7 +36,7 @@ struct FilterView: View {
 
 struct SelectedFiltersView: View {
     
-    @ObservedObject var filterController: FilterController
+    @ObservedObject var filterController: RealmFilterController
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -82,7 +82,7 @@ struct SelectedFiltersView: View {
 struct FilterSelectionView: View {
     
     let category: FilterCategory
-    @StateObject var filterController: FilterController
+    @StateObject var filterController: RealmFilterController
     
     var body: some View {
         ScrollView {

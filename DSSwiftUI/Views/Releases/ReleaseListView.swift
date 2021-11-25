@@ -19,9 +19,9 @@ struct ReleaseListView: View {
                            namespace: namespace,
                            tappedRelease: tappedRelease(_:))
         }
-        .sheet(isPresented: $releaseCollectionViewModel.showingFilters) {
-            FilterView(filterController: releaseCollectionViewModel.filterController)
-        }
+//        .sheet(isPresented: $releaseCollectionViewModel.showingFilters) {
+//            FilterView(filterController: releaseCollectionViewModel.filterController)
+//        }
     }
     
     func tappedRelease(_ release: ReleaseViewModel) {

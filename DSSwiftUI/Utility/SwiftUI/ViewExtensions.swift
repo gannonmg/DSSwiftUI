@@ -26,7 +26,7 @@ extension View {
                     x: 0, y: 2)
     }
     
-    func Print(_ vars: Any...) -> some View {
+    func vPrint(_ vars: Any...) -> some View {
         for v in vars { print(v) }
         return EmptyView()
     }

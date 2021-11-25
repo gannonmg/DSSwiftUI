@@ -40,6 +40,9 @@
 		2DD46A7A26C09A4E00FF53D5 /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD46A7926C09A4E00FF53D5 /* FilterController.swift */; };
 		C9244D70274ED13000AAFFE1 /* RealmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9244D6F274ED13000AAFFE1 /* RealmListView.swift */; };
 		C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9244D73274ED14400AAFFE1 /* Secret.swift */; };
+		C92BB3BA274FF467001C82C5 /* RealmModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3B9274FF467001C82C5 /* RealmModels.swift */; };
+		C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BB274FF48C001C82C5 /* RealmManager.swift */; };
+		C92BB3BE274FF4AA001C82C5 /* RealmFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BD274FF4AA001C82C5 /* RealmFilterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,9 @@
 		2DD46A7926C09A4E00FF53D5 /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		C9244D6F274ED13000AAFFE1 /* RealmListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmListView.swift; sourceTree = "<group>"; };
 		C9244D73274ED14400AAFFE1 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		C92BB3B9274FF467001C82C5 /* RealmModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModels.swift; sourceTree = "<group>"; };
+		C92BB3BB274FF48C001C82C5 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		C92BB3BD274FF4AA001C82C5 /* RealmFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFilterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +139,7 @@
 			children = (
 				2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */,
 				2D8922C9274C3DC30013C9F4 /* AppMainView.swift */,
-				C9244D6F274ED13000AAFFE1 /* RealmListView.swift */,
+				C92BB3B8274FF454001C82C5 /* Realm */,
 				2D44EFBC26B4D2F600E4A1FE /* DCManager.swift */,
 				2D6EE06226E9413500F98B43 /* KeychainManager.swift */,
 				C9244D73274ED14400AAFFE1 /* Secret.swift */,
@@ -242,6 +248,17 @@
 				2D39D3B126E2911900C312A9 /* ReleaseDetailView.swift */,
 			);
 			path = Releases;
+			sourceTree = "<group>";
+		};
+		C92BB3B8274FF454001C82C5 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				C9244D6F274ED13000AAFFE1 /* RealmListView.swift */,
+				C92BB3B9274FF467001C82C5 /* RealmModels.swift */,
+				C92BB3BB274FF48C001C82C5 /* RealmManager.swift */,
+				C92BB3BD274FF4AA001C82C5 /* RealmFilterController.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,17 +384,20 @@
 				2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */,
 				2D44EFD626B5C7ED00E4A1FE /* LFModels.swift in Sources */,
 				2D44EFC626B5A5DB00E4A1FE /* MenuView.swift in Sources */,
+				C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */,
 				2D44EFBB26B4CD8000E4A1FE /* LoginView.swift in Sources */,
 				2D44EFBD26B4D2F600E4A1FE /* DCManager.swift in Sources */,
 				2D39D3B226E2911900C312A9 /* ReleaseDetailView.swift in Sources */,
 				2D6EE06526E945EA00F98B43 /* LoginViewModel.swift in Sources */,
 				2DD46A7A26C09A4E00FF53D5 /* FilterController.swift in Sources */,
 				2D44EFA726B4CD3800E4A1FE /* DSSwiftUIApp.swift in Sources */,
+				C92BB3BE274FF4AA001C82C5 /* RealmFilterController.swift in Sources */,
 				2DA3BB2526BF04BC00AEAB48 /* RefreshControlView.swift in Sources */,
 				2D44EFD826B5CEE000E4A1FE /* DCModels.swift in Sources */,
 				2D44EFCB26B5C28200E4A1FE /* ViewExtensions.swift in Sources */,
 				2D44EFCD26B5C4A400E4A1FE /* LFManager.swift in Sources */,
 				2D44EFBF26B4D87D00E4A1FE /* UserAgentString.swift in Sources */,
+				C92BB3BA274FF467001C82C5 /* RealmModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
