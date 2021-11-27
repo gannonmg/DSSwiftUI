@@ -98,6 +98,13 @@ class DCManager {
                 return
             }
 
+            for release in releases {
+                let str = release.basicInformation.formats
+                    .map { $0.descriptions.joined(separator: ", ") }
+                    .joined(separator: ", ")
+                print("Descriptions are \(str)")
+            }
+            
             completion(releases)
         }
     }
@@ -110,6 +117,7 @@ class DCManager {
                 //Decode our data response to the release object
                 do {
                     
+                    //print(String(decoding: response.data, as: UTF8.self))
                     let response = try JSONDecoder().decode(RealmCollectionReleasesResponse.self,
                                                             from: response.data)
 
@@ -128,7 +136,7 @@ class DCManager {
                                         pageUrl: nextPage,
                                         completion: completion)
                 } catch {
-                    print("Error decoding albums: \(error.localizedDescription)")
+                    print("Error decoding albums: \(error)")
                     completion(initialReleases)
                 }
                 
@@ -139,6 +147,7 @@ class DCManager {
         }
     }
     
+    /*
     func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetail?)->Void) {
         oauthSwift.client.get(resourceUrl) { result in
             switch result {
@@ -158,5 +167,6 @@ class DCManager {
             }
         }
     }
+    */
     
 }

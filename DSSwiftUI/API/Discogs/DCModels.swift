@@ -5,42 +5,14 @@
 //  Created by Matt Gannon on 7/31/21.
 //
 
+
 import Foundation
 
-//MARK: - Errors
-enum DCError: Error {
-    case releaseFailure
-    case releaseDetailFailure
-}
-
-// MARK: - DCUser
-struct DCUser: Codable {
-    let id: Int
-    let username: String
-    let resource_url: String
-}
-
+/*
 // MARK: - CollectionReleasesResponse
 struct CollectionReleasesResponse: Codable {
     let pagination: Pagination
     let releases: [DCRelease]
-}
-
-// MARK: - Pagination
-struct Pagination: Codable {
-    let page, pages, perPage, items: Int
-    let urls: Urls
-    
-    enum CodingKeys: String, CodingKey {
-        case page, pages
-        case perPage = "per_page"
-        case items, urls
-    }
-}
-
-// MARK: - Urls
-struct Urls: Codable {
-    let first, last, prev, next: String?
 }
 
 // MARK: - DCRelease
@@ -384,3 +356,4 @@ struct DCVideo: Codable {
     }
 }
 
+*/

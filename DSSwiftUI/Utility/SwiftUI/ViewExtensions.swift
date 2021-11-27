@@ -41,7 +41,7 @@ struct FullScreenProgressView: View {
                 .opacity(0.3)
                 .ignoresSafeArea()
             ProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
+                .progressViewStyle(.circular)
         }
     }
 }

@@ -43,7 +43,7 @@ class RealmManager {
                     if object == nil {
                         realm.add(release)
                     } else {
-                        //TODO: - Update object
+                        #warning("TODO: Figure out what updates object might need")
                     }
                 }
             }

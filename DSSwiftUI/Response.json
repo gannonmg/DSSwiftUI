@@ -1,0 +1,499 @@
+{
+  "pagination": {
+    "page": 1,
+    "pages": 1,
+    "per_page": 100,
+    "items": 8,
+    "urls": {}
+  },
+  "releases": [
+    {
+      "id": 20771347,
+      "instance_id": 862963093,
+      "date_added": "2021-11-21T09:42:18-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 20771347,
+        "master_id": 2356930,
+        "master_url": "https://api.discogs.com/masters/2356930",
+        "resource_url": "https://api.discogs.com/releases/20771347",
+        "thumb": "https://img.discogs.com/zYERYaw_vkobpK1yGV9PbBJjq7g=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-20771347-1635520360-5208.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/Mi34uJ_IwP7gsDg1PQM-ElWqyrs=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-20771347-1635520360-5208.jpeg.jpg",
+        "title": "I Don't Live Here Anymore",
+        "year": 2021,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Stereo"
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "name": "Atlantic",
+            "catno": "SEL 1-659043 - 075678643477",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 681,
+            "resource_url": "https://api.discogs.com/labels/681"
+          },
+          {
+            "name": "Atlantic",
+            "catno": "075678641299",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 681,
+            "resource_url": "https://api.discogs.com/labels/681"
+          }
+        ],
+        "artists": [
+          {
+            "name": "The War On Drugs",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1337908,
+            "resource_url": "https://api.discogs.com/artists/1337908"
+          }
+        ],
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock"
+        ]
+      },
+      "folder_id": 1
+    },
+    {
+      "id": 11276596,
+      "instance_id": 862964476,
+      "date_added": "2021-11-21T09:43:31-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 11276596,
+        "master_id": 1207677,
+        "master_url": "https://api.discogs.com/masters/1207677",
+        "resource_url": "https://api.discogs.com/releases/11276596",
+        "thumb": "https://img.discogs.com/xQ3-sbg5N_1YtQmTeXIe_j0Oars=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-11276596-1520658971-4783.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/kV9R6onQnVA4bCfHi85GV2-fzJc=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-11276596-1520658971-4783.jpeg.jpg",
+        "title": "Soft Sounds From Another Planet",
+        "year": 2017,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "text": "Orange",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "name": "Dead Oceans",
+            "catno": "DOC133",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 94740,
+            "resource_url": "https://api.discogs.com/labels/94740"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Japanese Breakfast",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 3602279,
+            "resource_url": "https://api.discogs.com/artists/3602279"
+          }
+        ],
+        "genres": [
+          "Rock",
+          "Pop"
+        ],
+        "styles": [
+          "Indie Rock",
+          "Indie Pop"
+        ]
+      },
+      "folder_id": 1
+    },
+    {
+      "id": 2940876,
+      "instance_id": 862963351,
+      "date_added": "2021-11-21T09:42:31-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 2940876,
+        "master_id": 345153,
+        "master_url": "https://api.discogs.com/masters/345153",
+        "resource_url": "https://api.discogs.com/releases/2940876",
+        "thumb": "https://img.discogs.com/XuiWdjWKUW1HejL1CIZbwfGjdcU=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-2940876-1308320926.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/IIcJq-QJZcaHUn0HFHDmMvB2i-w=/fit-in/400x400/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-2940876-1308320926.jpeg.jpg",
+        "title": "Bon Iver, Bon Iver",
+        "year": 2011,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "text": "Gatefold",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Stereo"
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "name": "Jagjaguwar",
+            "catno": "JAG135",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 29121,
+            "resource_url": "https://api.discogs.com/labels/29121"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Bon Iver",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1042739,
+            "resource_url": "https://api.discogs.com/artists/1042739"
+          }
+        ],
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Folk Rock",
+          "Indie Rock"
+        ]
+      },
+      "folder_id": 1
+    },
+    {
+      "id": 5625311,
+      "instance_id": 862970398,
+      "date_added": "2021-11-21T09:49:00-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 5625311,
+        "master_id": 679718,
+        "master_url": "https://api.discogs.com/masters/679718",
+        "resource_url": "https://api.discogs.com/releases/5625311",
+        "thumb": "https://img.discogs.com/UNO1ZTQb32OIUZUt6g7Hk6nfE-I=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-5625311-1586354448-2008.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/mUrn4O6J8h_qh_tcnl9LFQ_Zs0c=/fit-in/600x602/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5625311-1586354448-2008.jpeg.jpg",
+        "title": "Shriek",
+        "year": 2014,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "text": "Orange-Red",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "name": "Merge Records",
+            "catno": "MRG515",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 7496,
+            "resource_url": "https://api.discogs.com/labels/7496"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Wye Oak",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1105754,
+            "resource_url": "https://api.discogs.com/artists/1105754"
+          }
+        ],
+        "genres": [
+          "Electronic",
+          "Pop"
+        ],
+        "styles": [
+          "Indie Pop"
+        ]
+      },
+      "folder_id": 1
+    },
+    {
+      "id": 5920625,
+      "instance_id": 862970071,
+      "date_added": "2021-11-21T09:48:40-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 5920625,
+        "master_id": 68130,
+        "master_url": "https://api.discogs.com/masters/68130",
+        "resource_url": "https://api.discogs.com/releases/5920625",
+        "thumb": "https://img.discogs.com/-ixIUHgKZ8yTRMJYSNzXdF3vuSU=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-5920625-1408137619-1526.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/yyCmp693JwASgo5nUFawt7h4BX4=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5920625-1408137619-1526.jpeg.jpg",
+        "title": "Mama's Gun",
+        "year": 2014,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "text": "Red Translucent",
+            "descriptions": [
+              "LP"
+            ]
+          },
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "text": "Gold",
+            "descriptions": [
+              "LP"
+            ]
+          },
+          {
+            "name": "All Media",
+            "qty": "1",
+            "descriptions": [
+              "Album",
+              "Limited Edition",
+              "Numbered",
+              "Reissue"
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "name": "Music On Vinyl",
+            "catno": "MOVLP1124",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 169635,
+            "resource_url": "https://api.discogs.com/labels/169635"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Erykah Badu",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 10995,
+            "resource_url": "https://api.discogs.com/artists/10995"
+          }
+        ],
+        "genres": [
+          "Hip Hop",
+          "Funk / Soul"
+        ],
+        "styles": [
+          "RnB/Swing",
+          "Neo Soul"
+        ]
+      },
+      "folder_id": 1
+    },
+    {
+      "id": 16321647,
+      "instance_id": 862964890,
+      "date_added": "2021-11-21T09:43:53-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 16321647,
+        "master_id": 0,
+        "master_url": null,
+        "resource_url": "https://api.discogs.com/releases/16321647",
+        "thumb": "https://img.discogs.com/HjnUKLXor4jIwwMUskUKZr5Q64U=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-16321647-1607051241-7525.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/2wzzQIZsxjWZzKeyjffQsE-jZVA=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-16321647-1607051241-7525.jpeg.jpg",
+        "title": "Neat Tape 2",
+        "year": 2020,
+        "formats": [
+          {
+            "name": "Cassette",
+            "qty": "1"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Not On Label",
+            "catno": "none",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1818,
+            "resource_url": "https://api.discogs.com/labels/1818"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Bad Snacks",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 8246424,
+            "resource_url": "https://api.discogs.com/artists/8246424"
+          }
+        ],
+        "genres": [
+          "Electronic",
+          "Hip Hop"
+        ],
+        "styles": [
+          "Jazzy Hip-Hop"
+        ]
+      },
+      "folder_id": 1,
+      "notes": [
+        {
+          "field_id": 1,
+          "value": "Poor (P)"
+        },
+        {
+          "field_id": 2,
+          "value": "Poor (P)"
+        }
+      ]
+    },
+    {
+      "id": 16321647,
+      "instance_id": 863801722,
+      "date_added": "2021-11-22T09:16:30-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 16321647,
+        "master_id": 0,
+        "master_url": null,
+        "resource_url": "https://api.discogs.com/releases/16321647",
+        "thumb": "https://img.discogs.com/HjnUKLXor4jIwwMUskUKZr5Q64U=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-16321647-1607051241-7525.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/2wzzQIZsxjWZzKeyjffQsE-jZVA=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-16321647-1607051241-7525.jpeg.jpg",
+        "title": "Neat Tape 2",
+        "year": 2020,
+        "formats": [
+          {
+            "name": "Cassette",
+            "qty": "1"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Not On Label",
+            "catno": "none",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1818,
+            "resource_url": "https://api.discogs.com/labels/1818"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Bad Snacks",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 8246424,
+            "resource_url": "https://api.discogs.com/artists/8246424"
+          }
+        ],
+        "genres": [
+          "Electronic",
+          "Hip Hop"
+        ],
+        "styles": [
+          "Jazzy Hip-Hop"
+        ]
+      },
+      "folder_id": 1,
+      "notes": [
+        {
+          "field_id": 1,
+          "value": "Mint (M)"
+        },
+        {
+          "field_id": 2,
+          "value": "Mint (M)"
+        }
+      ]
+    },
+    {
+      "id": 18320044,
+      "instance_id": 862963903,
+      "date_added": "2021-11-21T09:43:00-08:00",
+      "rating": 0,
+      "basic_information": {
+        "id": 18320044,
+        "master_id": 1432323,
+        "master_url": "https://api.discogs.com/masters/1432323",
+        "resource_url": "https://api.discogs.com/releases/18320044",
+        "thumb": "https://img.discogs.com/6ZtMKVVoLCdWCSJzNcXi8Dt2MbE=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-18320044-1618743939-9068.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/-swMAh8a2-gm80HhwhKeSP7bsOM=/fit-in/600x580/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-18320044-1618743939-9068.jpeg.jpg",
+        "title": "Care For Me",
+        "year": 2021,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "text": "Grey, 180g",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Reissue",
+              "Repress"
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "name": "Not On Label",
+            "catno": "VMP-043",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1818,
+            "resource_url": "https://api.discogs.com/labels/1818"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Saba (14)",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 3270638,
+            "resource_url": "https://api.discogs.com/artists/3270638"
+          }
+        ],
+        "genres": [
+          "Hip Hop"
+        ],
+        "styles": [
+          "Conscious"
+        ]
+      },
+      "folder_id": 1
+    }
+  ]
+}

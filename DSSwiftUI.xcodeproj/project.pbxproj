@@ -34,6 +34,7 @@
 		C92BB3BA274FF467001C82C5 /* RealmModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3B9274FF467001C82C5 /* RealmModels.swift */; };
 		C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BB274FF48C001C82C5 /* RealmManager.swift */; };
 		C92BB3BE274FF4AA001C82C5 /* RealmFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BD274FF4AA001C82C5 /* RealmFilterController.swift */; };
+		C92BB3C027502226001C82C5 /* Response.json in Resources */ = {isa = PBXBuildFile; fileRef = C92BB3BF27502226001C82C5 /* Response.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		C92BB3B9274FF467001C82C5 /* RealmModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModels.swift; sourceTree = "<group>"; };
 		C92BB3BB274FF48C001C82C5 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C92BB3BD274FF4AA001C82C5 /* RealmFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFilterController.swift; sourceTree = "<group>"; };
+		C92BB3BF27502226001C82C5 /* Response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Response.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				2D6EE06226E9413500F98B43 /* KeychainManager.swift */,
 				C9244D73274ED14400AAFFE1 /* Secret.swift */,
 				2DD2F7D426BDB699006D8F40 /* FilterView.swift */,
+				C92BB3BF27502226001C82C5 /* Response.json */,
 				2D44EFC826B5C22200E4A1FE /* Utility */,
 				2D44EFC726B5C20E00E4A1FE /* API */,
 				2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */,
@@ -299,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C92BB3C027502226001C82C5 /* Response.json in Resources */,
 				2D44EFAE26B4CD3A00E4A1FE /* Preview Assets.xcassets in Resources */,
 				2D44EFAB26B4CD3A00E4A1FE /* Assets.xcassets in Resources */,
 				2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */,
