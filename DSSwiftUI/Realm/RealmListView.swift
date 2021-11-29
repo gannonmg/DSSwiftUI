@@ -16,6 +16,7 @@ class RealmListViewModel: ObservableObject {
     
     @Published var randomizedRelease: RealmReleaseCodable?
     @Published var showingFilters: Bool = false
+    @Published var searchQuery: String = ""
     private(set) var filterController = RealmFilterController(releases: [])
     private var cancellable: AnyCancellable?
     
@@ -87,6 +88,8 @@ struct RealmListView: View {
         SwiftUI.List {
             let predicate = viewModel.filterController.predicate
             let releases = (predicate == nil) ? releases : releases.filter(predicate!)
+            
+            
             ForEach(releases) { release in
                 VStack(alignment: .leading) {
                     Text(release.basicInformation.title)
@@ -107,6 +110,7 @@ struct RealmListView: View {
                 }
             }
         }
+        .searchable(text: $viewModel.searchQuery)
     }
     
     var leadingItem: some ToolbarContent {
@@ -145,6 +149,23 @@ struct RealmListView: View {
         let predicate = viewModel.filterController.predicate
         let releases = (predicate == nil) ? releases : releases.filter(predicate!)
         viewModel.randomizedRelease = releases.randomElement()
+    }
+    
+    func test() {
+        let ssMatcher = SmartSearchMatcher(searchString: viewModel.searchQuery)
+        var r = releases
+//        if let predicate = viewModel.filterController.predicate {
+//            r = r.filter(predicate)
+//        }
+
+//        r = releases.filter { release in
+//            let releaseString = release.basicInformation.title + " " + release.basicInformation.artists.first!.name
+//            return ssMatcher.matches(releaseString)
+//        }
+        
+        let thing = releases.filter { release in
+            return true
+        }
     }
 
 }
