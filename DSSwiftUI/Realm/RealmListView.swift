@@ -5,53 +5,11 @@
 //  Created by Matt Gannon on 11/10/21.
 //
 
-import Combine
-import RealmSwift
 import SwiftUI
-
-class RealmListViewModel: ObservableObject {
-    
-    static let shared = RealmListViewModel()
-    private init() {}
-    
-    @Published var randomizedRelease: RealmReleaseCodable?
-    @Published var showingFilters: Bool = false
-    @Published var searchQuery: String = ""
-    private(set) var filterController = RealmFilterController(releases: [])
-    private var cancellable: AnyCancellable?
-    
-    func setCancellable(with results: Results<RealmReleaseCodable>) {
-        self.cancellable = results
-            .collectionPublisher
-            .assertNoFailure()
-            .sink { releaseResults in
-                #warning("TODO: Migrate filter controller to new set of filters instead of new object")
-                let releases = Array(releaseResults)
-                self.filterController = RealmFilterController(releases: releases)
-            }
-    }
-    
-    deinit {
-        cancellable?.cancel()
-        cancellable = nil
-    }
-    
-    func getReleases() {
-        DCManager.shared.getAllReleasesForUser { releases in
-            RealmManager.shared.update(with: releases)
-        }
-    }
-    
-}
 
 struct RealmListView: View {
     
-    @ObservedResults(RealmReleaseCodable.self) var releases
-    @ObservedObject var viewModel = RealmListViewModel.shared
-    
-    init() {
-        viewModel.setCancellable(with: releases)
-    }
+    @StateObject var viewModel = RealmListViewModel()
     
     var body: some View {
         ZStack {
@@ -68,6 +26,7 @@ struct RealmListView: View {
             
             if let randomizedRelease = viewModel.randomizedRelease {
                 SelectedReleaseView(release: randomizedRelease)
+                    .environmentObject(viewModel)
             }
         }
         .sheet(isPresented: $viewModel.showingFilters) {
@@ -76,7 +35,7 @@ struct RealmListView: View {
     }
     
     var conditionalView: some View {
-        if releases.isEmpty {
+        if viewModel.releases.isEmpty {
             return AnyView(Button("Get Releases", action: viewModel.getReleases)
                             .buttonStyle(.bordered))
         } else {
@@ -86,11 +45,11 @@ struct RealmListView: View {
     
     var listView: some View {
         SwiftUI.List {
-            let predicate = viewModel.filterController.predicate
-            let releases = (predicate == nil) ? releases : releases.filter(predicate!)
+//            let predicate = viewModel.filterController.predicate
+//            let smartSearchMatcher = SmartSearchMatcher(searchString: viewModel.searchQuery)
+//            let releases = ((predicate == nil) ? releases : releases.filter(predicate!))
             
-            
-            ForEach(releases) { release in
+            ForEach(viewModel.releases) { release in
                 VStack(alignment: .leading) {
                     Text(release.basicInformation.title)
                     Text(release.basicInformation.artists.first!.name)
@@ -129,7 +88,7 @@ struct RealmListView: View {
     var shuffleItem: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             Button {
-                pickRandomRelease()
+                viewModel.pickRandomRelease()
             } label: {
                 Image(systemName: "shuffle")
             }
@@ -144,34 +103,12 @@ struct RealmListView: View {
             }
         }
     }
-    
-    func pickRandomRelease() {
-        let predicate = viewModel.filterController.predicate
-        let releases = (predicate == nil) ? releases : releases.filter(predicate!)
-        viewModel.randomizedRelease = releases.randomElement()
-    }
-    
-    func test() {
-        let ssMatcher = SmartSearchMatcher(searchString: viewModel.searchQuery)
-        var r = releases
-//        if let predicate = viewModel.filterController.predicate {
-//            r = r.filter(predicate)
-//        }
-
-//        r = releases.filter { release in
-//            let releaseString = release.basicInformation.title + " " + release.basicInformation.artists.first!.name
-//            return ssMatcher.matches(releaseString)
-//        }
-        
-        let thing = releases.filter { release in
-            return true
-        }
-    }
 
 }
 
 struct SelectedReleaseView: View {
     
+    @EnvironmentObject var realmListViewModel: RealmListViewModel
     let release: RealmReleaseCodable
     
     var body: some View {
@@ -184,7 +121,7 @@ struct SelectedReleaseView: View {
                     RemoteImageView(url: URL(string: release.basicInformation.coverImage),
                                     placeholder: UIImage(systemName: "photo")!)
                     Button {
-                        RealmListViewModel.shared.randomizedRelease = nil
+                        realmListViewModel.randomizedRelease = nil
                     } label: {
                         Image(systemName: "x.circle.fill")
                             .foregroundColor(.white)
