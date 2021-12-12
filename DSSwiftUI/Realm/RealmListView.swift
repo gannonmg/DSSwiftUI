@@ -123,34 +123,30 @@ struct RealmListView: View {
 
 struct ReleaseListItemView: View {
     
-    let release: RealmReleaseCodable
+    let release: ReleaseViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
             
             HStack(alignment: .top) {
-                RemoteImageView(url: URL(string: release.basicInformation.coverImage),
+                RemoteImageView(url: URL(string: release.coverImage),
                                 placeholder: UIImage(systemName: "photo")!)
                     .height(40)
                     .width(40)
                 VStack(alignment: .leading) {
-                    Text(release.basicInformation.title)
-                    Text(release.basicInformation.artists.first?.name ?? "")
+                    Text(release.title)
+                    Text(release.artists.first?.name ?? "")
                         .font(.callout)
                 }
             }
             
-            Text("Genres: " + release.basicInformation.genres.map { $0 }.joined(separator: ", "))
+            Text("Genres: " + release.genres.map { $0 }.joined(separator: ", "))
                 .font(.caption)
-            Text("Styles: " + release.basicInformation.styles.map { $0 }.joined(separator: ", "))
+            Text("Styles: " + release.styles.map { $0 }.joined(separator: ", "))
                 .font(.caption)
-            
-            let formats = release.basicInformation.formats.map { $0 }
-            Text("Formats: " + formats.map { $0.name }.joined(separator: ", "))
+            Text("Formats: " + release.formats.map { $0 }.joined(separator: ", "))
                 .font(.caption)
-            
-            let descriptions = formats.map { $0.descriptions }.flatMap { $0 }.uniques
-            Text("Descriptions: " + descriptions.joined(separator: ", "))
+            Text("Descriptions: " + release.descriptions.joined(separator: ", "))
                 .font(.caption)
         }
     }
@@ -161,10 +157,6 @@ struct SelectedReleaseView: View {
     
     @EnvironmentObject var realmListViewModel: RealmListViewModel
     @ObservedObject var release: ReleaseViewModel
-    
-    init(release: RealmReleaseCodable) {
-        self.release = ReleaseViewModel(from: release)
-    }
     
     var body: some View {
         ZStack {

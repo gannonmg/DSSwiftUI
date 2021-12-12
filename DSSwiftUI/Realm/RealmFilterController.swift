@@ -41,7 +41,7 @@ class RealmFilterController: ObservableObject {
         didSet { setPredicate() }
     }
     
-    init(releases: [RealmReleaseCodable]) {
+    init(releases: [ReleaseViewModel]) {
         self.filterOptions = RealmFilterController.getFilters(for: releases)
     }
     
@@ -94,12 +94,12 @@ extension RealmFilterController {
         }
     }
 
-    static func getFilters(for releases: [RealmReleaseCodable]) -> [FilterCategory:[FilterOption]] {
+    static func getFilters(for releases: [ReleaseViewModel]) -> [FilterCategory:[FilterOption]] {
         var options:[FilterCategory:[FilterOption]] = [:]
         
         //Genres
         options[.genres] = releases
-            .map { $0.basicInformation.genres } // [[String]]
+            .map { $0.genres } // [[String]]
             .flatMap { $0 } // [String]
             .uniques
             .sorted(by: { $0 < $1 })
@@ -107,25 +107,22 @@ extension RealmFilterController {
         
         //Styles/Subgenres
         options[.styles] = releases
-            .map { $0.basicInformation.styles } // [[String]]
+            .map { $0.styles } // [[String]]
             .flatMap { $0 } // [String]
             .uniques
             .sorted(by: { $0 < $1 })
             .map { FilterOption(title: $0) }
 
         //Formats
-        let formats = releases
-            .map { $0.basicInformation.formats }
-            .flatMap { $0 }
-        
-        options[.formats] = formats
-            .map { $0.name }
+        options[.formats] = releases
+            .map { $0.formats }
+            .flatMap { $0 } // [String]
             .uniques
             .sorted(by: { $0 < $1 })
             .map { FilterOption(title: $0) }
 
-        //Format Descriptions
-        options[.descriptions] = formats
+        //Descriptions
+        options[.descriptions] = releases
             .map { $0.descriptions }
             .flatMap { $0 }
             .uniques
@@ -135,7 +132,7 @@ extension RealmFilterController {
         return options
     }
     
-    func updateFilters(for newReleases: [RealmReleaseCodable]) {
+    func updateFilters(for newReleases: [ReleaseViewModel]) {
         
         //Get the filters for the releases like normal
         var newFilters = RealmFilterController.getFilters(for: newReleases)

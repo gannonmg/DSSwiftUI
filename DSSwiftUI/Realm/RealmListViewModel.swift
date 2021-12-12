@@ -12,9 +12,9 @@ import Foundation
 class RealmListViewModel: ObservableObject {
     
     @ObservedResults(RealmReleaseCodable.self) private var releasesResults
-    @Published private(set) var releases:[RealmReleaseCodable] = []
+    @Published private(set) var releases:[ReleaseViewModel] = []
     
-    @Published private(set) var selectedRelease: RealmReleaseCodable?
+    @Published private(set) var selectedRelease: ReleaseViewModel?
     @Published var showingFilters: Bool = false
     @Published var searchQuery: String = "" {
         didSet { searchChanged() }
@@ -51,7 +51,7 @@ class RealmListViewModel: ObservableObject {
     }
     
     func handleNewResults(_ results: Results<RealmReleaseCodable>) {
-        let releases = Array(results)
+        let releases = Array(results).map { ReleaseViewModel(from: $0) }
         self.releases = releases
         self.filterController.updateFilters(for: releases)
     }
@@ -62,7 +62,7 @@ class RealmListViewModel: ObservableObject {
         }
     }
     
-    func setSelectedRelease(_ release: RealmReleaseCodable) {
+    func setSelectedRelease(_ release: ReleaseViewModel) {
         selectedRelease = release
     }
     
@@ -79,18 +79,18 @@ class RealmListViewModel: ObservableObject {
     }
     
     func filterUpdated(predicate: NSPredicate?) {
-        var releases:[RealmReleaseCodable] = []
+        var releases:[ReleaseViewModel] = []
         
         if let predicate = predicate {
             let results = self.releasesResults.filter(predicate)
-            releases = Array(results)
+            releases = Array(results).map { ReleaseViewModel(from: $0) }
         } else {
-            releases = Array(releasesResults)
+            releases = Array(releasesResults).map { ReleaseViewModel(from: $0) }
         }
         
         let smartSearch = SmartSearchMatcher(searchString: searchQuery)
         releases = releases.filter { release in
-            let filterableTitle = release.basicInformation.title + " " + (release.basicInformation.artists.map { $0 }.first?.name ?? "")
+            let filterableTitle = release.title + " " + (release.artists.map { $0 }.first?.name ?? "")
             return smartSearch.matches(filterableTitle)
         }
         

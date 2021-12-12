@@ -167,7 +167,9 @@ class RealmTrackCodable: Object, Codable, Identifiable {
     
 }
 
-class ReleaseViewModel: ObservableObject {
+class ReleaseViewModel: ObservableObject, Identifiable {
+    
+    let id: Int
     
     let title: String
     let year: Int
@@ -183,6 +185,7 @@ class ReleaseViewModel: ObservableObject {
     @Published private(set) var tracklist: [RealmTrackCodable] = []
 
     init(from release: RealmReleaseCodable) {
+        self.id = release.instanceId
         self.title = release.basicInformation.title
         self.year = release.basicInformation.year
         self.artists = Array(release.basicInformation.artists)
@@ -192,9 +195,8 @@ class ReleaseViewModel: ObservableObject {
         self.genres = Array(release.basicInformation.genres)
         self.styles = Array(release.basicInformation.styles)
         self.formats = release.basicInformation.formats.map { $0.name }
-        self.descriptions = release.basicInformation.formats
-            .map { $0.description }
-            .compactMap { $0 }
+        self.descriptions = Array(release.basicInformation.formats.map { Array($0.descriptions) })
+            .flatMap { $0 }
     }
     
     func getDetail() async {
