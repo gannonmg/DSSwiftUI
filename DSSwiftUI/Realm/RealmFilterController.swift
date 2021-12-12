@@ -172,6 +172,8 @@ extension RealmFilterController {
     }
     
     func turnOffAllFilters() {
+        self.exclusiveFilter = true
+        
         for key in filterOptions.keys {
             let count = filterOptions[key]?.count ?? 0
             for i in 0..<count {
