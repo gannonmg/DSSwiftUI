@@ -41,12 +41,20 @@ struct RealmListView: View {
     
     var conditionalView: some View {
         if viewModel.trulyEmpty {
-            return AnyView(Button("Get Releases", action: viewModel.getReleases)
-                            .buttonStyle(.bordered))
+            return AnyView(getReleasesView)
         } else if viewModel.releases.isEmpty {
             return AnyView(noSearchResultsView)
         } else {
             return AnyView(listView)
+        }
+    }
+    
+    var getReleasesView: some View {
+        VStack(alignment: .center) {
+            Spacer()
+            Button("Get Releases", action: viewModel.getReleases)
+                    .buttonStyle(.bordered)
+            Spacer()
         }
     }
     
