@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D3B37AA27629E8E0053CADF /* RealmListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37A927629E8E0053CADF /* RealmListViewModel.swift */; };
+		2D3B37AC2765AC760053CADF /* LastFmLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37AB2765AC760053CADF /* LastFmLoginView.swift */; };
 		2D44EFA726B4CD3800E4A1FE /* DSSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */; };
 		2D44EFAB26B4CD3A00E4A1FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */; };
 		2D44EFAE26B4CD3A00E4A1FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D44EFAD26B4CD3A00E4A1FE /* Preview Assets.xcassets */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		2D3B37A927629E8E0053CADF /* RealmListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmListViewModel.swift; sourceTree = "<group>"; };
+		2D3B37AB2765AC760053CADF /* LastFmLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastFmLoginView.swift; sourceTree = "<group>"; };
 		2D44EFA326B4CD3800E4A1FE /* DSSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSSwiftUIApp.swift; sourceTree = "<group>"; };
 		2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				2D6EE06226E9413500F98B43 /* KeychainManager.swift */,
 				C9244D73274ED14400AAFFE1 /* Secret.swift */,
 				2DD2F7D426BDB699006D8F40 /* FilterView.swift */,
+				2D3B37AB2765AC760053CADF /* LastFmLoginView.swift */,
 				C92BB3BF27502226001C82C5 /* Response.json */,
 				2D44EFC826B5C22200E4A1FE /* Utility */,
 				2D44EFC726B5C20E00E4A1FE /* API */,
@@ -333,6 +336,7 @@
 				2D8922CA274C3DC30013C9F4 /* AppMainView.swift in Sources */,
 				2DCC292E26BC42040062B56F /* RemoteImage.swift in Sources */,
 				2D44EFD226B5C66100E4A1FE /* Common.swift in Sources */,
+				2D3B37AC2765AC760053CADF /* LastFmLoginView.swift in Sources */,
 				2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */,
 				2D3B37AA27629E8E0053CADF /* RealmListViewModel.swift in Sources */,
 				2D44EFD626B5C7ED00E4A1FE /* LFModels.swift in Sources */,

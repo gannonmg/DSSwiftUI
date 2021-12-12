@@ -41,16 +41,16 @@ class LFManager {
     static let shared = LFManager()
     
     //MARK: Variables
-    let baseRequestUrl = URL(string: "https://ws.audioscrobbler.com/2.0/")!
+    private let baseRequestUrl = URL(string: "https://ws.audioscrobbler.com/2.0/")!
     
-    lazy var session:URLSession = {
+    lazy private var session:URLSession = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
         return URLSession(configuration: configuration)
     }()
     
     //MARK: Parameter building for calls
-    func getApiSignature(from params: [String:Any]) -> String {
+    private func getApiSignature(from params: [String:Any]) -> String {
         var alphabetizedParams = ""
         let sortedKeys = params.keys.sorted(by: <)
         sortedKeys.forEach { key in
@@ -64,7 +64,7 @@ class LFManager {
     }
     
     ///All calls to last.fm require an api_sig of alphabetized parameters and
-    func getQueryItems(from params: [String:Any], format: ResponseFormat = .json) -> [URLQueryItem] {
+    private func getQueryItems(from params: [String:Any], format: ResponseFormat = .json) -> [URLQueryItem] {
         var queryItems:[URLQueryItem] = []
         
         for (k, v) in params {

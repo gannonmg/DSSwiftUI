@@ -13,7 +13,7 @@ import Security
 class KeychainManager {
     
     enum KeychainKey: String {
-        case discogsUserToken, discogsUserSecret, discogsUsername, testKey
+        case discogsUserToken, discogsUserSecret, discogsUsername, lastFmSessionKey, testKey
     }
     
     static let shared = KeychainManager()

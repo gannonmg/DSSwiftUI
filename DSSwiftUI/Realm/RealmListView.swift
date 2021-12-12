@@ -10,6 +10,7 @@ import SwiftUI
 struct RealmListView: View {
     
     @StateObject var viewModel = RealmListViewModel()
+    @State private var showingLastFmLogin:Bool = false
     
     var body: some View {
         ZStack {
@@ -36,6 +37,9 @@ struct RealmListView: View {
         .sheet(isPresented: $viewModel.showingFilters) {
             FilterView()
                 .environmentObject(viewModel.filterController)
+        }
+        .sheet(isPresented: $showingLastFmLogin) {
+            LastFmLoginView()
         }
     }
     
@@ -106,6 +110,9 @@ struct RealmListView: View {
                        action: AppViewModel.shared.logOut)
                 Button("Delete Collection", role: .destructive,
                        action: RealmManager.shared.deleteAllReleases)
+                Button("Last.FM Login") {
+                    showingLastFmLogin = true
+                }
             } label: {
                 Image(systemName: "gearshape.fill")
             }
