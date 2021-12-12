@@ -14,62 +14,77 @@ struct RealmListView: View {
     var body: some View {
         ZStack {
             NavigationView {
-                conditionalView
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        leadingItem
-                        shuffleItem
-                        ToolbarItem(placement: .principal, content: { Text("Collection") })
-                        trailingItem
-                    }
+                VStack(spacing: 0) {
+                    searchView
+                    conditionalView
+                }
+                .background { Color.lightGreyColor }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    leadingItem
+                    shuffleItem
+                    ToolbarItem(placement: .principal, content: { Text("Collection") })
+                    trailingItem
+                }
             }
             
-            if let randomizedRelease = viewModel.randomizedRelease {
-                SelectedReleaseView(release: randomizedRelease)
+            if let selectedRelease = viewModel.selectedRelease {
+                SelectedReleaseView(release: selectedRelease)
                     .environmentObject(viewModel)
             }
         }
         .sheet(isPresented: $viewModel.showingFilters) {
-            FilterView(filterController: viewModel.filterController)
+            FilterView()
+                .environmentObject(viewModel.filterController)
         }
     }
     
     var conditionalView: some View {
-        if viewModel.releases.isEmpty {
+        if viewModel.trulyEmpty {
             return AnyView(Button("Get Releases", action: viewModel.getReleases)
                             .buttonStyle(.bordered))
+        } else if viewModel.releases.isEmpty {
+            return AnyView(noSearchResultsView)
         } else {
             return AnyView(listView)
         }
     }
     
     var listView: some View {
-        SwiftUI.List {
-//            let predicate = viewModel.filterController.predicate
-//            let smartSearchMatcher = SmartSearchMatcher(searchString: viewModel.searchQuery)
-//            let releases = ((predicate == nil) ? releases : releases.filter(predicate!))
-            
+        List {
             ForEach(viewModel.releases) { release in
-                VStack(alignment: .leading) {
-                    Text(release.basicInformation.title)
-                    Text(release.basicInformation.artists.first!.name)
-                        .font(.callout)
-                    Text("Genres: " + release.basicInformation.genres.map { $0 }.joined(separator: ", "))
-                        .font(.caption)
-                    Text("Styles: " + release.basicInformation.styles.map { $0 }.joined(separator: ", "))
-                        .font(.caption)
-                    
-                    let formats = release.basicInformation.formats.map { $0 }
-                    Text("Formats: " + formats.map { $0.name }.joined(separator: ", "))
-                        .font(.caption)
-                    
-                    let descriptions = formats.map { $0.descriptions }.flatMap { $0 }.uniques
-                    Text("Descriptions: " + descriptions.joined(separator: ", "))
-                        .font(.caption)
-                }
+                ReleaseListItemView(release: release)
+                    .onTapGesture {
+                        viewModel.setSelectedRelease(release)
+                    }
             }
         }
-        .searchable(text: $viewModel.searchQuery)
+        .onAppear {
+            UITableView.appearance().contentInset.top = -27
+        }
+    }
+    
+    var searchView: some View {
+        VStack(alignment: .leading) {
+            TextField("Search", text: $viewModel.searchQuery)
+                .textFieldStyle(.roundedBorder)
+            let resultsCount = viewModel.releases.count
+            Text("\(resultsCount) \(resultsCount == 1 ? "Result" : "Results")")
+                .font(.caption)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background { Color.white }
+    }
+    
+    var noSearchResultsView: some View {
+        VStack {
+            Text("No albums matched your filter criteria")
+                .padding(.horizontal, 20)
+                .padding(.top, 40)
+                .multilineTextAlignment(.center)
+            Spacer()
+        }
     }
     
     var leadingItem: some ToolbarContent {
@@ -106,42 +121,107 @@ struct RealmListView: View {
 
 }
 
+struct ReleaseListItemView: View {
+    
+    let release: RealmReleaseCodable
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            
+            HStack(alignment: .top) {
+                RemoteImageView(url: URL(string: release.basicInformation.coverImage),
+                                placeholder: UIImage(systemName: "photo")!)
+                    .height(40)
+                    .width(40)
+                VStack(alignment: .leading) {
+                    Text(release.basicInformation.title)
+                    Text(release.basicInformation.artists.first?.name ?? "")
+                        .font(.callout)
+                }
+            }
+            
+            Text("Genres: " + release.basicInformation.genres.map { $0 }.joined(separator: ", "))
+                .font(.caption)
+            Text("Styles: " + release.basicInformation.styles.map { $0 }.joined(separator: ", "))
+                .font(.caption)
+            
+            let formats = release.basicInformation.formats.map { $0 }
+            Text("Formats: " + formats.map { $0.name }.joined(separator: ", "))
+                .font(.caption)
+            
+            let descriptions = formats.map { $0.descriptions }.flatMap { $0 }.uniques
+            Text("Descriptions: " + descriptions.joined(separator: ", "))
+                .font(.caption)
+        }
+    }
+    
+}
+
 struct SelectedReleaseView: View {
     
     @EnvironmentObject var realmListViewModel: RealmListViewModel
-    let release: RealmReleaseCodable
+    @ObservedObject var release: ReleaseViewModel
+    
+    init(release: RealmReleaseCodable) {
+        self.release = ReleaseViewModel(from: release)
+    }
     
     var body: some View {
         ZStack {
             Color.black
                 .opacity(0.3)
                 .ignoresSafeArea()
-            HStack(spacing:8) {
+            content
+        }
+        .onAppear(perform: getDetail)
+    }
+    
+    var content: some View {
+        VStack(alignment: .leading) {
+            HStack {
                 ZStack(alignment: .topLeading) {
-                    RemoteImageView(url: URL(string: release.basicInformation.coverImage),
+                    RemoteImageView(url: URL(string: release.coverImage),
                                     placeholder: UIImage(systemName: "photo")!)
-                    Button {
-                        realmListViewModel.randomizedRelease = nil
-                    } label: {
-                        Image(systemName: "x.circle.fill")
-                            .foregroundColor(.white)
-                            .height(20)
-                            .width(20)
-                            .background { Color.black }
-                            .padding(.top, 8)
-                            .padding(.leading, 8)
-                    }
-
+                        .height(80)
+                        .width(80)
+                    closeButton
                 }
+                
                 VStack(alignment: .leading) {
-                    Text(release.basicInformation.title)
-                    Text(release.basicInformation.artists.first!.name)
+                    Text(release.title)
+                    Text(release.artists.first!.name)
                         .font(.callout)
                 }
             }
-            .background { Color.white }
-            .cornerRadius(20)
-            .padding(.horizontal, 20)
+            
+            ForEach(release.tracklist) { track in
+                Text("\(track.title)")
+            }
+            
+        }
+        .background { Color.white }
+        .cornerRadius(20)
+        .padding(.horizontal, 20)
+    }
+    
+    var closeButton: some View {
+        Button {
+            realmListViewModel.removeRandomeRelease()
+        } label: {
+            Image(systemName: "x.circle.fill")
+                .foregroundColor(.white)
+                .height(20)
+                .width(20)
+                .background { Color.black }
+                .padding(.top, 8)
+                .padding(.leading, 8)
+        }
+    }
+    
+    func getDetail() {
+//        release.basicInformation.getDetail()
+        Task {
+            await release.getDetail()
         }
     }
     

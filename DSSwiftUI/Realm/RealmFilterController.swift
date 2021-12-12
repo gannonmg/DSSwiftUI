@@ -12,7 +12,6 @@ enum FilterCategory: String, CaseIterable {
     
     case genres, styles, formats, descriptions
     
-//      let predicate = NSPredicate(format: "ANY basicInformation.artists.name CONTAINS[dc] %@", "bad snacks")
     var keyPath: String {
         switch self {
         case .genres: return "basicInformation.genres"
@@ -32,11 +31,13 @@ struct FilterOption: Hashable {
 
 class RealmFilterController: ObservableObject {
     
-    @Published var predicate: NSPredicate?
+    @Published private(set) var predicate: NSPredicate?
+    
     @Published var exclusiveFilter: Bool = true {
         didSet { setPredicate() }
     }
-    @Published var filterOptions:[FilterCategory:[FilterOption]] {
+    
+    @Published private(set) var filterOptions:[FilterCategory:[FilterOption]] {
         didSet { setPredicate() }
     }
     
@@ -75,18 +76,20 @@ extension RealmFilterController {
     
     func tappedOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
-            for i in 0..<filterOptions[key]!.count {
-                guard filterOptions[key]![i].id == tappedOption.id else { continue }
-                filterOptions[key]![i].selected.toggle()
+            let count = filterOptions[key]?.count ?? 0
+            for i in 0..<count {
+                guard filterOptions[key]?[i].id == tappedOption.id else { continue }
+                filterOptions[key]?[i].selected.toggle()
             }
         }
     }
 
     func removeOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
-            for i in 0..<filterOptions[key]!.count {
-                guard filterOptions[key]![i].id == tappedOption.id else { continue }
-                filterOptions[key]![i].selected = false
+            let count = filterOptions[key]?.count ?? 0
+            for i in 0..<count {
+                guard filterOptions[key]?[i].id == tappedOption.id else { continue }
+                filterOptions[key]?[i].selected = false
             }
         }
     }
@@ -130,6 +133,24 @@ extension RealmFilterController {
             .map { FilterOption(title: $0) }
 
         return options
+    }
+    
+    func updateFilters(for newReleases: [RealmReleaseCodable]) {
+        
+        //Get the filters for the releases like normal
+        var newFilters = RealmFilterController.getFilters(for: newReleases)
+        
+        //Search for filter matches in the old filters and update selected status
+        for key in newFilters.keys {
+            guard let options = newFilters[key] else { continue }
+            for i in 0..<options.count {
+                guard let match = filterOptions[key]?.first(where: { options[i].title == $0.title }) else { continue }
+                newFilters[key]?[i].selected = match.selected
+            }
+        }
+        
+        //Assign our new filters
+        self.filterOptions = newFilters
     }
     
     func setPredicate() {

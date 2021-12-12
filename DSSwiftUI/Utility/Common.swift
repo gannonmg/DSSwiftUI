@@ -94,7 +94,7 @@ enum HexColor: UInt {
     case textPrimary = 0xEDEEE5
     case textSecondary = 0x94969C
     case dsSeparator = 0x484D5B
-    case lightGreyColor = 0xEFEFEF
+    case lightGreyColor = 0xF2F2F7
 }
 
 extension Color {
@@ -104,7 +104,7 @@ extension Color {
 //    static let textPrimary = Color(hex: 0xEDEEE5)
 //    static let textSecondary = Color(hex: 0x94969C)
 //    static let separator = Color(hex: 0x484D5B)
-//    static let lightGreyColor = Color(.sRGB, white: 239/255, opacity: 1)
+    static let lightGreyColor = Color(.lightGreyColor)
 
     init(_ hexColor: HexColor, alpha: Double = 1) {
         self.init(hex: hexColor.rawValue, alpha: alpha)

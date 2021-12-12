@@ -7,35 +7,53 @@
 
 import Combine
 import RealmSwift
+import Foundation
 
 class RealmListViewModel: ObservableObject {
     
     @ObservedResults(RealmReleaseCodable.self) private var releasesResults
     @Published private(set) var releases:[RealmReleaseCodable] = []
     
-    @Published var randomizedRelease: RealmReleaseCodable?
+    @Published private(set) var selectedRelease: RealmReleaseCodable?
     @Published var showingFilters: Bool = false
-    @Published var searchQuery: String = ""
+    @Published var searchQuery: String = "" {
+        didSet { searchChanged() }
+    }
     
     private(set) var filterController = RealmFilterController(releases: [])
     
+    var trulyEmpty: Bool {
+        return releasesResults.freeze().isEmpty
+    }
+    
     private var resultsCancellable: AnyCancellable?
+    private var filterCancellable: AnyCancellable?
     
     init() {
         self.resultsCancellable = releasesResults
             .collectionPublisher
             .assertNoFailure()
             .sink { releaseResults in
-                #warning("TODO: Migrate filter controller to new set of filters instead of new object")
-                let releases = Array(releaseResults)
-                self.releases = releases
-                self.filterController = RealmFilterController(releases: releases)
+                self.handleNewResults(releaseResults)
+            }
+        
+        self.filterCancellable = filterController.$predicate
+            .sink { predicate in
+                self.filterUpdated(predicate: predicate)
             }
     }
     
     deinit {
         resultsCancellable?.cancel()
         resultsCancellable = nil
+        filterCancellable?.cancel()
+        filterCancellable = nil
+    }
+    
+    func handleNewResults(_ results: Results<RealmReleaseCodable>) {
+        let releases = Array(results)
+        self.releases = releases
+        self.filterController.updateFilters(for: releases)
     }
     
     func getReleases() {
@@ -44,10 +62,39 @@ class RealmListViewModel: ObservableObject {
         }
     }
     
+    func setSelectedRelease(_ release: RealmReleaseCodable) {
+        selectedRelease = release
+    }
+    
     func pickRandomRelease() {
-//        let predicate = viewModel.filterController.predicate
-//        let releases = (predicate == nil) ? releases : releases.filter(predicate!)
-        randomizedRelease = releases.randomElement()
+        selectedRelease = releases.randomElement()
+    }
+    
+    func removeRandomeRelease() {
+        selectedRelease = nil
+    }
+    
+    func searchChanged() {
+        filterUpdated(predicate: filterController.predicate)
+    }
+    
+    func filterUpdated(predicate: NSPredicate?) {
+        var releases:[RealmReleaseCodable] = []
+        
+        if let predicate = predicate {
+            let results = self.releasesResults.filter(predicate)
+            releases = Array(results)
+        } else {
+            releases = Array(releasesResults)
+        }
+        
+        let smartSearch = SmartSearchMatcher(searchString: searchQuery)
+        releases = releases.filter { release in
+            let filterableTitle = release.basicInformation.title + " " + (release.basicInformation.artists.map { $0 }.first?.name ?? "")
+            return smartSearch.matches(filterableTitle)
+        }
+        
+        self.releases = releases
     }
     
 }

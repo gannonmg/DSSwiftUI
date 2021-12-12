@@ -94,15 +94,9 @@ class DCManager {
         let initialPageUrl = "https://api.discogs.com/users/\(username)/collection/folders/0/releases?per_page=100"
         getAllReleases(initialReleases: [], pageUrl: initialPageUrl) { releases in
             guard releases.isEmpty == false else {
+                #warning("Handle eempty release response")
                 completion([])
                 return
-            }
-
-            for release in releases {
-                let str = release.basicInformation.formats
-                    .map { $0.descriptions.joined(separator: ", ") }
-                    .joined(separator: ", ")
-                print("Descriptions are \(str)")
             }
             
             completion(releases)
@@ -147,16 +141,15 @@ class DCManager {
         }
     }
     
-    /*
-    func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetail?)->Void) {
+    func getDetail(for resourceUrl: String, completion: @escaping (RealmReleaseDetailCodable?)->Void) {
         oauthSwift.client.get(resourceUrl) { result in
             switch result {
             case .success(let response):
                 do {
-                    let detail = try JSONDecoder().decode(DCReleaseDetail.self,
+                    let detail = try JSONDecoder().decode(RealmReleaseDetailCodable.self,
                                                           from: response.data)
-                    completion(detail)
                     print("Got album detail")
+                    completion(detail)
                 } catch {
                     print("Error getting album detail: \(error). Resourse \(resourceUrl)")
                     completion(nil)
@@ -167,6 +160,28 @@ class DCManager {
             }
         }
     }
-    */
+    
+    func getDetail(for resourceUrl: String) async -> RealmReleaseDetailCodable? {
+        return await withCheckedContinuation { continuation in
+            oauthSwift.client.get(resourceUrl) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let detail = try JSONDecoder().decode(RealmReleaseDetailCodable.self,
+                                                              from: response.data)
+                        print("Got album detail")
+                        continuation.resume(returning: detail)
+                    } catch {
+                        print("Error getting album detail: \(error). Resourse \(resourceUrl)")
+                        continuation.resume(returning: nil)
+                    }
+                case .failure(let error):
+                    print("Error getting album detail: \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
+                }
+            }
+        }
+    }
+
     
 }

@@ -48,7 +48,7 @@ class RealmManager {
                 }
             }
         } catch {
-            print("Failed to add all releases")
+            print("Failed to add all releases \(error)")
         }
     }
     

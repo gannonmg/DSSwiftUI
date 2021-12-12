@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FilterView: View {
     
-    @StateObject var filterController: RealmFilterController
+    @EnvironmentObject var filterController: RealmFilterController
 
     var body: some View {
         NavigationView {
@@ -30,6 +30,9 @@ struct FilterView: View {
                 }
             }
             .navigationTitle("Filters")
+            .onAppear {
+                UITableView.appearance().contentInset.top = 0
+            }
         }
      }
 }
