@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RealmListView: View {
     
+    @EnvironmentObject var appViewModel: AppViewModel
     @StateObject var viewModel = RealmListViewModel()
     @State private var showingLastFmLogin:Bool = false
     
@@ -107,14 +108,24 @@ struct RealmListView: View {
         ToolbarItem(placement: .navigationBarLeading) {
             Menu {
                 Button("Log Out", role: .destructive,
-                       action: AppViewModel.shared.logOut)
+                       action: appViewModel.logOut)
                 Button("Delete Collection", role: .destructive,
                        action: RealmManager.shared.deleteAllReleases)
-                Button("Last.FM Login") {
-                    showingLastFmLogin = true
-                }
+                lastFmButton
             } label: {
                 Image(systemName: "gearshape.fill")
+            }
+        }
+    }
+    
+    var lastFmButton: some View {
+        if appViewModel.loggedInToLastFm {
+            return Button("Last.FM Logout", role: .destructive) {
+                appViewModel.logOutLastFm()
+            }
+        } else {
+            return Button("Last.FM Login") {
+                showingLastFmLogin = true
             }
         }
     }
@@ -205,8 +216,20 @@ struct SelectedReleaseView: View {
                 }
             }
             
+            if KeychainManager.shared.get(for: .lastFmSessionKey) != nil {
+                Button("Scrobble Album") {
+                    LFManager.shared.scrobbleRelease(release)
+                }
+            }
+            
             ForEach(release.tracklist) { track in
-                Text("\(track.title)")
+                HStack {
+                    Text("\(track.title)")
+                    Spacer()
+                    if track.duration != "" {
+                        Text("\(track.duration)")
+                    }
+                }
             }
             
         }
@@ -230,7 +253,6 @@ struct SelectedReleaseView: View {
     }
     
     func getDetail() {
-//        release.basicInformation.getDetail()
         Task {
             await release.getDetail()
         }

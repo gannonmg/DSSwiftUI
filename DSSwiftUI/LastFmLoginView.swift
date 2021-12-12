@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LastFmLoginView: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @State private(set) var username: String = ""
     @State private(set) var password: String = ""
     
@@ -16,9 +18,11 @@ struct LastFmLoginView: View {
         VStack {
             Text("Last.FM Login")
             TextField("Username", text: $username, prompt: Text("Enter Username"))
-            TextField("Password", text: $password, prompt: Text("Enter Password"))
+                .disableAutocorrection(true)
+                .textInputAutocapitalization(.never)
+            SecureField("Password", text: $password, prompt: Text("Enter Password"))
             Button("Login") {
-                
+                login()
             }
         }
     }
@@ -26,7 +30,9 @@ struct LastFmLoginView: View {
     func login() {
         LFManager.shared.getUserSession(username: username, password: password) { session in
             if let session = session {
+                print("Logged in successfully")
                 KeychainManager.shared.save(key: .lastFmSessionKey, string: session.key)
+                self.presentationMode.wrappedValue.dismiss()
             }
         }
     }

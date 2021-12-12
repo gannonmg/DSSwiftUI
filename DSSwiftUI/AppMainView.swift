@@ -9,13 +9,15 @@ import SwiftUI
 
 class AppViewModel: ObservableObject {
     
-    static let shared = AppViewModel()
     
-    @Published var token: String?
+    @Published private(set) var token: String?
+    @Published private(set) var lastFmKey: String?
     var loggedIn: Bool { token != nil }
+    var loggedInToLastFm: Bool { lastFmKey != nil }
     
-    private init() {
+    init() {
         token = KeychainManager.shared.get(for: .discogsUserToken)
+        lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(checkForToken),
                                                name: UIApplication.didBecomeActiveNotification,
@@ -40,11 +42,18 @@ class AppViewModel: ObservableObject {
         KeychainManager.shared.remove(key: .discogsUsername)
         KeychainManager.shared.remove(key: .discogsUserToken)
         KeychainManager.shared.remove(key: .discogsUserSecret)
-        
+        KeychainManager.shared.remove(key: .lastFmSessionKey)
+
         token = nil
+        lastFmKey = nil
         
         RealmManager.shared.deleteAllReleases()
         DCManager.shared.resetOauth()
+    }
+    
+    func logOutLastFm() {
+        KeychainManager.shared.remove(key: .lastFmSessionKey)
+        lastFmKey = nil
     }
     
     @objc func checkForToken() {
@@ -57,11 +66,12 @@ class AppViewModel: ObservableObject {
 
 struct AppMainView: View {
     
-    @ObservedObject var viewModel: AppViewModel = .shared
+    @StateObject var viewModel = AppViewModel()
     
     var body: some View {
         if viewModel.loggedIn {
             RealmListView()
+                .environmentObject(viewModel)
         } else {
             VStack {
                 Text("Welcome!")

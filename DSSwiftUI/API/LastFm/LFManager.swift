@@ -108,7 +108,28 @@ class LFManager {
     }
     
     //MARK: Scrobbling
-    func scrobbleTrack(album: String, artist: String, track: String, timestamp: TimeInterval, key: String) {
+    func scrobbleRelease(_ release: ReleaseViewModel) {
+        let tracklist = release.tracklist
+        guard !release.tracklist.isEmpty,
+              let key = KeychainManager.shared.get(for: .lastFmSessionKey)
+        else { return }
+        
+        var timestamp = Date.now.timeIntervalSince1970
+        for track in tracklist {
+            scrobbleTrack(album: release.title,
+                          artist: release.artists.first?.name ?? "",
+                          track: track.title,
+                          timestamp: timestamp,
+                          key: key)
+            
+            // If unable to get track duration (not always available in discogs data)
+            // set to three minutes
+            let trackLength = Double(track.duration) ?? 180
+            timestamp += trackLength
+        }
+    }
+    
+    private func scrobbleTrack(album: String, artist: String, track: String, timestamp: TimeInterval, key: String) {
         
         let params:[String:Any] = ["api_key":   LFAuthInfo.apiKey,
                                    "method":    LFMethod.scrobble.method,
