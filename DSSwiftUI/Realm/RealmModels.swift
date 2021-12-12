@@ -199,7 +199,9 @@ class ReleaseViewModel: ObservableObject {
     
     func getDetail() async {
         if let details = await DCManager.shared.getDetail(for: resourceURL) {
-            self.tracklist = Array(details.tracklist)
+            DispatchQueue.main.async {
+                self.tracklist = Array(details.tracklist)
+            }
         }
     }
     
