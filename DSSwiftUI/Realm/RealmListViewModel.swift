@@ -97,4 +97,9 @@ class RealmListViewModel: ObservableObject {
         self.releases = releases
     }
     
+    func clearSearchAndFilter() {
+        self.searchQuery = ""
+        filterController.turnOffAllFilters()
+    }
+    
 }

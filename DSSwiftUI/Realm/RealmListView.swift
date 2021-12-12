@@ -68,9 +68,13 @@ struct RealmListView: View {
         VStack(alignment: .leading) {
             TextField("Search", text: $viewModel.searchQuery)
                 .textFieldStyle(.roundedBorder)
-            let resultsCount = viewModel.releases.count
-            Text("\(resultsCount) \(resultsCount == 1 ? "Result" : "Results")")
-                .font(.caption)
+            HStack {
+                let resultsCount = viewModel.releases.count
+                Text("\(resultsCount) \(resultsCount == 1 ? "Result" : "Results")")
+                    .font(.caption)
+                Spacer()
+                Button("Clear Filters", action: viewModel.clearSearchAndFilter)
+            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

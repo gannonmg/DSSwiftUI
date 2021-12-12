@@ -171,6 +171,15 @@ extension RealmFilterController {
         }
     }
     
+    func turnOffAllFilters() {
+        for key in filterOptions.keys {
+            let count = filterOptions[key]?.count ?? 0
+            for i in 0..<count {
+                filterOptions[key]?[i].selected = false
+            }
+        }
+    }
+    
 }
 
 extension Array where Element == FilterOption {
