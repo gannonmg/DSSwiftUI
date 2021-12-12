@@ -5,6 +5,7 @@
 //  Created by Matt Gannon on 11/25/21.
 //
 
+import Foundation
 import RealmSwift
 
 class RealmManager {
@@ -31,6 +32,28 @@ class RealmManager {
             }
         } catch {
             print("Failed to add all releases")
+        }
+    }
+    
+    func add(detail: RealmReleaseDetailCodable) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(detail)
+            }
+        } catch {
+            print("Failed to add detail")
+        }
+    }
+    
+    func get(for discogsId: Int) -> RealmReleaseDetailCodable? {
+        do {
+            let realm = try Realm()
+            return realm.object(ofType: RealmReleaseDetailCodable.self,
+                                forPrimaryKey: discogsId)
+        } catch {
+            print("Failed to get detail")
+            return nil
         }
     }
     

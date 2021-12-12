@@ -51,11 +51,13 @@ class RealmReleaseCodable: Object, ObjectKeyIdentifiable, Codable {
     }
 
     ///The unique identifier release for this album in the collection. Two identical albums in a collection will have different instanceIds.
+    @Persisted private(set) var id: Int
     @Persisted private(set) var instanceId: Int
     @Persisted private(set) var basicInformation: RealmBasicInformation!
     
     enum CodingKeys: String, CodingKey {
-        case instanceId = "instance_id",
+        case id,
+             instanceId = "instance_id",
              basicInformation = "basic_information"
     }
     
@@ -126,6 +128,10 @@ class RealmFormatCodable: Object, Codable {
 
 class RealmReleaseDetailCodable: Object, Codable {
     
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+
     @Persisted private(set) var id: Int
     @Persisted private(set) var tracklist: List<RealmTrackCodable>
 
@@ -169,7 +175,8 @@ class RealmTrackCodable: Object, Codable, Identifiable {
 
 class ReleaseViewModel: ObservableObject, Identifiable {
     
-    let id: Int
+    let id: Int //this is the instance id from discogs and is unique even among duplicate albums
+    let discogsId: Int //This is unique to thee reelease, but not instances of the release
     
     let title: String
     let year: Int
@@ -186,6 +193,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
 
     init(from release: RealmReleaseCodable) {
         self.id = release.instanceId
+        self.discogsId = release.id
         self.title = release.basicInformation.title
         self.year = release.basicInformation.year
         self.artists = Array(release.basicInformation.artists)
@@ -200,9 +208,16 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     }
     
     func getDetail() async {
+        
+        if let details = RealmManager.shared.get(for: discogsId) {
+            tracklist = Array(details.tracklist)
+            return
+        }
+        
         if let details = await DCManager.shared.getDetail(for: resourceURL) {
             DispatchQueue.main.async {
                 self.tracklist = Array(details.tracklist)
+                RealmManager.shared.add(detail: details)
             }
         }
     }
