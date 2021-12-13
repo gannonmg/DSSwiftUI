@@ -13,7 +13,7 @@ struct AppMainView: View {
     
     var body: some View {
         if viewModel.loggedIn {
-            ListView()
+            ReleaseListView()
                 .environmentObject(viewModel)
         } else {
             VStack {

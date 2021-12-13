@@ -30,9 +30,6 @@ struct FilterView: View {
                 }
             }
             .navigationTitle("Filters")
-            .onAppear {
-                UITableView.appearance().contentInset.top = 0
-            }
         }
      }
 }

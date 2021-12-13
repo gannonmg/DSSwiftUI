@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListView: View {
+struct ReleaseListView: View {
     
     @EnvironmentObject var appViewModel: AppViewModel
     @StateObject var viewModel = ListViewModel()
@@ -72,8 +72,8 @@ struct ListView: View {
                     }
             }
         }
-        .onAppear {
-            UITableView.appearance().contentInset.top = -27
+        .refreshable {
+            viewModel.getRemoteReleases()
         }
     }
     
