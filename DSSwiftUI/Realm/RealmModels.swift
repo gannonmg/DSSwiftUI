@@ -190,6 +190,10 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     let styles: [String]
     
     @Published private(set) var tracklist: [RealmTrackCodable] = []
+    
+    var firstArtist: String {
+        return self.artists.first?.name ?? ""
+    }
 
     init(from release: RealmReleaseCodable) {
         self.id = release.instanceId

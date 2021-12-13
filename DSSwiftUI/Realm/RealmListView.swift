@@ -57,7 +57,7 @@ struct RealmListView: View {
     var getReleasesView: some View {
         VStack(alignment: .center) {
             Spacer()
-            Button("Get Releases", action: viewModel.getReleases)
+            Button("Get Releases", action: viewModel.getRemoteReleases)
                     .buttonStyle(.bordered)
             Spacer()
         }

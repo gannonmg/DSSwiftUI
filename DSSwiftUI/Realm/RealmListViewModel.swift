@@ -52,11 +52,15 @@ class RealmListViewModel: ObservableObject {
     
     func handleNewResults(_ results: Results<RealmReleaseCodable>) {
         let releases = Array(results).map { ReleaseViewModel(from: $0) }
-        self.releases = releases
+        self.setSortedReleases(releases)
         self.filterController.updateFilters(for: releases)
     }
     
-    func getReleases() {
+    func setSortedReleases(_ releases: [ReleaseViewModel]) {
+        self.releases = releases.sorted(by: { $0.firstArtist < $1.firstArtist } )
+    }
+    
+    func getRemoteReleases() {
         DCManager.shared.getAllReleasesForUser { releases in
             RealmManager.shared.update(with: releases)
         }
@@ -94,7 +98,7 @@ class RealmListViewModel: ObservableObject {
             return smartSearch.matches(filterableTitle)
         }
         
-        self.releases = releases
+        self.setSortedReleases(releases)
     }
     
     func clearSearchAndFilter() {
