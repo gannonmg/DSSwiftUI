@@ -9,9 +9,9 @@ import Combine
 import RealmSwift
 import Foundation
 
-class RealmListViewModel: ObservableObject {
+class ListViewModel: ObservableObject {
     
-    @ObservedResults(RealmReleaseCodable.self) private var releasesResults
+    @ObservedResults(DCReleaseModel.self) private var releasesResults
     @Published private(set) var releases:[ReleaseViewModel] = []
     
     @Published private(set) var selectedRelease: ReleaseViewModel?
@@ -20,7 +20,7 @@ class RealmListViewModel: ObservableObject {
         didSet { searchChanged() }
     }
     
-    private(set) var filterController = RealmFilterController(releases: [])
+    private(set) var filterController = FilterViewModel(releases: [])
     
     var trulyEmpty: Bool {
         return releasesResults.freeze().isEmpty
@@ -50,7 +50,7 @@ class RealmListViewModel: ObservableObject {
         filterCancellable = nil
     }
     
-    func handleNewResults(_ results: Results<RealmReleaseCodable>) {
+    func handleNewResults(_ results: Results<DCReleaseModel>) {
         let releases = Array(results).map { ReleaseViewModel(from: $0) }
         self.setSortedReleases(releases)
         self.filterController.updateFilters(for: releases)

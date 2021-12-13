@@ -5,7 +5,6 @@
 //  Created by Matt Gannon on 11/25/21.
 //
 
-import RealmSwift
 import SwiftUI
 
 enum FilterCategory: String, CaseIterable {
@@ -29,7 +28,7 @@ struct FilterOption: Hashable {
     var selected: Bool = false
 }
 
-class RealmFilterController: ObservableObject {
+class FilterViewModel: ObservableObject {
     
     @Published private(set) var predicate: NSPredicate?
     
@@ -42,13 +41,13 @@ class RealmFilterController: ObservableObject {
     }
     
     init(releases: [ReleaseViewModel]) {
-        self.filterOptions = RealmFilterController.getFilters(for: releases)
+        self.filterOptions = FilterViewModel.getFilters(for: releases)
     }
     
 }
 
 //MARK: - Computed Properties
-extension RealmFilterController {
+extension FilterViewModel {
     
     var genres:[FilterOption] { filterOptions[.genres] ?? [] }
     var styles:[FilterOption] { filterOptions[.styles] ?? [] }
@@ -72,7 +71,7 @@ extension RealmFilterController {
 }
 
 //MARK: - Filter functions
-extension RealmFilterController {
+extension FilterViewModel {
     
     func tappedOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
@@ -135,7 +134,7 @@ extension RealmFilterController {
     func updateFilters(for newReleases: [ReleaseViewModel]) {
         
         //Get the filters for the releases like normal
-        var newFilters = RealmFilterController.getFilters(for: newReleases)
+        var newFilters = FilterViewModel.getFilters(for: newReleases)
         
         //Search for filter matches in the old filters and update selected status
         for key in newFilters.keys {

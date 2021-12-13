@@ -15,10 +15,6 @@ import typealias CommonCrypto.CC_LONG
 //MARK: - String
 extension String {
     
-    var words:[String] { self.split(separator: " ").map { String($0) } }
-    
-    var trimmingWhitespaces: String { self.trimmingCharacters(in: .whitespacesAndNewlines) }
-    
     //LastFM signature encryption
     func utf8DecodedString() -> String {
         let data = self.data(using: .utf8)

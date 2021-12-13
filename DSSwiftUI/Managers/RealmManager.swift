@@ -24,7 +24,7 @@ class RealmManager {
         }
     }
     
-    func add(releases: [RealmReleaseCodable]) {
+    func add(releases: [DCReleaseModel]) {
         do {
             let realm = try Realm()
             try realm.write {
@@ -35,7 +35,7 @@ class RealmManager {
         }
     }
     
-    func add(detail: RealmReleaseDetailCodable) {
+    func add(detail: DCReleaseDetailModel) {
         do {
             let realm = try Realm()
             try realm.write {
@@ -46,10 +46,10 @@ class RealmManager {
         }
     }
     
-    func get(for discogsId: Int) -> RealmReleaseDetailCodable? {
+    func get(for discogsId: Int) -> DCReleaseDetailModel? {
         do {
             let realm = try Realm()
-            return realm.object(ofType: RealmReleaseDetailCodable.self,
+            return realm.object(ofType: DCReleaseDetailModel.self,
                                 forPrimaryKey: discogsId)
         } catch {
             print("Failed to get detail")
@@ -57,12 +57,12 @@ class RealmManager {
         }
     }
     
-    func update(with releases: [RealmReleaseCodable]) {
+    func update(with releases: [DCReleaseModel]) {
         do {
             let realm = try Realm()
             try realm.write {
                 for release in releases {
-                    let object = realm.object(ofType: RealmReleaseCodable.self, forPrimaryKey: release.instanceId)
+                    let object = realm.object(ofType: DCReleaseModel.self, forPrimaryKey: release.instanceId)
                     if object == nil {
                         realm.add(release)
                     } else {

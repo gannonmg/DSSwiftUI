@@ -1,14 +1,13 @@
 //
-//  RealmMainView.swift
+//  AppViewModel.swift
 //  DSSwiftUI
 //
-//  Created by Matt Gannon on 11/22/21.
+//  Created by Matt Gannon on 12/13/21.
 //
 
 import SwiftUI
 
 class AppViewModel: ObservableObject {
-    
     
     @Published private(set) var token: String?
     @Published private(set) var lastFmKey: String?
@@ -62,32 +61,4 @@ class AppViewModel: ObservableObject {
         }
     }
     
-}
-
-struct AppMainView: View {
-    
-    @StateObject var viewModel = AppViewModel()
-    
-    var body: some View {
-        if viewModel.loggedIn {
-            RealmListView()
-                .environmentObject(viewModel)
-        } else {
-            VStack {
-                Text("Welcome!")
-                    .font(.headline)
-                Text("Please log in via Discogs")
-                    .font(.body)
-                Button("Log In", action: viewModel.logIn)
-                    .buttonStyle(.bordered)
-            }
-        }
-    }
-    
-}
-
-struct RealmMainView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppMainView()
-    }
 }

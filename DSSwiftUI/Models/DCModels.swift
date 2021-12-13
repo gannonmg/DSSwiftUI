@@ -1,5 +1,5 @@
 //
-//  RealmModels.swift
+//  DCModels.swift
 //  DSSwiftUI
 //
 //  Created by Matt Gannon on 11/25/21.
@@ -9,9 +9,9 @@ import Combine
 import Foundation
 import RealmSwift
 
-struct RealmCollectionReleasesResponse: Codable {
+struct CollectionReleasesResponse: Codable {
     let pagination: Pagination
-    let releases: [RealmReleaseCodable]
+    let releases: [DCReleaseModel]
 }
 
 //MARK: - Errors
@@ -44,7 +44,7 @@ struct Urls: Codable {
     let first, last, prev, next: String?
 }
 
-class RealmReleaseCodable: Object, ObjectKeyIdentifiable, Codable {
+class DCReleaseModel: Object, ObjectKeyIdentifiable, Codable {
     
     override static func primaryKey() -> String? {
         return "instanceId"
@@ -53,7 +53,7 @@ class RealmReleaseCodable: Object, ObjectKeyIdentifiable, Codable {
     ///The unique identifier release for this album in the collection. Two identical albums in a collection will have different instanceIds.
     @Persisted private(set) var id: Int
     @Persisted private(set) var instanceId: Int
-    @Persisted private(set) var basicInformation: RealmBasicInformation!
+    @Persisted private(set) var basicInformation: DCBasicInformationModel!
     
     enum CodingKeys: String, CodingKey {
         case id,
@@ -62,22 +62,22 @@ class RealmReleaseCodable: Object, ObjectKeyIdentifiable, Codable {
     }
     
     //Convenience
-    var tracks: [RealmTrackCodable] { self.basicInformation.tracks ?? [] }
+    var tracks: [DCTrackModel] { self.basicInformation.tracks ?? [] }
 
 }
 
-class RealmBasicInformation: Object, Codable {
+class DCBasicInformationModel: Object, Codable {
     
     @Persisted private(set) var title: String
     @Persisted private(set) var year: Int
-    @Persisted private(set) var artists: List<RealmArtistCodable>
+    @Persisted private(set) var artists: List<DCArtistModel>
     @Persisted private(set) var coverImage: String
     @Persisted private(set) var resourceURL: String
-    @Persisted private(set) var formats: List<RealmFormatCodable>
+    @Persisted private(set) var formats: List<DCFormatModel>
     @Persisted private(set) var genres: List<String>
     @Persisted private(set) var styles: List<String>
     
-    @Published private(set) var tracks: [RealmTrackCodable]? {
+    @Published private(set) var tracks: [DCTrackModel]? {
         didSet {
             print("Tracks changed")
         }
@@ -88,14 +88,6 @@ class RealmBasicInformation: Object, Codable {
         case coverImage = "cover_image"
         case resourceURL = "resource_url"
     }
-    
-//    func getDetail() async {
-//        if let detail = await DCManager.shared.getDetail(for: self.resourceURL) {
-//            print("Detail gotten")
-//            self.tracks = Array(detail.tracklist)
-////            print("Tracks are \(self.tracks ?? [])")
-//        }
-//    }
 
     func getDetail() {
         DCManager.shared.getDetail(for: self.resourceURL) { detail in
@@ -109,11 +101,11 @@ class RealmBasicInformation: Object, Codable {
     }
 }
 
-class RealmArtistCodable: Object, Codable {
+class DCArtistModel: Object, Codable {
     @Persisted private(set) var name: String
 }
 
-class RealmFormatCodable: Object, Codable {
+class DCFormatModel: Object, Codable {
     
     @Persisted private(set) var name: String
     @Persisted private(set) var descriptions: List<String>
@@ -126,25 +118,25 @@ class RealmFormatCodable: Object, Codable {
     }
 }
 
-class RealmReleaseDetailCodable: Object, Codable {
+class DCReleaseDetailModel: Object, Codable {
     
     override static func primaryKey() -> String? {
         return "id"
     }
 
     @Persisted private(set) var id: Int
-    @Persisted private(set) var tracklist: List<RealmTrackCodable>
+    @Persisted private(set) var tracklist: List<DCTrackModel>
 
     required convenience init(from decoder: Decoder) throws {
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
-        self.tracklist = try container.decodeIfPresent(List<RealmTrackCodable>.self, forKey: .tracklist) ?? List<RealmTrackCodable>()
+        self.tracklist = try container.decodeIfPresent(List<DCTrackModel>.self, forKey: .tracklist) ?? List<DCTrackModel>()
     }
     
 }
 
-class RealmTrackCodable: Object, Codable, Identifiable {
+class DCTrackModel: Object, Codable, Identifiable {
     
     let id = UUID()
     
@@ -152,7 +144,7 @@ class RealmTrackCodable: Object, Codable, Identifiable {
     @Persisted private(set) var type: String
     @Persisted private(set) var title: String
     @Persisted private(set) var duration: String
-    @Persisted private(set) var extraArtists: List<RealmArtistCodable>
+    @Persisted private(set) var extraArtists: List<DCArtistModel>
     
     enum CodingKeys: String, CodingKey {
         case type = "type_"
@@ -168,62 +160,8 @@ class RealmTrackCodable: Object, Codable, Identifiable {
         self.title = try container.decode(String.self, forKey: .title)
         self.duration = try container.decode(String.self, forKey: .duration)
         self.position = try container.decode(String.self, forKey: .position)
-        self.extraArtists = try container.decodeIfPresent(List<RealmArtistCodable>.self, forKey: .extraArtists) ?? List<RealmArtistCodable>()
+        self.extraArtists = try container.decodeIfPresent(List<DCArtistModel>.self, forKey: .extraArtists) ?? List<DCArtistModel>()
     }
     
 }
 
-class ReleaseViewModel: ObservableObject, Identifiable {
-    
-    let id: Int //this is the instance id from discogs and is unique even among duplicate albums
-    let discogsId: Int //This is unique to thee reelease, but not instances of the release
-    
-    let title: String
-    let year: Int
-    let artists: [RealmArtistCodable]
-    let coverImage: String
-    let resourceURL: String
-    
-    let formats: [String]
-    let descriptions: [String]
-    let genres: [String]
-    let styles: [String]
-    
-    @Published private(set) var tracklist: [RealmTrackCodable] = []
-    
-    var firstArtist: String {
-        return self.artists.first?.name ?? ""
-    }
-
-    init(from release: RealmReleaseCodable) {
-        self.id = release.instanceId
-        self.discogsId = release.id
-        self.title = release.basicInformation.title
-        self.year = release.basicInformation.year
-        self.artists = Array(release.basicInformation.artists)
-        self.coverImage = release.basicInformation.coverImage
-        self.resourceURL = release.basicInformation.resourceURL
-        
-        self.genres = Array(release.basicInformation.genres)
-        self.styles = Array(release.basicInformation.styles)
-        self.formats = release.basicInformation.formats.map { $0.name }
-        self.descriptions = Array(release.basicInformation.formats.map { Array($0.descriptions) })
-            .flatMap { $0 }
-    }
-    
-    func getDetail() async {
-        
-        if let details = RealmManager.shared.get(for: discogsId) {
-            tracklist = Array(details.tracklist)
-            return
-        }
-        
-        if let details = await DCManager.shared.getDetail(for: resourceURL) {
-            DispatchQueue.main.async {
-                self.tracklist = Array(details.tracklist)
-                RealmManager.shared.add(detail: details)
-            }
-        }
-    }
-    
-}

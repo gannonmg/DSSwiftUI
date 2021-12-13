@@ -84,7 +84,7 @@ class DCManager {
     }
     
     //MARK: Releases
-    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([RealmReleaseCodable])->Void) {
+    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([DCReleaseModel])->Void) {
         
         guard let username = KeychainManager.shared.get(for: .discogsUsername) else {
             completion([])
@@ -103,7 +103,7 @@ class DCManager {
         }
     }
     
-    private func getAllReleases(initialReleases: [RealmReleaseCodable], pageUrl: String, completion: @escaping ([RealmReleaseCodable])->Void) {
+    private func getAllReleases(initialReleases: [DCReleaseModel], pageUrl: String, completion: @escaping ([DCReleaseModel])->Void) {
         oauthSwift.client.get(pageUrl) { result in
             switch result {
             case .success(let response):
@@ -112,7 +112,7 @@ class DCManager {
                 do {
                     
                     //print(String(decoding: response.data, as: UTF8.self))
-                    let response = try JSONDecoder().decode(RealmCollectionReleasesResponse.self,
+                    let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
                                                             from: response.data)
 
                     
@@ -141,12 +141,12 @@ class DCManager {
         }
     }
     
-    func getDetail(for resourceUrl: String, completion: @escaping (RealmReleaseDetailCodable?)->Void) {
+    func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetailModel?)->Void) {
         oauthSwift.client.get(resourceUrl) { result in
             switch result {
             case .success(let response):
                 do {
-                    let detail = try JSONDecoder().decode(RealmReleaseDetailCodable.self,
+                    let detail = try JSONDecoder().decode(DCReleaseDetailModel.self,
                                                           from: response.data)
                     print("Got album detail")
                     completion(detail)
@@ -161,13 +161,13 @@ class DCManager {
         }
     }
     
-    func getDetail(for resourceUrl: String) async -> RealmReleaseDetailCodable? {
+    func getDetail(for resourceUrl: String) async -> DCReleaseDetailModel? {
         return await withCheckedContinuation { continuation in
             oauthSwift.client.get(resourceUrl) { result in
                 switch result {
                 case .success(let response):
                     do {
-                        let detail = try JSONDecoder().decode(RealmReleaseDetailCodable.self,
+                        let detail = try JSONDecoder().decode(DCReleaseDetailModel.self,
                                                               from: response.data)
                         print("Got album detail")
                         continuation.resume(returning: detail)

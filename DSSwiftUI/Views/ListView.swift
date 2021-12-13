@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct RealmListView: View {
+struct ListView: View {
     
     @EnvironmentObject var appViewModel: AppViewModel
-    @StateObject var viewModel = RealmListViewModel()
+    @StateObject var viewModel = ListViewModel()
     @State private var showingLastFmLogin:Bool = false
     
     var body: some View {
@@ -40,7 +40,7 @@ struct RealmListView: View {
                 .environmentObject(viewModel.filterController)
         }
         .sheet(isPresented: $showingLastFmLogin) {
-            LastFmLoginView()
+            LFLoginView()
         }
     }
     
@@ -185,7 +185,7 @@ struct ReleaseListItemView: View {
 
 struct SelectedReleaseView: View {
     
-    @EnvironmentObject var realmListViewModel: RealmListViewModel
+    @EnvironmentObject var realmListViewModel: ListViewModel
     @ObservedObject var release: ReleaseViewModel
     
     var body: some View {
