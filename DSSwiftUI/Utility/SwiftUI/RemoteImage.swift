@@ -8,6 +8,7 @@
 import SwiftUI
 
 class UIImageDownloader: NSObject {
+    
     private let url: URL?
     private let placeholder: UIImage?
     private let fallback: UIImage?

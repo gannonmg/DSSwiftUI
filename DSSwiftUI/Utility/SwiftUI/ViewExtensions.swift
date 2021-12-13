@@ -20,12 +20,6 @@ extension View {
         self.frame(width: width)
     }
     
-    func standardShadow() -> some View {
-        self.shadow(color: .black.opacity(0.3),
-                    radius: 3,
-                    x: 0, y: 2)
-    }
-    
     func vPrint(_ vars: Any...) -> some View {
         for v in vars { print(v) }
         return EmptyView()
@@ -43,21 +37,5 @@ struct FullScreenProgressView: View {
             ProgressView()
                 .progressViewStyle(.circular)
         }
-    }
-}
-
-//MARK: - Login Field
-struct LoginFieldModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(Color(.lightGreyColor))
-            .cornerRadius(5.0)
-    }
-}
-
-extension TextField {
-    func loginFieldStyle() -> TextField {
-        self.modifier(LoginFieldModifier()).content
     }
 }
