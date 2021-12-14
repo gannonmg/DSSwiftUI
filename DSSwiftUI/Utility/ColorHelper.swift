@@ -7,16 +7,15 @@
 
 import SwiftUI
 
-enum ColorName: String {
-    
-    case searchBackground = "searchBackground"
-    
-}
-
+//From: https://stackoverflow.com/a/62207329/11556801
 extension Color {
-    
-    init(_ colorName: ColorName) {
-        self.init(colorName.rawValue)
-    }
-    
+    #if os(macOS)
+    static let background = Color(NSColor.windowBackgroundColor)
+    static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
+    static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
+    #else
+    static let background = Color(UIColor.systemBackground)
+    static let secondaryBackground = Color(UIColor.secondarySystemBackground)
+    static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
+    #endif
 }

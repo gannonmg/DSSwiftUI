@@ -224,8 +224,8 @@
 			children = (
 				2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */,
 				2D44EFD126B5C66100E4A1FE /* Common.swift */,
-				2DA3BB2326BF04AC00AEAB48 /* SwiftUI */,
 				2DE2CD242769474700F90A4D /* ColorHelper.swift */,
+				2DA3BB2326BF04AC00AEAB48 /* SwiftUI */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

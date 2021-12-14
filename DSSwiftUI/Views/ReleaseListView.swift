@@ -91,7 +91,7 @@ struct ReleaseListView: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
-        .background { Color(.searchBackground) }
+        .background { Color.background }
     }
     
     var noSearchResultsView: some View {
@@ -187,10 +187,11 @@ struct SelectedReleaseView: View {
     
     @EnvironmentObject var realmListViewModel: ReleaseListViewModel
     @ObservedObject var release: ReleaseViewModel
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack {
-            Color.black
+            (colorScheme == .light ? Color.black : Color.white)
                 .opacity(0.3)
                 .ignoresSafeArea()
             content
@@ -200,20 +201,23 @@ struct SelectedReleaseView: View {
     
     var content: some View {
         VStack(alignment: .leading) {
-            HStack {
-                ZStack(alignment: .topLeading) {
+            ZStack(alignment: .topTrailing) {
+                HStack {
                     RemoteImageView(url: URL(string: release.coverImage),
                                     placeholder: UIImage(systemName: "photo")!)
                         .height(80)
                         .width(80)
-                    closeButton
+                    
+                    VStack(alignment: .leading) {
+                        Text(release.title)
+                        Text(release.artists.first!.name)
+                            .font(.callout)
+                    }
+                    
+                    Spacer()
                 }
                 
-                VStack(alignment: .leading) {
-                    Text(release.title)
-                    Text(release.artists.first!.name)
-                        .font(.callout)
-                }
+                closeButton
             }
             
             if KeychainManager.shared.get(for: .lastFmSessionKey) != nil {
@@ -222,19 +226,20 @@ struct SelectedReleaseView: View {
                 }
             }
             
-            ForEach(release.tracklist) { track in
-                HStack {
-                    Text("\(track.title)")
-                    Spacer()
-                    if track.duration != "" {
-                        Text("\(track.duration)")
+            VStack {
+                ForEach(release.tracklist) { track in
+                    HStack(alignment: .top) {
+                        Text("\(track.title)")
+                        Spacer()
+                        if track.duration != "" {
+                            Text("\(track.duration)")
+                        }
                     }
                 }
             }
-            
+            .padding()
         }
-        .background { Color.white }
-        .cornerRadius(20)
+        .background { Color.secondaryBackground }
         .padding(.horizontal, 20)
     }
     
@@ -243,12 +248,17 @@ struct SelectedReleaseView: View {
             realmListViewModel.removeRandomeRelease()
         } label: {
             Image(systemName: "x.circle.fill")
+                .height(28)
+                .width(28)
                 .foregroundColor(.white)
-                .height(20)
-                .width(20)
-                .background { Color.black }
+                .background {
+                    Color.black
+                        .height(28)
+                        .width(28)
+                        .cornerRadius(14)
+                }
                 .padding(.top, 8)
-                .padding(.leading, 8)
+                .padding(.trailing, 8)
         }
     }
     
