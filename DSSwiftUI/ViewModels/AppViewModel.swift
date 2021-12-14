@@ -50,6 +50,10 @@ class AppViewModel: ObservableObject {
         DCManager.shared.resetOauth()
     }
     
+    func checkLastFmKey() {
+        self.lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
+    }
+    
     func logOutLastFm() {
         KeychainManager.shared.remove(key: .lastFmSessionKey)
         lastFmKey = nil

@@ -41,6 +41,7 @@ struct ReleaseListView: View {
         }
         .sheet(isPresented: $showingLastFmLogin) {
             LFLoginView()
+                .environmentObject(appViewModel)
         }
     }
     
@@ -119,7 +120,7 @@ struct ReleaseListView: View {
     }
     
     var lastFmButton: some View {
-        if appViewModel.loggedInToLastFm {
+        if appViewModel.lastFmKey != nil {
             return Button("Last.FM Logout", role: .destructive) {
                 appViewModel.logOutLastFm()
             }

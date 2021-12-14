@@ -10,6 +10,7 @@ import SwiftUI
 struct LFLoginView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var appViewModel: AppViewModel
     @StateObject private var viewModel = LFLoginViewModel()
     
     var body: some View {
@@ -21,6 +22,7 @@ struct LFLoginView: View {
             SecureField("Password", text: $viewModel.password, prompt: Text("Enter Password"))
             Button("Login") {
                 viewModel.login {
+                    self.appViewModel.checkLastFmKey()
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }
