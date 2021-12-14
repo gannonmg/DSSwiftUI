@@ -45,5 +45,12 @@ class ReleaseListViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1.0)
     }
+    
+    func testFilter() throws {
+        RealmManager.shared.add(releases: releaseModels)
+        let viewModel = ReleaseListViewModel()
+        viewModel.filterController.tappedOption(FilterOption(title: "Indie Rock"))
+        
+    }
 
 }

@@ -39,6 +39,7 @@
 		2DCC292E26BC42040062B56F /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC292D26BC42040062B56F /* RemoteImage.swift */; };
 		2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2F7D426BDB699006D8F40 /* FilterView.swift */; };
 		2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */; };
+		2DE2CD252769474700F90A4D /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2CD242769474700F90A4D /* ColorHelper.swift */; };
 		C9244D70274ED13000AAFFE1 /* ReleaseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9244D6F274ED13000AAFFE1 /* ReleaseListView.swift */; };
 		C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9244D73274ED14400AAFFE1 /* Secret.swift */; };
 		C92BB3BA274FF467001C82C5 /* DCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3B9274FF467001C82C5 /* DCModels.swift */; };
@@ -90,6 +91,7 @@
 		2DCC292D26BC42040062B56F /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		2DD2F7D426BDB699006D8F40 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartSearchMatcher.swift; sourceTree = "<group>"; };
+		2DE2CD242769474700F90A4D /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
 		C9244D6F274ED13000AAFFE1 /* ReleaseListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseListView.swift; sourceTree = "<group>"; };
 		C9244D73274ED14400AAFFE1 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		C92BB3B9274FF467001C82C5 /* DCModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCModels.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */,
 				2D44EFD126B5C66100E4A1FE /* Common.swift */,
 				2DA3BB2326BF04AC00AEAB48 /* SwiftUI */,
+				2DE2CD242769474700F90A4D /* ColorHelper.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				2D44EFBD26B4D2F600E4A1FE /* DCManager.swift in Sources */,
 				2D44EFA726B4CD3800E4A1FE /* DSSwiftUIApp.swift in Sources */,
 				C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */,
+				2DE2CD252769474700F90A4D /* ColorHelper.swift in Sources */,
 				2DA3BB2526BF04BC00AEAB48 /* RefreshControlView.swift in Sources */,
 				2D44EFCB26B5C28200E4A1FE /* ViewExtensions.swift in Sources */,
 				2D44EFCD26B5C4A400E4A1FE /* LFManager.swift in Sources */,

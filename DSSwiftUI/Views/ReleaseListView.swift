@@ -91,7 +91,7 @@ struct ReleaseListView: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
-        .background { Color.white }
+        .background { Color(.searchBackground) }
     }
     
     var noSearchResultsView: some View {
