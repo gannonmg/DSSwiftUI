@@ -26,6 +26,10 @@ class RealmManagerTests: XCTestCase {
 
         }
     }
+    
+    override func tearDownWithError() throws {
+        releaseModels = nil
+    }
 
     func testRealmSaving() throws {
         RealmManager.shared.add(releases: releaseModels)

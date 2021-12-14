@@ -17,6 +17,8 @@
 		2D3B37BF27680E810053CADF /* SingleRelease.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D3B37BE27680E800053CADF /* SingleRelease.json */; };
 		2D3B37C12768116B0053CADF /* SmartSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37C02768116A0053CADF /* SmartSearchTests.swift */; };
 		2D3B37C3276813780053CADF /* RealmManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37C2276813780053CADF /* RealmManagerTests.swift */; };
+		2D3B37C527681E400053CADF /* FilterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37C427681E400053CADF /* FilterViewModelTests.swift */; };
+		2D3B37C727681E510053CADF /* ReleaseListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37C627681E510053CADF /* ReleaseListViewModelTests.swift */; };
 		2D44EFA726B4CD3800E4A1FE /* DSSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */; };
 		2D44EFAB26B4CD3A00E4A1FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */; };
 		2D44EFAE26B4CD3A00E4A1FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D44EFAD26B4CD3A00E4A1FE /* Preview Assets.xcassets */; };
@@ -66,6 +68,8 @@
 		2D3B37BE27680E800053CADF /* SingleRelease.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SingleRelease.json; sourceTree = "<group>"; };
 		2D3B37C02768116A0053CADF /* SmartSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartSearchTests.swift; sourceTree = "<group>"; };
 		2D3B37C2276813780053CADF /* RealmManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManagerTests.swift; sourceTree = "<group>"; };
+		2D3B37C427681E400053CADF /* FilterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModelTests.swift; sourceTree = "<group>"; };
+		2D3B37C627681E510053CADF /* ReleaseListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseListViewModelTests.swift; sourceTree = "<group>"; };
 		2D44EFA326B4CD3800E4A1FE /* DSSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSSwiftUIApp.swift; sourceTree = "<group>"; };
 		2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -241,6 +245,8 @@
 				2D3B37B82768066C0053CADF /* ReleaseViewModelTests.swift */,
 				2D3B37C02768116A0053CADF /* SmartSearchTests.swift */,
 				2D3B37C2276813780053CADF /* RealmManagerTests.swift */,
+				2D3B37C627681E510053CADF /* ReleaseListViewModelTests.swift */,
+				2D3B37C427681E400053CADF /* FilterViewModelTests.swift */,
 			);
 			path = DSSwiftUITests;
 			sourceTree = "<group>";
@@ -386,8 +392,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D3B37C727681E510053CADF /* ReleaseListViewModelTests.swift in Sources */,
 				2D3B37C3276813780053CADF /* RealmManagerTests.swift in Sources */,
 				2D8922CC274C4CD20013C9F4 /* AppViewModelTests.swift in Sources */,
+				2D3B37C527681E400053CADF /* FilterViewModelTests.swift in Sources */,
 				2D3B37C12768116B0053CADF /* SmartSearchTests.swift in Sources */,
 				2DC892D4274ACD4400010F6C /* KeychainManagerTests.swift in Sources */,
 				2D3B37B92768066C0053CADF /* ReleaseViewModelTests.swift in Sources */,
