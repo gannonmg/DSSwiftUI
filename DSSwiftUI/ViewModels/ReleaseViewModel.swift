@@ -10,7 +10,7 @@ import Foundation
 class ReleaseViewModel: ObservableObject, Identifiable {
     
     let id: Int //this is the instance id from discogs and is unique even among duplicate albums
-    let discogsId: Int //This is unique to thee reelease, but not instances of the release
+    let discogsId: Int //This is unique to the release, but not instances of the release
     
     let title: String
     let year: Int
@@ -27,6 +27,10 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     
     var firstArtist: String {
         return self.artists.first?.name ?? ""
+    }
+    
+    var artistList: String {
+        return self.artists.map { $0.name }.joined(separator: ", ")
     }
 
     init(from release: DCReleaseModel) {

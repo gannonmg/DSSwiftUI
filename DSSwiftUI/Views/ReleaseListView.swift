@@ -10,7 +10,7 @@ import SwiftUI
 struct ReleaseListView: View {
     
     @EnvironmentObject var appViewModel: AppViewModel
-    @StateObject var viewModel = ListViewModel()
+    @StateObject var viewModel = ReleaseListViewModel()
     @State private var showingLastFmLogin:Bool = false
     
     var body: some View {
@@ -108,7 +108,7 @@ struct ReleaseListView: View {
         ToolbarItem(placement: .navigationBarLeading) {
             Menu {
                 Button("Log Out", role: .destructive,
-                       action: appViewModel.logOut)
+                       action: appViewModel.logOutAll)
                 Button("Delete Collection", role: .destructive,
                        action: RealmManager.shared.deleteAllReleases)
                 lastFmButton
@@ -185,7 +185,7 @@ struct ReleaseListItemView: View {
 
 struct SelectedReleaseView: View {
     
-    @EnvironmentObject var realmListViewModel: ListViewModel
+    @EnvironmentObject var realmListViewModel: ReleaseListViewModel
     @ObservedObject var release: ReleaseViewModel
     
     var body: some View {

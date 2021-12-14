@@ -9,13 +9,13 @@ import SwiftUI
 
 class AppViewModel: ObservableObject {
     
-    @Published private(set) var token: String?
+    @Published private(set) var discogsToken: String?
     @Published private(set) var lastFmKey: String?
-    var loggedIn: Bool { token != nil }
+    var loggedIn: Bool { discogsToken != nil }
     var loggedInToLastFm: Bool { lastFmKey != nil }
     
     init() {
-        token = KeychainManager.shared.get(for: .discogsUserToken)
+        discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
         lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(checkForToken),
@@ -37,13 +37,13 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func logOut() {
+    func logOutAll() {
         KeychainManager.shared.remove(key: .discogsUsername)
         KeychainManager.shared.remove(key: .discogsUserToken)
         KeychainManager.shared.remove(key: .discogsUserSecret)
         KeychainManager.shared.remove(key: .lastFmSessionKey)
 
-        token = nil
+        discogsToken = nil
         lastFmKey = nil
         
         RealmManager.shared.deleteAllReleases()
@@ -57,7 +57,7 @@ class AppViewModel: ObservableObject {
     
     @objc func checkForToken() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.token = KeychainManager.shared.get(for: .discogsUserToken)
+            self.discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
         }
     }
     

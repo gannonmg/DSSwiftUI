@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D3B37AA27629E8E0053CADF /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37A927629E8E0053CADF /* ListViewModel.swift */; };
+		2D3B37AA27629E8E0053CADF /* ReleaseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */; };
 		2D3B37AC2765AC760053CADF /* LFLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37AB2765AC760053CADF /* LFLoginView.swift */; };
 		2D3B37B12767E90A0053CADF /* ReleaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */; };
 		2D3B37B32767EA520053CADF /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37B22767EA520053CADF /* AppViewModel.swift */; };
 		2D3B37B62767EBF50053CADF /* LFLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37B52767EBF50053CADF /* LFLoginViewModel.swift */; };
+		2D3B37B92768066C0053CADF /* ReleaseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37B82768066C0053CADF /* ReleaseViewModelTests.swift */; };
+		2D3B37BC27680A400053CADF /* MockApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37BA27680A330053CADF /* MockApiClient.swift */; };
+		2D3B37BF27680E810053CADF /* SingleRelease.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D3B37BE27680E800053CADF /* SingleRelease.json */; };
+		2D3B37C12768116B0053CADF /* SmartSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37C02768116A0053CADF /* SmartSearchTests.swift */; };
+		2D3B37C3276813780053CADF /* RealmManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37C2276813780053CADF /* RealmManagerTests.swift */; };
 		2D44EFA726B4CD3800E4A1FE /* DSSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */; };
 		2D44EFAB26B4CD3A00E4A1FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */; };
 		2D44EFAE26B4CD3A00E4A1FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D44EFAD26B4CD3A00E4A1FE /* Preview Assets.xcassets */; };
@@ -37,7 +42,7 @@
 		C92BB3BA274FF467001C82C5 /* DCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3B9274FF467001C82C5 /* DCModels.swift */; };
 		C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BB274FF48C001C82C5 /* RealmManager.swift */; };
 		C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */; };
-		C92BB3C027502226001C82C5 /* Response.json in Resources */ = {isa = PBXBuildFile; fileRef = C92BB3BF27502226001C82C5 /* Response.json */; };
+		C92BB3C027502226001C82C5 /* ShortResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = C92BB3BF27502226001C82C5 /* ShortResponse.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,11 +56,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2D3B37A927629E8E0053CADF /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseListViewModel.swift; sourceTree = "<group>"; };
 		2D3B37AB2765AC760053CADF /* LFLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFLoginView.swift; sourceTree = "<group>"; };
 		2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseViewModel.swift; sourceTree = "<group>"; };
 		2D3B37B22767EA520053CADF /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		2D3B37B52767EBF50053CADF /* LFLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFLoginViewModel.swift; sourceTree = "<group>"; };
+		2D3B37B82768066C0053CADF /* ReleaseViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseViewModelTests.swift; sourceTree = "<group>"; };
+		2D3B37BA27680A330053CADF /* MockApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockApiClient.swift; sourceTree = "<group>"; };
+		2D3B37BE27680E800053CADF /* SingleRelease.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SingleRelease.json; sourceTree = "<group>"; };
+		2D3B37C02768116A0053CADF /* SmartSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartSearchTests.swift; sourceTree = "<group>"; };
+		2D3B37C2276813780053CADF /* RealmManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManagerTests.swift; sourceTree = "<group>"; };
 		2D44EFA326B4CD3800E4A1FE /* DSSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSSwiftUIApp.swift; sourceTree = "<group>"; };
 		2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,7 +91,7 @@
 		C92BB3B9274FF467001C82C5 /* DCModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCModels.swift; sourceTree = "<group>"; };
 		C92BB3BB274FF48C001C82C5 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
-		C92BB3BF27502226001C82C5 /* Response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Response.json; sourceTree = "<group>"; };
+		C92BB3BF27502226001C82C5 /* ShortResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShortResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				2D3B37B22767EA520053CADF /* AppViewModel.swift */,
-				2D3B37A927629E8E0053CADF /* ListViewModel.swift */,
+				2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */,
 				2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */,
 				C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */,
 				2D3B37B52767EBF50053CADF /* LFLoginViewModel.swift */,
@@ -148,6 +158,16 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		2D3B37BD27680A450053CADF /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				2D3B37BA27680A330053CADF /* MockApiClient.swift */,
+				C92BB3BF27502226001C82C5 /* ShortResponse.json */,
+				2D3B37BE27680E800053CADF /* SingleRelease.json */,
+			);
+			path = Testing;
+			sourceTree = "<group>";
+		};
 		2D44EF9A26B4CD3700E4A1FE = {
 			isa = PBXGroup;
 			children = (
@@ -171,13 +191,13 @@
 			isa = PBXGroup;
 			children = (
 				2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */,
+				C9244D73274ED14400AAFFE1 /* Secret.swift */,
 				2D3B37B42767EAAD0053CADF /* Managers */,
 				2D3B37AF2767E7B20053CADF /* Models */,
 				2D3B37AD2767E7A40053CADF /* Views */,
 				2D3B37AE2767E7AB0053CADF /* ViewModels */,
 				2D44EFC826B5C22200E4A1FE /* Utility */,
-				C9244D73274ED14400AAFFE1 /* Secret.swift */,
-				C92BB3BF27502226001C82C5 /* Response.json */,
+				2D3B37BD27680A450053CADF /* Testing */,
 				2D44EFAA26B4CD3A00E4A1FE /* Assets.xcassets */,
 				2D44EFB426B4CD3A00E4A1FE /* Info.plist */,
 				2D44EFAC26B4CD3A00E4A1FE /* Preview Content */,
@@ -218,6 +238,9 @@
 			children = (
 				2DC892D3274ACD4400010F6C /* KeychainManagerTests.swift */,
 				2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */,
+				2D3B37B82768066C0053CADF /* ReleaseViewModelTests.swift */,
+				2D3B37C02768116A0053CADF /* SmartSearchTests.swift */,
+				2D3B37C2276813780053CADF /* RealmManagerTests.swift */,
 			);
 			path = DSSwiftUITests;
 			sourceTree = "<group>";
@@ -311,8 +334,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C92BB3C027502226001C82C5 /* Response.json in Resources */,
+				C92BB3C027502226001C82C5 /* ShortResponse.json in Resources */,
 				2D44EFAE26B4CD3A00E4A1FE /* Preview Assets.xcassets in Resources */,
+				2D3B37BF27680E810053CADF /* SingleRelease.json in Resources */,
 				2D44EFAB26B4CD3A00E4A1FE /* Assets.xcassets in Resources */,
 				2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */,
 			);
@@ -333,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */,
+				2D3B37BC27680A400053CADF /* MockApiClient.swift in Sources */,
 				2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */,
 				2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */,
 				2D3B37B62767EBF50053CADF /* LFLoginViewModel.swift in Sources */,
@@ -343,7 +368,7 @@
 				2D3B37AC2765AC760053CADF /* LFLoginView.swift in Sources */,
 				2D3B37B32767EA520053CADF /* AppViewModel.swift in Sources */,
 				2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */,
-				2D3B37AA27629E8E0053CADF /* ListViewModel.swift in Sources */,
+				2D3B37AA27629E8E0053CADF /* ReleaseListViewModel.swift in Sources */,
 				2D3B37B12767E90A0053CADF /* ReleaseViewModel.swift in Sources */,
 				2D44EFD626B5C7ED00E4A1FE /* LFModels.swift in Sources */,
 				C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */,
@@ -361,8 +386,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D3B37C3276813780053CADF /* RealmManagerTests.swift in Sources */,
 				2D8922CC274C4CD20013C9F4 /* AppViewModelTests.swift in Sources */,
+				2D3B37C12768116B0053CADF /* SmartSearchTests.swift in Sources */,
 				2DC892D4274ACD4400010F6C /* KeychainManagerTests.swift in Sources */,
+				2D3B37B92768066C0053CADF /* ReleaseViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

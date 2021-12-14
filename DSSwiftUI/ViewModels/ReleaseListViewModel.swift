@@ -9,7 +9,7 @@ import Combine
 import RealmSwift
 import Foundation
 
-class ListViewModel: ObservableObject {
+class ReleaseListViewModel: ObservableObject {
     
     @ObservedResults(DCReleaseModel.self) private var releasesResults
     @Published private(set) var releases:[ReleaseViewModel] = []

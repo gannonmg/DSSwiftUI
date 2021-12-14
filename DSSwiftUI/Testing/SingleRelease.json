@@ -1,0 +1,72 @@
+{
+    "id": 20771347,
+    "instance_id": 862963093,
+    "date_added": "2021-11-21T09:42:18-08:00",
+    "rating": 0,
+    "basic_information": {
+        "id": 20771347,
+        "master_id": 2356930,
+        "master_url": "https://api.discogs.com/masters/2356930",
+        "resource_url": "https://api.discogs.com/releases/20771347",
+        "thumb": "https://img.discogs.com/zYERYaw_vkobpK1yGV9PbBJjq7g=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-20771347-1635520360-5208.jpeg.jpg",
+        "cover_image": "https://img.discogs.com/Mi34uJ_IwP7gsDg1PQM-ElWqyrs=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-20771347-1635520360-5208.jpeg.jpg",
+        "title": "I Don't Live Here Anymore",
+        "year": 2021,
+        "formats": [
+            {
+                "name": "Vinyl",
+                "qty": "2",
+                "descriptions": [
+                    "LP",
+                    "Album",
+                    "Stereo"
+                ]
+            }
+        ],
+        "labels": [
+            {
+                "name": "Atlantic",
+                "catno": "SEL 1-659043 - 075678643477",
+                "entity_type": "1",
+                "entity_type_name": "Label",
+                "id": 681,
+                "resource_url": "https://api.discogs.com/labels/681"
+            },
+            {
+                "name": "Atlantic",
+                "catno": "075678641299",
+                "entity_type": "1",
+                "entity_type_name": "Label",
+                "id": 681,
+                "resource_url": "https://api.discogs.com/labels/681"
+            }
+        ],
+        "artists": [
+            {
+                "name": "The War On Drugs",
+                "anv": "",
+                "join": "",
+                "role": "",
+                "tracks": "",
+                "id": 1337908,
+                "resource_url": "https://api.discogs.com/artists/1337908"
+            },
+            {
+                "name": "Fakey McFakename",
+                "anv": "",
+                "join": "",
+                "role": "",
+                "tracks": "",
+                "id": 1337908,
+                "resource_url": "https://api.discogs.com/artists/1337908"
+            }
+        ],
+        "genres": [
+            "Rock"
+        ],
+        "styles": [
+            "Alternative Rock"
+        ]
+    },
+    "folder_id": 1
+}

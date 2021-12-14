@@ -57,6 +57,16 @@ class RealmManager {
         }
     }
     
+    func getAllReleases() -> [DCReleaseModel]? {
+        do {
+            let realm = try Realm()
+            return Array(realm.objects(DCReleaseModel.self))
+        } catch {
+            print("Failed to get detail")
+            return nil
+        }
+    }
+    
     func update(with releases: [DCReleaseModel]) {
         do {
             let realm = try Realm()
