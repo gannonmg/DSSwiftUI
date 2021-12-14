@@ -20,7 +20,7 @@ struct ReleaseListView: View {
                     searchView
                     conditionalView
                 }
-                .background { Color.lightGreyColor }
+                .background { Color.secondaryBackground }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     leadingItem
