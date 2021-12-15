@@ -56,12 +56,9 @@ struct ReleaseListView: View {
     }
     
     var getReleasesView: some View {
-        VStack(alignment: .center) {
-            Spacer()
-            Button("Get Releases", action: viewModel.getRemoteReleases)
-                    .buttonStyle(.bordered)
-            Spacer()
-        }
+        Button("Get Releases", action: viewModel.getRemoteReleases)
+                .buttonStyle(.bordered)
+                .frame(maxHeight: .infinity)
     }
     
     var listView: some View {
