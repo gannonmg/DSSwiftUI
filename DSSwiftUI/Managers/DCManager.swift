@@ -14,22 +14,21 @@ class DCManager {
     static let shared = DCManager()
     
     private init() {
-        self.oauthSwift = OAuth1Swift(consumerKey:     DCAuthInfo.key,
-                                      consumerSecret:  DCAuthInfo.secret,
+        self.oauthSwift = OAuth1Swift(consumerKey: DCAuthInfo.key,
+                                      consumerSecret: DCAuthInfo.secret,
                                       requestTokenUrl: "https://api.discogs.com/oauth/request_token",
-                                      authorizeUrl:    "https://www.discogs.com/oauth/authorize",
-                                      accessTokenUrl:  "https://api.discogs.com/oauth/access_token")
+                                      authorizeUrl: "https://www.discogs.com/oauth/authorize",
+                                      accessTokenUrl: "https://api.discogs.com/oauth/access_token")
         
         if let userToken = KeychainManager.shared.get(for: .discogsUserToken),
-           let userTokenSecret = KeychainManager.shared.get(for: .discogsUserSecret)
-        {
+           let userTokenSecret = KeychainManager.shared.get(for: .discogsUserSecret) {
             oauthSwift.client.credential.oauthToken = userToken
             oauthSwift.client.credential.oauthTokenSecret = userTokenSecret
         }
     }
     
-    //MARK: Authentication
-    func userLoginProcess(completion: @escaping  ((Error?)->Void)) {
+    // MARK: Authentication
+    func userLoginProcess(completion: @escaping  ((Error?) -> Void)) {
         sendToWebLogin { error in
             guard error == nil else {
                 completion(error)
@@ -40,9 +39,9 @@ class DCManager {
         }
     }
     
-    //Allows user to authenticate the app via oauth
-    private func sendToWebLogin(completion: @escaping ((Error?)->Void)) {
-        let _ = oauthSwift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
+    // Allows user to authenticate the app via oauth
+    private func sendToWebLogin(completion: @escaping ((Error?) -> Void)) {
+        _ = oauthSwift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
             switch result {
             case .success(let (credential, _ /*response*/, _/*parameters*/)):
                 KeychainManager.shared.save(key: .discogsUserToken, string: credential.oauthToken)
@@ -54,8 +53,8 @@ class DCManager {
         }
     }
     
-    //Gets the user's username after oauth login
-    func getUserIdentity(completion: @escaping ((Error?)->Void)) {
+    // Gets the user's username after oauth login
+    func getUserIdentity(completion: @escaping ((Error?) -> Void)) {
         oauthSwift.client.get("https://api.discogs.com/oauth/identity") { result in
             switch result {
             case .success(let response):
@@ -73,18 +72,15 @@ class DCManager {
     }
     
     func resetOauth() {
-        self.oauthSwift = OAuth1Swift(consumerKey:     DCAuthInfo.key,
-                                      consumerSecret:  DCAuthInfo.secret,
+        self.oauthSwift = OAuth1Swift(consumerKey: DCAuthInfo.key,
+                                      consumerSecret: DCAuthInfo.secret,
                                       requestTokenUrl: "https://api.discogs.com/oauth/request_token",
-                                      authorizeUrl:    "https://www.discogs.com/oauth/authorize",
-                                      accessTokenUrl:  "https://api.discogs.com/oauth/access_token")
-
-        
-        
+                                      authorizeUrl: "https://www.discogs.com/oauth/authorize",
+                                      accessTokenUrl: "https://api.discogs.com/oauth/access_token")
     }
     
-    //MARK: Releases
-    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([DCReleaseModel])->Void) {
+    // MARK: Releases
+    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([DCReleaseModel]) -> Void) {
         
         guard let username = KeychainManager.shared.get(for: .discogsUsername) else {
             completion([])
@@ -103,29 +99,28 @@ class DCManager {
         }
     }
     
-    private func getAllReleases(initialReleases: [DCReleaseModel], pageUrl: String, completion: @escaping ([DCReleaseModel])->Void) {
+    private func getAllReleases(initialReleases: [DCReleaseModel], pageUrl: String, completion: @escaping ([DCReleaseModel]) -> Void) {
         oauthSwift.client.get(pageUrl) { result in
             switch result {
             case .success(let response):
                 
-                //Decode our data response to the release object
+                // Decode our data response to the release object
                 do {
                     
-                    //print(String(decoding: response.data, as: UTF8.self))
+                    // print(String(decoding: response.data, as: UTF8.self))
                     let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
                                                             from: response.data)
-
                     
-                    //Add our newly collected releases to what we've passed in
+                    // Add our newly collected releases to what we've passed in
                     let releases = initialReleases + response.releases
 
-                    //Check if we have a next url. If not, we're at the end and have everything we need, so bail
+                    // Check if we have a next url. If not, we're at the end and have everything we need, so bail
                     guard let nextPage = response.pagination.urls.next else {
                         completion(releases)
                         return
                     }
                     
-                    //If we do have a next page url, let recursively call this function again, and get another chunk of albums
+                    // If we do have a next page url, let recursively call this function again, and get another chunk of albums
                     self.getAllReleases(initialReleases: releases,
                                         pageUrl: nextPage,
                                         completion: completion)
@@ -141,7 +136,7 @@ class DCManager {
         }
     }
     
-    func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetailModel?)->Void) {
+    func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetailModel?) -> Void) {
         oauthSwift.client.get(resourceUrl) { result in
             switch result {
             case .success(let response):
@@ -182,6 +177,5 @@ class DCManager {
             }
         }
     }
-
     
 }

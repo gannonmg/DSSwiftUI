@@ -11,7 +11,7 @@ import XCTest
 class AppViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
-        //Make sure we have a logged out state to start each test
+        // Make sure we have a logged out state to start each test
         KeychainManager.shared.remove(key: .discogsUserToken)
         KeychainManager.shared.remove(key: .lastFmSessionKey)
         XCTAssertNil(KeychainManager.shared.get(for: .discogsUserToken))
@@ -20,7 +20,7 @@ class AppViewModelTests: XCTestCase {
 
     func testLogInLogOut() throws {
         
-        //Save fake keys to make sure AppViewModel is getting keys properly on init
+        // Save fake keys to make sure AppViewModel is getting keys properly on init
         KeychainManager.shared.save(key: .discogsUserToken, string: "123")
         KeychainManager.shared.save(key: .lastFmSessionKey, string: "123")
         XCTAssertNotNil(KeychainManager.shared.get(for: .discogsUserToken))

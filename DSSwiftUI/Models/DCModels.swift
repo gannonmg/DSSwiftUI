@@ -14,7 +14,7 @@ struct CollectionReleasesResponse: Codable {
     let releases: [DCReleaseModel]
 }
 
-//MARK: - Errors
+// MARK: - Errors
 enum DCError: Error {
     case releaseFailure
     case releaseDetailFailure
@@ -24,7 +24,13 @@ enum DCError: Error {
 struct DCUser: Codable {
     let id: Int
     let username: String
-    let resource_url: String
+    let resourseUrl: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, username
+        case resourseUrl = "resource_url"
+    }
+    
 }
 
 // MARK: - Pagination
@@ -50,7 +56,7 @@ class DCReleaseModel: Object, ObjectKeyIdentifiable, Codable {
         return "instanceId"
     }
 
-    ///The unique identifier release for this album in the collection. Two identical albums in a collection will have different instanceIds.
+    /// The unique identifier release for this album in the collection. Two identical albums in a collection will have different instanceIds.
     @Persisted private(set) var id: Int
     @Persisted private(set) var instanceId: Int
     @Persisted private(set) var basicInformation: DCBasicInformationModel!
@@ -61,7 +67,7 @@ class DCReleaseModel: Object, ObjectKeyIdentifiable, Codable {
              basicInformation = "basic_information"
     }
     
-    //Convenience
+    // Convenience
     var tracks: [DCTrackModel] { self.basicInformation.tracks ?? [] }
 
 }
@@ -164,4 +170,3 @@ class DCTrackModel: Object, Codable, Identifiable {
     }
     
 }
-

@@ -11,7 +11,7 @@ struct ReleaseListView: View {
     
     @EnvironmentObject var appViewModel: AppViewModel
     @StateObject var viewModel = ReleaseListViewModel()
-    @State private var showingLastFmLogin:Bool = false
+    @State private var showingLastFmLogin: Bool = false
     
     var body: some View {
         ZStack {
@@ -229,7 +229,7 @@ struct SelectedReleaseView: View {
                     HStack(alignment: .top) {
                         Text("\(track.title)")
                         Spacer()
-                        if track.duration != "" {
+                        if !track.duration.isEmpty {
                             Text("\(track.duration)")
                         }
                     }

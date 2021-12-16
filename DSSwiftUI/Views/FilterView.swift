@@ -14,7 +14,7 @@ struct FilterView: View {
     var body: some View {
         NavigationView {
             List {
-                if filterController.selectedFilters.count > 0 {
+                if filterController.selectedFilters.isEmpty == false {
                     SelectedFiltersView(filterController: filterController)
                 }
                 
@@ -23,8 +23,7 @@ struct FilterView: View {
                 ForEach(filterController.categories, id: \.self) { category in
                     let filterCategory = FilterCategory(rawValue: category.lowercased())!
                     NavigationLink(destination: FilterSelectionView(category: filterCategory,
-                                                                    filterController: filterController))
-                    {
+                                                                    filterController: filterController)) {
                         FilterCategoryView(title: category)
                     }
                 }
@@ -108,13 +107,11 @@ struct FilterSelectionView: View {
 
 struct FilterOptionView: View {
     
-    let option:FilterOption
-    let action:(()->Void)
+    let option: FilterOption
+    let action: StandardAction
     
     var body: some View {
-        Button(action: {
-            action()
-        }, label: {
+        Button(action: action) {
             VStack(alignment: .center) {
                 HStack {
                     Text(option.title)
@@ -125,14 +122,14 @@ struct FilterOptionView: View {
                 .padding(.horizontal, 16)
             }
             .frame(height: 40)
-        })
+        }
     }
     
 }
 
 struct FilterCategoryView: View {
     
-    let title:String
+    let title: String
     
     var body: some View {
         HStack {

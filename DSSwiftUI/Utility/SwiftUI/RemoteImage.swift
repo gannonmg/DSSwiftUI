@@ -25,7 +25,7 @@ class UIImageDownloader: NSObject {
         currentTask?.cancel()
     }
 
-    func fetch(update: @escaping (UIImage?)->()) {
+    func fetch(update: @escaping (UIImage?) -> Void) {
         currentTask?.cancel()
         if let url = url {
             if let cachedImage = ImageCache.shared.imageFor(url) {
@@ -34,12 +34,11 @@ class UIImageDownloader: NSObject {
             } else {
                 update(placeholder)
             }
-        }
-        else {
+        } else {
             update(fallback ?? placeholder)
         }
         if let url = url {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
                 if let data = data, let image = UIImage(data: data) {
                     ImageCache.shared.set(image, for: url)
                     DispatchQueue.main.async {
@@ -70,7 +69,7 @@ struct RemoteImageView: View {
         Image(uiImage: self.image ?? self.placeholder)
             .resizable()
             .aspectRatio(contentMode: contentMode)
-            .onAppear() {
+            .onAppear {
                 self.downloader.fetch {
                     self.image = $0!
                 }
@@ -78,7 +77,7 @@ struct RemoteImageView: View {
     }
 }
 
-//MARK: - Image Cache
+// MARK: - Image Cache
 private class ImageCache: NSCache<NSString, UIImage> {
     
     static let shared = ImageCache()

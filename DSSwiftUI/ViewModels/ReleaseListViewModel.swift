@@ -12,7 +12,7 @@ import Foundation
 class ReleaseListViewModel: ObservableObject {
     
     @ObservedResults(DCReleaseModel.self) private var releasesResults
-    @Published private(set) var releases:[ReleaseViewModel] = []
+    @Published private(set) var releases: [ReleaseViewModel] = []
     
     @Published private(set) var selectedRelease: ReleaseViewModel?
     @Published var showingFilters: Bool = false
@@ -57,7 +57,7 @@ class ReleaseListViewModel: ObservableObject {
     }
     
     func setSortedReleases(_ releases: [ReleaseViewModel]) {
-        self.releases = releases.sorted(by: { $0.firstArtist < $1.firstArtist } )
+        self.releases = releases.sorted(by: { $0.firstArtist < $1.firstArtist })
     }
     
     func getRemoteReleases() {
@@ -83,7 +83,7 @@ class ReleaseListViewModel: ObservableObject {
     }
     
     func filterUpdated(predicate: NSPredicate?) {
-        var releases:[ReleaseViewModel] = []
+        var releases: [ReleaseViewModel] = []
         
         if let predicate = predicate {
             let results = self.releasesResults.filter(predicate)

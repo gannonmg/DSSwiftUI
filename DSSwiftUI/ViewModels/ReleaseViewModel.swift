@@ -9,8 +9,8 @@ import Foundation
 
 class ReleaseViewModel: ObservableObject, Identifiable {
     
-    let id: Int //this is the instance id from discogs and is unique even among duplicate albums
-    let discogsId: Int //This is unique to the release, but not instances of the release
+    let id: Int // This is the instance id from discogs and is unique even among duplicate albums
+    let discogsId: Int // This is unique to the release, but not instances of the release
     
     let title: String
     let year: Int

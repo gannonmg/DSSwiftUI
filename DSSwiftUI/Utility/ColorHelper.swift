@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//From: https://stackoverflow.com/a/62207329/11556801
+// From: https://stackoverflow.com/a/62207329/11556801
 extension Color {
     #if os(macOS)
     static let background = Color(NSColor.windowBackgroundColor)

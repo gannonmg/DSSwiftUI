@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-typealias StandardAction = (()->Void)
+typealias StandardAction = (() -> Void)
 
-//MARK: - Common
+// MARK: - Common
 extension View {
     
     func height(_ height: CGFloat) -> some View {
@@ -20,14 +20,14 @@ extension View {
         self.frame(width: width)
     }
     
-    func vPrint(_ vars: Any...) -> some View {
-        for v in vars { print(v) }
+    func vPrint(_ variables: Any...) -> some View {
+        for variable in variables { print(variable) }
         return EmptyView()
     }
     
 }
 
-//MARK: - Progress Indicators
+// MARK: - Progress Indicators
 struct FullScreenProgressView: View {
     var body: some View {
         ZStack {

@@ -36,7 +36,7 @@ class FilterViewModel: ObservableObject {
         didSet { setPredicate() }
     }
     
-    @Published private(set) var filterOptions:[FilterCategory:[FilterOption]] {
+    @Published private(set) var filterOptions: [FilterCategory: [FilterOption]] {
         didSet { setPredicate() }
     }
     
@@ -46,39 +46,39 @@ class FilterViewModel: ObservableObject {
     
 }
 
-//MARK: - Computed Properties
+// MARK: - Computed Properties
 extension FilterViewModel {
     
-    var genres:[FilterOption] { filterOptions[.genres] ?? [] }
-    var styles:[FilterOption] { filterOptions[.styles] ?? [] }
-    var formats:[FilterOption] { filterOptions[.formats] ?? [] }
-    var descriptions:[FilterOption] { filterOptions[.descriptions] ?? [] }
+    var genres: [FilterOption] { filterOptions[.genres] ?? [] }
+    var styles: [FilterOption] { filterOptions[.styles] ?? [] }
+    var formats: [FilterOption] { filterOptions[.formats] ?? [] }
+    var descriptions: [FilterOption] { filterOptions[.descriptions] ?? [] }
 
-    var categories:[String] {
+    var categories: [String] {
         return filterOptions.keys
             .map { $0.rawValue.capitalized }
             .sorted { $0 < $1 }
     }
 
-    var selectedFilters:[FilterOption] {
+    var selectedFilters: [FilterOption] {
         return allFilterOptions.selected
     }
 
-    var allFilterOptions:[FilterOption] {
+    var allFilterOptions: [FilterOption] {
         return filterOptions.values.flatMap { $0 }
     }
     
 }
 
-//MARK: - Filter functions
+// MARK: - Filter functions
 extension FilterViewModel {
     
     func tappedOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
             let count = filterOptions[key]?.count ?? 0
-            for i in 0..<count {
-                guard filterOptions[key]?[i].id == tappedOption.id else { continue }
-                filterOptions[key]?[i].selected.toggle()
+            for index in 0..<count {
+                guard filterOptions[key]?[index].id == tappedOption.id else { continue }
+                filterOptions[key]?[index].selected.toggle()
             }
         }
     }
@@ -86,17 +86,17 @@ extension FilterViewModel {
     func removeOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
             let count = filterOptions[key]?.count ?? 0
-            for i in 0..<count {
-                guard filterOptions[key]?[i].id == tappedOption.id else { continue }
-                filterOptions[key]?[i].selected = false
+            for index in 0..<count {
+                guard filterOptions[key]?[index].id == tappedOption.id else { continue }
+                filterOptions[key]?[index].selected = false
             }
         }
     }
 
-    static func getFilters(for releases: [ReleaseViewModel]) -> [FilterCategory:[FilterOption]] {
-        var options:[FilterCategory:[FilterOption]] = [:]
+    static func getFilters(for releases: [ReleaseViewModel]) -> [FilterCategory: [FilterOption]] {
+        var options: [FilterCategory: [FilterOption]] = [:]
         
-        //Genres
+        // Genres
         options[.genres] = releases
             .map { $0.genres } // [[String]]
             .flatMap { $0 } // [String]
@@ -104,7 +104,7 @@ extension FilterViewModel {
             .sorted(by: { $0 < $1 })
             .map { FilterOption(title: $0) }
         
-        //Styles/Subgenres
+        // Styles/Subgenres
         options[.styles] = releases
             .map { $0.styles } // [[String]]
             .flatMap { $0 } // [String]
@@ -112,7 +112,7 @@ extension FilterViewModel {
             .sorted(by: { $0 < $1 })
             .map { FilterOption(title: $0) }
 
-        //Formats
+        // Formats
         options[.formats] = releases
             .map { $0.formats }
             .flatMap { $0 } // [String]
@@ -120,7 +120,7 @@ extension FilterViewModel {
             .sorted(by: { $0 < $1 })
             .map { FilterOption(title: $0) }
 
-        //Descriptions
+        // Descriptions
         options[.descriptions] = releases
             .map { $0.descriptions }
             .flatMap { $0 }
@@ -133,25 +133,25 @@ extension FilterViewModel {
     
     func updateFilters(for newReleases: [ReleaseViewModel]) {
         
-        //Get the filters for the releases like normal
+        // Get the filters for the releases like normal
         var newFilters = FilterViewModel.getFilters(for: newReleases)
         
-        //Search for filter matches in the old filters and update selected status
+        // Search for filter matches in the old filters and update selected status
         for key in newFilters.keys {
             guard let options = newFilters[key] else { continue }
-            for i in 0..<options.count {
-                guard let match = filterOptions[key]?.first(where: { options[i].title == $0.title }) else { continue }
-                newFilters[key]?[i].selected = match.selected
+            for index in 0..<options.count {
+                guard let match = filterOptions[key]?.first(where: { options[index].title == $0.title }) else { continue }
+                newFilters[key]?[index].selected = match.selected
             }
         }
         
-        //Assign our new filters
+        // Assign our new filters
         self.filterOptions = newFilters
     }
     
     func setPredicate() {
         
-        var predicates:[String] = []
+        var predicates: [String] = []
 
         for category in FilterCategory.allCases {
             let selected = filterOptions[category]?.selected ?? []
@@ -175,8 +175,8 @@ extension FilterViewModel {
         
         for key in filterOptions.keys {
             let count = filterOptions[key]?.count ?? 0
-            for i in 0..<count {
-                filterOptions[key]?[i].selected = false
+            for index in 0..<count {
+                filterOptions[key]?[index].selected = false
             }
         }
     }
@@ -185,6 +185,6 @@ extension FilterViewModel {
 
 extension Array where Element == FilterOption {
     
-    var selected:[FilterOption] { self.filter { $0.selected } }
+    var selected: [FilterOption] { self.filter { $0.selected } }
     
 }

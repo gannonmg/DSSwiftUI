@@ -14,8 +14,7 @@ class FilterViewModelTests: XCTestCase {
     var releaseVMs: [ReleaseViewModel]!
 
     override func setUpWithError() throws {
-        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json")
-        {
+        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {
             let data = try Data(contentsOf: path, options: .dataReadingMapped)
             let model = try JSONDecoder().decode(CollectionReleasesResponse.self,
                                                  from: data)
@@ -79,29 +78,31 @@ class FilterViewModelTests: XCTestCase {
     }
     
     func testCategoryGetters() throws {
-        XCTAssertEqual(filterVM.filterOptions[.genres]!.map{ $0.title },
+        XCTAssertEqual(filterVM.filterOptions[.genres]!.map { $0.title },
                        ["Electronic", "Funk / Soul", "Hip Hop", "Pop", "Rock"])
-        XCTAssertEqual(filterVM.filterOptions[.styles]!.map{ $0.title },
+        XCTAssertEqual(filterVM.filterOptions[.styles]!.map { $0.title },
                        ["Alternative Rock", "Conscious", "Folk Rock", "Indie Pop", "Indie Rock", "Jazzy Hip-Hop", "Neo Soul", "RnB/Swing"])
-        XCTAssertEqual(filterVM.filterOptions[.formats]!.map{ $0.title },
+        XCTAssertEqual(filterVM.filterOptions[.formats]!.map { $0.title },
                        ["All Media", "Cassette", "Vinyl"])
-        XCTAssertEqual(filterVM.filterOptions[.descriptions]!.map{ $0.title },
+        XCTAssertEqual(filterVM.filterOptions[.descriptions]!.map { $0.title },
                        ["Album", "LP", "Limited Edition", "Numbered", "Reissue", "Repress", "Stereo"])
     }
     
     func testExclusivePredicate() throws {
         filterVM.tappedOption(filterVM.filterOptions[.styles]![0])
         filterVM.tappedOption(filterVM.filterOptions[.styles]![1])
+        let format: String = "ANY basicInformation.styles CONTAINS[dc] 'Alternative Rock' AND ANY basicInformation.styles CONTAINS[dc] 'Conscious'"
         XCTAssertEqual(filterVM.predicate,
-                       NSPredicate(format: "ANY basicInformation.styles CONTAINS[dc] 'Alternative Rock' AND ANY basicInformation.styles CONTAINS[dc] 'Conscious'"))
+                       NSPredicate(format: format))
     }
     
     func testInclusivePredicate() throws {
         filterVM.tappedOption(filterVM.filterOptions[.styles]![0])
         filterVM.tappedOption(filterVM.filterOptions[.styles]![1])
         filterVM.exclusiveFilter = false
+        let format: String = "ANY basicInformation.styles CONTAINS[dc] 'Alternative Rock' OR ANY basicInformation.styles CONTAINS[dc] 'Conscious'"
         XCTAssertEqual(filterVM.predicate,
-                       NSPredicate(format: "ANY basicInformation.styles CONTAINS[dc] 'Alternative Rock' OR ANY basicInformation.styles CONTAINS[dc] 'Conscious'"))
+                       NSPredicate(format: format))
     }
     
 }

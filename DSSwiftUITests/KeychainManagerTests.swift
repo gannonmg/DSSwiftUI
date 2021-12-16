@@ -10,14 +10,14 @@ import XCTest
 
 class KeychainManagerTests: XCTestCase {
 
-    //Test that saving and retrieving a value in the keychain manager works
+    // Test that saving and retrieving a value in the keychain manager works
     func testSavingValue() throws {
         KeychainManager.shared.save(key: .testKey, string: "test string")
         let val = KeychainManager.shared.get(for: .testKey)
         XCTAssertNotNil(val)
     }
     
-    //Test that deleting a saved value in the keychain manager works
+    // Test that deleting a saved value in the keychain manager works
     func testDeletingValue() throws {
         KeychainManager.shared.save(key: .testKey, string: "test string")
         KeychainManager.shared.remove(key: .testKey)

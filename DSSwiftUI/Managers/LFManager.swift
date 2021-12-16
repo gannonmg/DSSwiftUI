@@ -40,17 +40,17 @@ class LFManager {
     private init() {}
     static let shared = LFManager()
     
-    //MARK: Variables
+    // MARK: Variables
     private let baseRequestUrl = URL(string: "https://ws.audioscrobbler.com/2.0/")!
     
-    lazy private var session:URLSession = {
+    lazy private var session: URLSession = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
         return URLSession(configuration: configuration)
     }()
     
-    //MARK: Parameter building for calls
-    private func getApiSignature(from params: [String:Any]) -> String {
+    // MARK: Parameter building for calls
+    private func getApiSignature(from params: [String: Any]) -> String {
         var alphabetizedParams = ""
         let sortedKeys = params.keys.sorted(by: <)
         sortedKeys.forEach { key in
@@ -63,12 +63,12 @@ class LFManager {
         return secretAppended.md5String()
     }
     
-    ///All calls to last.fm require an api_sig of alphabetized parameters and
-    private func getQueryItems(from params: [String:Any], format: ResponseFormat = .json) -> [URLQueryItem] {
-        var queryItems:[URLQueryItem] = []
+    /// All calls to last.fm require an api_sig of alphabetized parameters and
+    private func getQueryItems(from params: [String: Any], format: ResponseFormat = .json) -> [URLQueryItem] {
+        var queryItems: [URLQueryItem] = []
         
-        for (k, v) in params {
-            queryItems.append(.init(name: k, value: "\(v)"))
+        for (key, value) in params {
+            queryItems.append(.init(name: key, value: "\(value)"))
         }
         
         queryItems.append(.init(name: "api_sig", value: getApiSignature(from: params)))
@@ -76,13 +76,13 @@ class LFManager {
         return queryItems
     }
     
-    //MARK: Login
-    func getUserSession(username: String, password: String, completion: @escaping((LFSession?)->Void)) {
+    // MARK: Login
+    func getUserSession(username: String, password: String, completion: @escaping((LFSession?) -> Void)) {
         
-        let authParams:[String:String] = ["api_key":  LFAuthInfo.apiKey,
-                                          "method":   LFMethod.auth.method,
-                                          "password": password,
-                                          "username": username]
+        let authParams: [String: String] = ["api_key": LFAuthInfo.apiKey,
+                                            "method": LFMethod.auth.method,
+                                            "password": password,
+                                            "username": username]
         
         var request = URLRequest(url: baseRequestUrl)
         request.httpMethod = HTTPMethod.post.method
@@ -107,7 +107,7 @@ class LFManager {
         task.resume()
     }
     
-    //MARK: Scrobbling
+    // MARK: Scrobbling
     func scrobbleRelease(_ release: ReleaseViewModel) {
         let tracklist = release.tracklist
         guard !release.tracklist.isEmpty,
@@ -131,13 +131,13 @@ class LFManager {
     
     private func scrobbleTrack(album: String, artist: String, track: String, timestamp: TimeInterval, key: String) {
         
-        let params:[String:Any] = ["api_key":   LFAuthInfo.apiKey,
-                                   "method":    LFMethod.scrobble.method,
-                                   "sk":        key,
-                                   "artist":    artist,
-                                   "album":     album,
-                                   "track":     track,
-                                   "timestamp": "\(timestamp)"]
+        let params: [String: Any] = ["api_key": LFAuthInfo.apiKey,
+                                     "method": LFMethod.scrobble.method,
+                                     "sk": key,
+                                     "artist": artist,
+                                     "album": album,
+                                     "track": track,
+                                     "timestamp": "\(timestamp)"]
         
         var request = URLRequest(url: baseRequestUrl)
         request.httpMethod = HTTPMethod.post.method

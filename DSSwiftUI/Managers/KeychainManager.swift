@@ -35,22 +35,22 @@ class KeychainManager {
 
     @discardableResult
     private func save(key: String, data: Data) -> OSStatus {
-        let query:[String : Any] = [kSecClass as String       : kSecClassGenericPassword as String,
-                                    kSecAttrAccount as String : key,
-                                    kSecValueData as String   : data]
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword as String,
+                                    kSecAttrAccount as String: key,
+                                    kSecValueData as String: data]
         
         SecItemDelete(query as CFDictionary)
         
         return SecItemAdd(query as CFDictionary, nil)
     }
-
+    
     private func load(key: String) -> Data? {
-        let query:[String : Any] = [kSecClass as String       : kSecClassGenericPassword,
-                                    kSecAttrAccount as String : key,
-                                    kSecReturnData as String  : kCFBooleanTrue!,
-                                    kSecMatchLimit as String  : kSecMatchLimitOne]
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+                                    kSecAttrAccount as String: key,
+                                    kSecReturnData as String: kCFBooleanTrue!,
+                                    kSecMatchLimit as String: kSecMatchLimitOne]
 
-        var dataTypeRef: AnyObject? = nil
+        var dataTypeRef: AnyObject?
         let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
         
         if status == noErr {
@@ -61,21 +61,26 @@ class KeychainManager {
     }
     
     private func remove(key: String) {
-        let query:[String : Any] = [kSecClass as String       : kSecClassGenericPassword,
-                                    kSecAttrAccount as String : key]
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+                                    kSecAttrAccount as String: key]
 
         // Delete any existing items
         let status = SecItemDelete(query as CFDictionary)
-        if (status != errSecSuccess) {
-            if let err = SecCopyErrorMessageString(status, nil) {
-                print("Remove failed for key \(key): \(err)")
-            } else {
-                print("Remove failed for key \(key)")
-            }
-        } else {
+//        switch status {
+//        case errSecSuccess:
+//            print("Successfully removed key \(key)")
+//        case let err as SecCopyErrorMessageString(status, nil):
+//            print("Remove failed for key \(key): \(err)")
+//        default:
+//            print("Remove failed for key \(key)")
+//        }
+        if status == errSecSuccess {
             print("Successfully removed key \(key)")
+        } else if let err = SecCopyErrorMessageString(status, nil) {
+            print("Remove failed for key \(key): \(err)")
+        } else {
+            print("Remove failed for key \(key)")
         }
-        
     }
     
 }

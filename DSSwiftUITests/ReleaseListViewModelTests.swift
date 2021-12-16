@@ -13,8 +13,7 @@ class ReleaseListViewModelTests: XCTestCase {
     var releaseModels: [DCReleaseModel]!
     
     override func setUpWithError() throws {
-        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json")
-        {
+        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {
             let data = try Data(contentsOf: path, options: .dataReadingMapped)
             let model = try JSONDecoder().decode(CollectionReleasesResponse.self,
                                                  from: data)

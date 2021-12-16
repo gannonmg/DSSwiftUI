@@ -16,8 +16,7 @@ class RealmManagerTests: XCTestCase {
         
         RealmManager.shared.deleteAllReleases()
         
-        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json")
-        {
+        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {
             let data = try Data(contentsOf: path, options: .dataReadingMapped)
             let model = try JSONDecoder().decode(CollectionReleasesResponse.self,
                                                  from: data)
@@ -44,6 +43,5 @@ class RealmManagerTests: XCTestCase {
         let stored = RealmManager.shared.getAllReleases()
         XCTAssertTrue(stored == [])
     }
-
 
 }

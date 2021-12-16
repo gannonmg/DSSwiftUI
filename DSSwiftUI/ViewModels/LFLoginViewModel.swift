@@ -12,7 +12,7 @@ class LFLoginViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var password: String = ""
     
-    func login(completion: @escaping (()->Void)) {
+    func login(completion: @escaping (() -> Void)) {
         LFManager.shared.getUserSession(username: username, password: password) { session in
             if let session = session {
                 print("Logged in successfully")
