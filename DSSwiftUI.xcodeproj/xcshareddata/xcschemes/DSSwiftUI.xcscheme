@@ -39,6 +39,16 @@
                ReferencedContainer = "container:DSSwiftUI.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2D000A77276C11DD00ED3634"
+               BuildableName = "DSSwiftUIUITests.xctest"
+               BlueprintName = "DSSwiftUIUITests"
+               ReferencedContainer = "container:DSSwiftUI.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

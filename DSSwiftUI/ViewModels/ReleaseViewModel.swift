@@ -65,3 +65,11 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     }
     
 }
+
+extension ReleaseViewModel: Equatable {
+    
+    static func == (lhs: ReleaseViewModel, rhs: ReleaseViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+}

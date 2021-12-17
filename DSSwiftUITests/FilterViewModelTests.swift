@@ -10,10 +10,11 @@ import XCTest
 
 class FilterViewModelTests: XCTestCase {
 
-    var filterVM: FilterViewModel!
+    var sut: FilterViewModel!
     var releaseVMs: [ReleaseViewModel]!
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {
             let data = try Data(contentsOf: path, options: .dataReadingMapped)
             let model = try JSONDecoder().decode(CollectionReleasesResponse.self,
@@ -21,95 +22,103 @@ class FilterViewModelTests: XCTestCase {
             let releaseVMs = model.releases.map { ReleaseViewModel(from: $0) }
             XCTAssertFalse(releaseVMs.isEmpty)
             self.releaseVMs = releaseVMs
-            filterVM = FilterViewModel(releases: releaseVMs)
+            self.sut = FilterViewModel(releases: releaseVMs)
+        } else {
+            
         }
     }
 
     override func tearDownWithError() throws {
-        filterVM = nil
+        sut = nil
         releaseVMs = nil
+        try super.tearDownWithError()
     }
 
     func testFilterBuilding() throws {
-        XCTAssertNotNil(filterVM.filterOptions[.genres])
-        XCTAssertNotNil(filterVM.filterOptions[.styles])
-        XCTAssertNotNil(filterVM.filterOptions[.formats])
-        XCTAssertNotNil(filterVM.filterOptions[.descriptions])
+        XCTAssertNotNil(sut.filterOptions[.genres])
+        XCTAssertNotNil(sut.filterOptions[.styles])
+        XCTAssertNotNil(sut.filterOptions[.formats])
+        XCTAssertNotNil(sut.filterOptions[.descriptions])
         
-        XCTAssertFalse(filterVM.filterOptions[.genres]!.isEmpty)
-        XCTAssertFalse(filterVM.filterOptions[.styles]!.isEmpty)
-        XCTAssertFalse(filterVM.filterOptions[.formats]!.isEmpty)
-        XCTAssertFalse(filterVM.filterOptions[.descriptions]!.isEmpty)
+        XCTAssertFalse(sut.filterOptions[.genres]!.isEmpty)
+        XCTAssertFalse(sut.filterOptions[.styles]!.isEmpty)
+        XCTAssertFalse(sut.filterOptions[.formats]!.isEmpty)
+        XCTAssertFalse(sut.filterOptions[.descriptions]!.isEmpty)
     }
     
     func testToggleFilter() throws {
-        let optionToToggle = filterVM.firstFilterOption()
+        let optionToToggle = sut.getFirstFilterOption()
         XCTAssertFalse(optionToToggle.selected)
-        filterVM.tappedOption(optionToToggle)
-        let toggledOption = filterVM.firstFilterOption()
+        sut.tappedOption(optionToToggle)
+        let toggledOption = sut.getFirstFilterOption()
         XCTAssertTrue(toggledOption.selected)
     }
     
     func testRemoveFilter() throws {
-        let optionToToggle = filterVM.firstFilterOption()
-        filterVM.tappedOption(optionToToggle)
-        filterVM.removeOption(optionToToggle)
-        let removedOption = filterVM.firstFilterOption()
+        let optionToToggle = sut.getFirstFilterOption()
+        sut.tappedOption(optionToToggle)
+        sut.removeOption(optionToToggle)
+        let removedOption = sut.getFirstFilterOption()
         XCTAssertFalse(removedOption.selected)
     }
     
     func testRemoveAllFilters() throws {
         for key in FilterCategory.allCases {
-            filterVM.filterOptions[key]?.forEach { filterVM.tappedOption($0) }
+            sut.filterOptions[key]?.forEach { sut.tappedOption($0) }
         }
         
-        XCTAssertFalse(filterVM.selectedFilters.isEmpty)
-        filterVM.turnOffAllFilters()
-        XCTAssertTrue(filterVM.selectedFilters.isEmpty)
+        XCTAssertFalse(sut.selectedFilters.isEmpty)
+        sut.turnOffAllFilters()
+        XCTAssertTrue(sut.selectedFilters.isEmpty)
     }
     
     func testMigration() throws {
-        let optionToTrack = filterVM.firstFilterOption()
-        XCTAssertFalse(filterVM.firstFilterOption().selected)
-        filterVM.tappedOption(optionToTrack)
-        XCTAssertTrue(filterVM.firstFilterOption().selected)
-        filterVM.updateFilters(for: releaseVMs)
-        XCTAssertTrue(filterVM.firstFilterOption().selected)
+        let optionToTrack = sut.getFirstFilterOption()
+        XCTAssertFalse(sut.getFirstFilterOption().selected)
+        sut.tappedOption(optionToTrack)
+        XCTAssertTrue(sut.getFirstFilterOption().selected)
+        sut.updateFilters(for: releaseVMs)
+        XCTAssertTrue(sut.getFirstFilterOption().selected)
     }
     
     func testCategoryGetters() throws {
-        XCTAssertEqual(filterVM.filterOptions[.genres]!.map { $0.title },
+        XCTAssertEqual(sut.filterOptions[.genres]!.map { $0.title },
                        ["Electronic", "Funk / Soul", "Hip Hop", "Pop", "Rock"])
-        XCTAssertEqual(filterVM.filterOptions[.styles]!.map { $0.title },
+        XCTAssertEqual(sut.filterOptions[.styles]!.map { $0.title },
                        ["Alternative Rock", "Conscious", "Folk Rock", "Indie Pop", "Indie Rock", "Jazzy Hip-Hop", "Neo Soul", "RnB/Swing"])
-        XCTAssertEqual(filterVM.filterOptions[.formats]!.map { $0.title },
+        XCTAssertEqual(sut.filterOptions[.formats]!.map { $0.title },
                        ["All Media", "Cassette", "Vinyl"])
-        XCTAssertEqual(filterVM.filterOptions[.descriptions]!.map { $0.title },
+        XCTAssertEqual(sut.filterOptions[.descriptions]!.map { $0.title },
                        ["Album", "LP", "Limited Edition", "Numbered", "Reissue", "Repress", "Stereo"])
     }
     
     func testExclusivePredicate() throws {
-        filterVM.tappedOption(filterVM.filterOptions[.styles]![0])
-        filterVM.tappedOption(filterVM.filterOptions[.styles]![1])
+        sut.tappedOption(sut.filterOptions[.styles]![0])
+        sut.tappedOption(sut.filterOptions[.styles]![1])
         let format: String = "ANY basicInformation.styles CONTAINS[dc] 'Alternative Rock' AND ANY basicInformation.styles CONTAINS[dc] 'Conscious'"
-        XCTAssertEqual(filterVM.predicate,
+        XCTAssertEqual(sut.predicate,
                        NSPredicate(format: format))
     }
     
     func testInclusivePredicate() throws {
-        filterVM.tappedOption(filterVM.filterOptions[.styles]![0])
-        filterVM.tappedOption(filterVM.filterOptions[.styles]![1])
-        filterVM.exclusiveFilter = false
+        sut.tappedOption(sut.filterOptions[.styles]![0])
+        sut.tappedOption(sut.filterOptions[.styles]![1])
+        sut.exclusiveFilter = false
         let format: String = "ANY basicInformation.styles CONTAINS[dc] 'Alternative Rock' OR ANY basicInformation.styles CONTAINS[dc] 'Conscious'"
-        XCTAssertEqual(filterVM.predicate,
+        XCTAssertEqual(sut.predicate,
                        NSPredicate(format: format))
+    }
+    
+    func testGetFirstFilterOption() throws {
+        let option: FilterOption = sut.getFirstFilterOption()
+        XCTAssertEqual(option.title, "Alternative Rock")
     }
     
 }
 
-private extension FilterViewModel {
+internal extension FilterViewModel {
     
-    func firstFilterOption() -> FilterOption {
+    func getFirstFilterOption() -> FilterOption {
         return filterOptions[.styles]!.first!
     }
     

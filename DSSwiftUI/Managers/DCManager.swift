@@ -54,7 +54,7 @@ class DCManager {
     }
     
     // Gets the user's username after oauth login
-    func getUserIdentity(completion: @escaping ((Error?) -> Void)) {
+    private func getUserIdentity(completion: @escaping ((Error?) -> Void)) {
         oauthSwift.client.get("https://api.discogs.com/oauth/identity") { result in
             switch result {
             case .success(let response):

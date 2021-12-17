@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol DSApiClientProtocol {
+    
+}
+
 class MockApiClient {
     
 }
