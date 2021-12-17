@@ -61,7 +61,7 @@ class ReleaseListViewModel: ObservableObject {
     }
     
     func getRemoteReleases() {
-        DCManager.shared.getAllReleasesForUser { releases in
+        DCManager.shared.getAllReleasesForUser(forceRefresh: false) { releases in
             RealmManager.shared.update(with: releases)
         }
     }

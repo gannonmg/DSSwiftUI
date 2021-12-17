@@ -80,7 +80,7 @@ class DCManager {
     }
     
     // MARK: Releases
-    func getAllReleasesForUser(forceRefresh: Bool = false, completion: @escaping ([DCReleaseModel]) -> Void) {
+    func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void) {
         
         guard let username = KeychainManager.shared.get(for: .discogsUsername) else {
             completion([])
@@ -135,33 +135,15 @@ class DCManager {
             }
         }
     }
-    
-    func getDetail(for resourceUrl: String, completion: @escaping (DCReleaseDetailModel?) -> Void) {
-        oauthSwift.client.get(resourceUrl) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let detail = try JSONDecoder().decode(DCReleaseDetailModel.self,
-                                                          from: response.data)
-                    print("Got album detail")
-                    completion(detail)
-                } catch {
-                    print("Error getting album detail: \(error). Resourse \(resourceUrl)")
-                    completion(nil)
-                }
-            case .failure(let error):
-                print("Error getting album detail: \(error.localizedDescription)")
-                completion(nil)
-            }
-        }
-    }
-    
+        
     func getDetail(for resourceUrl: String) async -> DCReleaseDetailModel? {
         return await withCheckedContinuation { continuation in
             oauthSwift.client.get(resourceUrl) { result in
                 switch result {
                 case .success(let response):
                     do {
+                        print("-------------------------------------------")
+                        print(response.dataString() ?? "none")
                         let detail = try JSONDecoder().decode(DCReleaseDetailModel.self,
                                                               from: response.data)
                         print("Got album detail")

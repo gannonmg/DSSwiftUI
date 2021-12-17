@@ -95,16 +95,6 @@ class DCBasicInformationModel: Object, Codable {
         case resourceURL = "resource_url"
     }
 
-    func getDetail() {
-        DCManager.shared.getDetail(for: self.resourceURL) { detail in
-            guard let detail = detail else {
-                print("Unable to fetch detail")
-                return
-            }
-
-            self.tracks = Array(detail.tracklist)
-        }
-    }
 }
 
 class DCArtistModel: Object, Codable {

@@ -29,7 +29,7 @@ class AppViewModel: ObservableObject {
                 print("Login error \(error)")
             } else {
                 print("Logged user in")
-                DCManager.shared.getAllReleasesForUser { releases in
+                DCManager.shared.getAllReleasesForUser(forceRefresh: false) { releases in
                     RealmManager.shared.update(with: releases)
                     print("Got and stored releases")
                 }
