@@ -7,25 +7,36 @@
 
 import Foundation
 
-protocol RemoteClientProtocol: DiscogsProxy, LastFmProxy {}
-
 protocol LastFmProxy {
     func getLastFmUserSession(username: String, password: String, completion: @escaping((LFSession?) -> Void))
     func scrobbleRelease(_ release: ReleaseViewModel)
 }
 
 protocol DiscogsProxy {
+    func userLoginProcess(completion: @escaping  ((Error?) -> Void))
     func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void)
     func getDetail(for release: ReleaseViewModel) async -> DCReleaseDetailModel?
     func resetOauth()
 }
 
-final class RemoteClientManager: RemoteClientProtocol {
+protocol RemoteClientProtocol: DiscogsProxy, LastFmProxy {}
+
+#if TEST
+let RemoteClientManager: RemoteClientProtocol = MockRemoteClientManager.shared
+#else
+let RemoteClientManager: RemoteClientProtocol = TrueRemoteClientManager.shared
+#endif
+
+final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     
-    let shared: RemoteClientManager = .init()
+    static var shared: RemoteClientProtocol = TrueRemoteClientManager.shared
     private init() {}
 
     // MARK: Discogs proxy
+    func userLoginProcess(completion: @escaping  ((Error?) -> Void)) {
+        DCManager.shared.userLoginProcess(completion: completion)
+    }
+
     func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void) {
         DCManager.shared.getAllReleasesForUser(forceRefresh: forceRefresh, completion: completion)
     }
@@ -49,9 +60,16 @@ final class RemoteClientManager: RemoteClientProtocol {
     
 }
 
-final class MockRemoteClientManager: RemoteClientProtocol {
+final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     
+    static var shared: RemoteClientProtocol = MockRemoteClientManager.shared
+    private init() {}
+
     // MARK: Discogs proxy
+    func userLoginProcess(completion: @escaping  ((Error?) -> Void)) {
+        // What to do here
+    }
+
     func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void) {
         if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json"),
             let data = try? Data(contentsOf: path, options: .dataReadingMapped),
@@ -91,7 +109,7 @@ final class MockRemoteClientManager: RemoteClientProtocol {
     }
     
     func scrobbleRelease(_ release: ReleaseViewModel) {
-
+        // nothing to see here
     }
     
 }

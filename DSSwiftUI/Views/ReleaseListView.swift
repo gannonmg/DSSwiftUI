@@ -220,7 +220,7 @@ struct SelectedReleaseView: View {
             
             if KeychainManager.shared.get(for: .lastFmSessionKey) != nil {
                 Button("Scrobble Album") {
-                    LFManager.shared.scrobbleRelease(release)
+                    RemoteClientManager.scrobbleRelease(release)
                 }
             }
             

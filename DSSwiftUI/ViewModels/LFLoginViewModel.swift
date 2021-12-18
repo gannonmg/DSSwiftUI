@@ -13,7 +13,7 @@ class LFLoginViewModel: ObservableObject {
     @Published var password: String = ""
     
     func login(completion: @escaping (() -> Void)) {
-        LFManager.shared.getUserSession(username: username, password: password) { session in
+        RemoteClientManager.getLastFmUserSession(username: username, password: password) { session in
             if let session = session {
                 print("Logged in successfully")
                 KeychainManager.shared.save(key: .lastFmSessionKey, string: session.key)

@@ -24,12 +24,12 @@ class AppViewModel: ObservableObject {
     }
 
     func logIn() {
-        DCManager.shared.userLoginProcess { error in
+        RemoteClientManager.userLoginProcess { error in
             if let error = error {
                 print("Login error \(error)")
             } else {
                 print("Logged user in")
-                DCManager.shared.getAllReleasesForUser(forceRefresh: false) { releases in
+                RemoteClientManager.getAllReleasesForUser(forceRefresh: false) { releases in
                     RealmManager.shared.update(with: releases)
                     print("Got and stored releases")
                 }
@@ -47,7 +47,7 @@ class AppViewModel: ObservableObject {
         lastFmKey = nil
         
         RealmManager.shared.deleteAllReleases()
-        DCManager.shared.resetOauth()
+        RemoteClientManager.resetOauth()
     }
     
     func checkLastFmKey() {
