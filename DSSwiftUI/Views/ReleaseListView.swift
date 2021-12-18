@@ -33,6 +33,7 @@ struct ReleaseListView: View {
             if let selectedRelease = viewModel.selectedRelease {
                 SelectedReleaseView(release: selectedRelease)
                     .environmentObject(viewModel)
+                    .environmentObject(appViewModel)
             }
         }
         .sheet(isPresented: $viewModel.showingFilters) {
@@ -41,7 +42,6 @@ struct ReleaseListView: View {
         }
         .sheet(isPresented: $showingLastFmLogin) {
             LFLoginView()
-                .environmentObject(appViewModel)
         }
     }
     
@@ -184,8 +184,9 @@ struct ReleaseListItemView: View {
 struct SelectedReleaseView: View {
     
     @EnvironmentObject var realmListViewModel: ReleaseListViewModel
-    @ObservedObject var release: ReleaseViewModel
+    @EnvironmentObject var appViewModel: AppViewModel
     @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var release: ReleaseViewModel
     
     var body: some View {
         ZStack {
@@ -218,7 +219,7 @@ struct SelectedReleaseView: View {
                 closeButton
             }
             
-            if KeychainManager.shared.get(for: .lastFmSessionKey) != nil {
+            if appViewModel.lastFmKey != nil {
                 Button("Scrobble Album") {
                     RemoteClientManager.scrobbleRelease(release)
                 }

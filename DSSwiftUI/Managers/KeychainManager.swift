@@ -10,6 +10,10 @@
 import Foundation
 import Security
 
+extension NSNotification.Name {
+    static let keychainUpdated: NSNotification.Name = .init("keychainUpdated")
+}
+
 class KeychainManager {
     
     enum KeychainKey: String {
@@ -22,6 +26,7 @@ class KeychainManager {
     func save(key: KeychainKey, string: String) {
         guard let data = string.data(using: .utf8) else { return }
         save(key: key.rawValue, data: data)
+        NotificationCenter.default.post(name: .keychainUpdated, object: nil)
     }
     
     func get(for key: KeychainKey) -> String? {
@@ -31,6 +36,7 @@ class KeychainManager {
     
     func remove(key: KeychainKey) {
         remove(key: key.rawValue)
+        NotificationCenter.default.post(name: .keychainUpdated, object: key.rawValue)
     }
 
     @discardableResult
@@ -66,14 +72,6 @@ class KeychainManager {
 
         // Delete any existing items
         let status = SecItemDelete(query as CFDictionary)
-//        switch status {
-//        case errSecSuccess:
-//            print("Successfully removed key \(key)")
-//        case let err as SecCopyErrorMessageString(status, nil):
-//            print("Remove failed for key \(key): \(err)")
-//        default:
-//            print("Remove failed for key \(key)")
-//        }
         if status == errSecSuccess {
             print("Successfully removed key \(key)")
         } else if let err = SecCopyErrorMessageString(status, nil) {

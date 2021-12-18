@@ -17,9 +17,10 @@ class AppViewModel: ObservableObject {
     init() {
         discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
         lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
+        
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(checkForToken),
-                                               name: UIApplication.didBecomeActiveNotification,
+                                               selector: #selector(keychainUpdated),
+                                               name: .keychainUpdated,
                                                object: nil)
     }
 
@@ -42,26 +43,19 @@ class AppViewModel: ObservableObject {
         KeychainManager.shared.remove(key: .discogsUserToken)
         KeychainManager.shared.remove(key: .discogsUserSecret)
         KeychainManager.shared.remove(key: .lastFmSessionKey)
-
-        discogsToken = nil
-        lastFmKey = nil
         
         RealmManager.shared.deleteAllReleases()
         RemoteClientManager.resetOauth()
     }
     
-    func checkLastFmKey() {
-        self.lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
-    }
-    
     func logOutLastFm() {
         KeychainManager.shared.remove(key: .lastFmSessionKey)
-        lastFmKey = nil
     }
     
-    @objc func checkForToken() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+    @objc func keychainUpdated() {
+        DispatchQueue.main.async {
             self.discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
+            self.lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
         }
     }
     
