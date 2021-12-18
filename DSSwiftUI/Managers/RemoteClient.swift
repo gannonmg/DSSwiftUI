@@ -29,7 +29,7 @@ let RemoteClientManager: RemoteClientProtocol = TrueRemoteClientManager.shared
 
 final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     
-    static var shared: RemoteClientProtocol = TrueRemoteClientManager.shared
+    static var shared: RemoteClientProtocol = TrueRemoteClientManager.init()
     private init() {}
 
     // MARK: Discogs proxy
@@ -62,7 +62,7 @@ final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
 
 final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     
-    static var shared: RemoteClientProtocol = MockRemoteClientManager.shared
+    static var shared: RemoteClientProtocol = MockRemoteClientManager.init()
     private init() {}
 
     // MARK: Discogs proxy
