@@ -24,10 +24,10 @@ class AppViewModel: ObservableObject {
                                                object: nil)
     }
 
-    func logIn() {
+    func logIn() throws {
         Task {
-            try! await RemoteClientManager.userLoginProcess()
-            let releases = try! await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
+            try await RemoteClientManager.userLoginProcess()
+            let releases = try await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
             RealmManager.shared.update(with: releases)
         }
     }

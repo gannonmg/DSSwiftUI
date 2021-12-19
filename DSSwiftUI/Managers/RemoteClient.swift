@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LastFmProxy {
-    func getLastFmUserSession(username: String, password: String) async -> LFSession?
+    func getLastFmUserSession(username: String, password: String) async throws -> LFSession?
     func scrobbleRelease(_ release: ReleaseViewModel)
 }
 
@@ -50,8 +50,8 @@ final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     }
     
     // MARK: last.fm proxy
-    func getLastFmUserSession(username: String, password: String) async -> LFSession? {
-        return await LFManager.shared.getUserSession(username: username, password: password)
+    func getLastFmUserSession(username: String, password: String) async throws -> LFSession? {
+        return try await LFManager.shared.getUserSession(username: username, password: password)
     }
     
     func scrobbleRelease(_ release: ReleaseViewModel) {
@@ -71,10 +71,10 @@ final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     }
 
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
-        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json"),
-            let data = try? Data(contentsOf: path, options: .dataReadingMapped),
-            let model = try? JSONDecoder().decode(CollectionReleasesResponse.self,
-                                                 from: data) {
+        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {
+            let data = try Data(contentsOf: path, options: .dataReadingMapped)
+            let model = try JSONDecoder().decode(CollectionReleasesResponse.self,
+                                                 from: data)
             let releases = model.releases
             return releases
         } else {
@@ -83,11 +83,11 @@ final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     }
     
     func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
-        if let path = Bundle.main.url(forResource: "Details", withExtension: "json"),
-           let data = try? Data(contentsOf: path, options: .dataReadingMapped),
-           let detailArray = try? JSONDecoder().decode([DCReleaseDetailModel].self,
-                                                 from: data),
-           let detail = detailArray.first(where: { $0.id == release.id }) {
+        if let path = Bundle.main.url(forResource: "Details", withExtension: "json") {
+            let data = try Data(contentsOf: path, options: .dataReadingMapped)
+            let detailArray = try JSONDecoder().decode([DCReleaseDetailModel].self,
+                                                       from: data)
+            let detail = detailArray.first(where: { $0.id == release.id })
             return detail
         }
         
@@ -99,7 +99,7 @@ final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     }
     
     // MARK: last.fm proxy
-    func getLastFmUserSession(username: String, password: String) async -> LFSession? {
+    func getLastFmUserSession(username: String, password: String) async throws -> LFSession? {
         let session: LFSession = .init(subscriber: 1,
                                        name: "Test Matt",
                                        key: "12345abcde")

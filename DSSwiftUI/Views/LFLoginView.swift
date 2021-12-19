@@ -19,8 +19,8 @@ struct LFLoginView: View {
                 .disableAutocorrection(true)
                 .textInputAutocapitalization(.never)
             SecureField("Password", text: $viewModel.password, prompt: Text("Enter Password"))
-            Button("Login") {
-                viewModel.login {
+            TryButton("Login") {
+                try viewModel.login {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }

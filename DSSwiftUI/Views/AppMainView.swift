@@ -15,13 +15,14 @@ struct AppMainView: View {
         if viewModel.loggedIn {
             ReleaseListView()
                 .environmentObject(viewModel)
+                .withErrorHandling()
         } else {
             VStack {
                 Text("Welcome!")
                     .font(.headline)
                 Text("Please log in via Discogs")
                     .font(.body)
-                Button("Log In", action: viewModel.logIn)
+                TryButton("Log In", action: viewModel.logIn)
                     .buttonStyle(.bordered)
             }
         }

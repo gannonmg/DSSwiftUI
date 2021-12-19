@@ -53,6 +53,7 @@
 		C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BB274FF48C001C82C5 /* RealmManager.swift */; };
 		C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */; };
 		C92BB3C027502226001C82C5 /* ShortResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = C92BB3BF27502226001C82C5 /* ShortResponse.json */; };
+		C98D31B3276F862A00C039AF /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D31B2276F862A00C039AF /* ErrorHandling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		C92BB3BB274FF48C001C82C5 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		C92BB3BF27502226001C82C5 /* ShortResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShortResponse.json; sourceTree = "<group>"; };
+		C98D31B2276F862A00C039AF /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +331,7 @@
 			children = (
 				2DCC292D26BC42040062B56F /* RemoteImage.swift */,
 				2D44EFCA26B5C28200E4A1FE /* ViewExtensions.swift */,
+				C98D31B2276F862A00C039AF /* ErrorHandling.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */,
 				2DE2CD252769474700F90A4D /* ColorHelper.swift in Sources */,
 				2D44EFCB26B5C28200E4A1FE /* ViewExtensions.swift in Sources */,
+				C98D31B3276F862A00C039AF /* ErrorHandling.swift in Sources */,
 				2D44EFCD26B5C4A400E4A1FE /* LFManager.swift in Sources */,
 				C92BB3BA274FF467001C82C5 /* DCModels.swift in Sources */,
 			);

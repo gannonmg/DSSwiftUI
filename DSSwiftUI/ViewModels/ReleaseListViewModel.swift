@@ -60,9 +60,9 @@ class ReleaseListViewModel: ObservableObject {
         self.releases = releases.sorted(by: { $0.firstArtist < $1.firstArtist })
     }
     
-    func getRemoteReleases() {
+    func getRemoteReleases() throws {
         Task {
-            let releases = try! await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
+            let releases = try await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
             RealmManager.shared.update(with: releases)
         }
     }

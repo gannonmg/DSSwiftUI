@@ -10,6 +10,7 @@ import SwiftUI
 struct ReleaseListView: View {
     
     @EnvironmentObject var appViewModel: AppViewModel
+    @EnvironmentObject var errorHandling: ErrorHandling
     @StateObject var viewModel = ReleaseListViewModel()
     @State private var showingLastFmLogin: Bool = false
     
@@ -33,7 +34,6 @@ struct ReleaseListView: View {
             if let selectedRelease = viewModel.selectedRelease {
                 SelectedReleaseView(release: selectedRelease)
                     .environmentObject(viewModel)
-                    .environmentObject(appViewModel)
             }
         }
         .sheet(isPresented: $viewModel.showingFilters) {
@@ -56,7 +56,7 @@ struct ReleaseListView: View {
     }
     
     var getReleasesView: some View {
-        Button("Get Releases", action: viewModel.getRemoteReleases)
+        TryButton("Get Releases", action: viewModel.getRemoteReleases)
                 .buttonStyle(.bordered)
                 .frame(maxHeight: .infinity)
     }
@@ -70,9 +70,7 @@ struct ReleaseListView: View {
                     }
             }
         }
-        .refreshable {
-            viewModel.getRemoteReleases()
-        }
+        .refreshable { refresh() }
     }
     
     var searchView: some View {
@@ -146,6 +144,14 @@ struct ReleaseListView: View {
             }
         }
     }
+    
+    func refresh() {
+        do {
+            try viewModel.getRemoteReleases()
+        } catch {
+            errorHandling.handle(error: error)
+        }
+    }
 
 }
 
@@ -185,6 +191,7 @@ struct SelectedReleaseView: View {
     
     @EnvironmentObject var realmListViewModel: ReleaseListViewModel
     @EnvironmentObject var appViewModel: AppViewModel
+    @EnvironmentObject var errorHandling: ErrorHandling
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var release: ReleaseViewModel
     
@@ -263,7 +270,11 @@ struct SelectedReleaseView: View {
     
     func getDetail() {
         Task {
-            await release.getDetail()
+            do {
+                try await release.getDetail()
+            } catch {
+                errorHandling.handle(error: error)
+            }
         }
     }
     
