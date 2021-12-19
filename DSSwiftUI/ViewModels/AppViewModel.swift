@@ -25,16 +25,10 @@ class AppViewModel: ObservableObject {
     }
 
     func logIn() {
-        RemoteClientManager.userLoginProcess { error in
-            if let error = error {
-                print("Login error \(error)")
-            } else {
-                print("Logged user in")
-                RemoteClientManager.getAllReleasesForUser(forceRefresh: false) { releases in
-                    RealmManager.shared.update(with: releases)
-                    print("Got and stored releases")
-                }
-            }
+        Task {
+            try! await RemoteClientManager.userLoginProcess()
+            let releases = try! await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
+            RealmManager.shared.update(with: releases)
         }
     }
     

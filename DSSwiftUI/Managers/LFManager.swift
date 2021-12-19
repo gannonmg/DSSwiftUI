@@ -77,7 +77,7 @@ class LFManager {
     }
     
     // MARK: Login
-    func getUserSession(username: String, password: String, completion: @escaping((LFSession?) -> Void)) {
+    func getUserSession(username: String, password: String) async -> LFSession? {
         
         let authParams: [String: String] = ["api_key": LFAuthInfo.apiKey,
                                             "method": LFMethod.auth.method,
@@ -91,20 +91,22 @@ class LFManager {
         urlComponents.queryItems = getQueryItems(from: authParams)
         request.url = urlComponents.url
         
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let data = data {
-                print(String(decoding: data, as: UTF8.self))
-                let session = try? JSONDecoder().decode(LFSessionResponse.self, from: data)
-                completion(session?.session)
-            } else {
-                print("Data \(String(describing: data))")
-                print("Response \(String(describing: response))")
-                print("Error \(String(describing: error))")
-                completion(nil)
+        return await withCheckedContinuation { continuation in
+            let task = session.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    print(String(decoding: data, as: UTF8.self))
+                    let session = try? JSONDecoder().decode(LFSessionResponse.self, from: data)
+                    continuation.resume(returning: session?.session)
+                } else {
+                    print("Data \(String(describing: data))")
+                    print("Response \(String(describing: response))")
+                    print("Error \(String(describing: error))")
+                    continuation.resume(returning: nil)
+                }
             }
+            
+            task.resume()
         }
-        
-        task.resume()
     }
     
     // MARK: Scrobbling

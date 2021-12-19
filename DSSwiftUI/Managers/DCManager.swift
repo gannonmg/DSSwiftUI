@@ -28,45 +28,43 @@ class DCManager {
     }
     
     // MARK: Authentication
-    func userLoginProcess(completion: @escaping  ((Error?) -> Void)) {
-        sendToWebLogin { error in
-            guard error == nil else {
-                completion(error)
-                return
-            }
-            
-            self.getUserIdentity(completion: completion)
-        }
+    func userLoginProcess() async throws {
+        try await sendToWebLogin()
+        try await self.getUserIdentity()
     }
     
     // Allows user to authenticate the app via oauth
-    private func sendToWebLogin(completion: @escaping ((Error?) -> Void)) {
-        _ = oauthSwift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
-            switch result {
-            case .success(let (credential, _ /*response*/, _/*parameters*/)):
-                KeychainManager.shared.save(key: .discogsUserToken, string: credential.oauthToken)
-                KeychainManager.shared.save(key: .discogsUserSecret, string: credential.oauthTokenSecret)
-                completion(nil)
-            case .failure(let error):
-                completion(error)
+    private func sendToWebLogin() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            _ = oauthSwift.authorize(withCallbackURL: DCAuthInfo.callback) { result in
+                switch result {
+                case .success(let (credential, _ /*response*/, _/*parameters*/)):
+                    KeychainManager.shared.save(key: .discogsUserToken, string: credential.oauthToken)
+                    KeychainManager.shared.save(key: .discogsUserSecret, string: credential.oauthTokenSecret)
+                    continuation.resume(returning: ())
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
             }
         }
     }
     
     // Gets the user's username after oauth login
-    private func getUserIdentity(completion: @escaping ((Error?) -> Void)) {
-        oauthSwift.client.get("https://api.discogs.com/oauth/identity") { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let user = try JSONDecoder().decode(DCUser.self, from: response.data)
-                    KeychainManager.shared.save(key: .discogsUsername, string: user.username)
-                    completion(nil)
-                } catch {
-                    completion(error)
+    private func getUserIdentity() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            oauthSwift.client.get("https://api.discogs.com/oauth/identity") { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let user = try JSONDecoder().decode(DCUser.self, from: response.data)
+                        KeychainManager.shared.save(key: .discogsUsername, string: user.username)
+                        continuation.resume(returning: ())
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-            case .failure(let error):
-                completion(error)
             }
         }
     }
@@ -80,81 +78,60 @@ class DCManager {
     }
     
     // MARK: Releases
-    func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void) {
-        
+    func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
         guard let username = KeychainManager.shared.get(for: .discogsUsername) else {
-            completion([])
-            return
+            throw AppError.messageError("No discogs username stored")
         }
         
         let initialPageUrl = "https://api.discogs.com/users/\(username)/collection/folders/0/releases?per_page=100"
-        getAllReleases(initialReleases: [], pageUrl: initialPageUrl) { releases in
-            guard releases.isEmpty == false else {
-                #warning("Handle eempty release response")
-                completion([])
-                return
-            }
-            
-            completion(releases)
-        }
+        return try await getAllReleases(initialUrl: initialPageUrl)
     }
     
-    private func getAllReleases(initialReleases: [DCReleaseModel], pageUrl: String, completion: @escaping ([DCReleaseModel]) -> Void) {
-        oauthSwift.client.get(pageUrl) { result in
-            switch result {
-            case .success(let response):
-                
-                // Decode our data response to the release object
-                do {
-                    
-                    // print(String(decoding: response.data, as: UTF8.self))
-                    let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
-                                                            from: response.data)
-                    
-                    // Add our newly collected releases to what we've passed in
-                    let releases = initialReleases + response.releases
-
-                    // Check if we have a next url. If not, we're at the end and have everything we need, so bail
-                    guard let nextPage = response.pagination.urls.next else {
-                        completion(releases)
-                        return
+    private func getAllReleases(initialUrl: String) async throws -> [DCReleaseModel] {
+        var releases: [DCReleaseModel] = []
+        var url = URL(string: initialUrl)
+        while let pageUrl = url {
+            let response: CollectionReleasesResponse = try await getReleases(from: pageUrl)
+            releases += response.releases
+            url = URL(optionalString: response.pagination.urls.next)
+        }
+        
+        return releases
+    }
+    
+    private func getReleases(from pageUrl: URL) async throws -> CollectionReleasesResponse {
+        return try await withCheckedThrowingContinuation { continuation in
+            oauthSwift.client.get(pageUrl) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
+                                                                from: response.data)
+                        continuation.resume(returning: response)
+                    } catch {
+                        continuation.resume(throwing: error)
                     }
-                    
-                    // If we do have a next page url, let recursively call this function again, and get another chunk of albums
-                    self.getAllReleases(initialReleases: releases,
-                                        pageUrl: nextPage,
-                                        completion: completion)
-                } catch {
-                    print("Error decoding albums: \(error)")
-                    completion(initialReleases)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-                
-            case .failure(let error):
-                print("Error with all albums: \(error.localizedDescription)")
-                completion(initialReleases)
             }
         }
     }
         
-    func getDetail(for resourceUrl: String) async -> DCReleaseDetailModel? {
-        return await withCheckedContinuation { continuation in
+    func getDetail(for resourceUrl: String) async throws -> DCReleaseDetailModel? {
+        return try await withCheckedThrowingContinuation { continuation in
             oauthSwift.client.get(resourceUrl) { result in
                 switch result {
                 case .success(let response):
                     do {
-                        print("-------------------------------------------")
-                        print(response.dataString() ?? "none")
                         let detail = try JSONDecoder().decode(DCReleaseDetailModel.self,
                                                               from: response.data)
-                        print("Got album detail")
                         continuation.resume(returning: detail)
                     } catch {
-                        print("Error getting album detail: \(error). Resourse \(resourceUrl)")
-                        continuation.resume(returning: nil)
+                        continuation.resume(throwing: error)
                     }
                 case .failure(let error):
-                    print("Error getting album detail: \(error.localizedDescription)")
-                    continuation.resume(returning: nil)
+                    continuation.resume(throwing: error)
                 }
             }
         }

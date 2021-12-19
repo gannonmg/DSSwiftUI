@@ -8,14 +8,14 @@
 import Foundation
 
 protocol LastFmProxy {
-    func getLastFmUserSession(username: String, password: String, completion: @escaping((LFSession?) -> Void))
+    func getLastFmUserSession(username: String, password: String) async -> LFSession?
     func scrobbleRelease(_ release: ReleaseViewModel)
 }
 
 protocol DiscogsProxy {
-    func userLoginProcess(completion: @escaping  ((Error?) -> Void))
-    func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void)
-    func getDetail(for release: ReleaseViewModel) async -> DCReleaseDetailModel?
+    func userLoginProcess() async throws
+    func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel]
+    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel?
     func resetOauth()
 }
 
@@ -33,16 +33,16 @@ final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     private init() {}
 
     // MARK: Discogs proxy
-    func userLoginProcess(completion: @escaping  ((Error?) -> Void)) {
-        DCManager.shared.userLoginProcess(completion: completion)
+    func userLoginProcess() async throws {
+        try await DCManager.shared.userLoginProcess()
     }
 
-    func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void) {
-        DCManager.shared.getAllReleasesForUser(forceRefresh: forceRefresh, completion: completion)
+    func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
+        return try await DCManager.shared.getAllReleasesForUser(forceRefresh: forceRefresh)
     }
     
-    func getDetail(for release: ReleaseViewModel) async -> DCReleaseDetailModel? {
-        return await DCManager.shared.getDetail(for: release.resourceURL)
+    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
+        return try await DCManager.shared.getDetail(for: release.resourceURL)
     }
     
     func resetOauth() {
@@ -50,8 +50,8 @@ final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     }
     
     // MARK: last.fm proxy
-    func getLastFmUserSession(username: String, password: String, completion: @escaping ((LFSession?) -> Void)) {
-        LFManager.shared.getUserSession(username: username, password: password, completion: completion)
+    func getLastFmUserSession(username: String, password: String) async -> LFSession? {
+        return await LFManager.shared.getUserSession(username: username, password: password)
     }
     
     func scrobbleRelease(_ release: ReleaseViewModel) {
@@ -66,24 +66,23 @@ final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     private init() {}
 
     // MARK: Discogs proxy
-    func userLoginProcess(completion: @escaping  ((Error?) -> Void)) {
+    func userLoginProcess() async throws {
         // What to do here
     }
 
-    func getAllReleasesForUser(forceRefresh: Bool, completion: @escaping ([DCReleaseModel]) -> Void) {
+    func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
         if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json"),
             let data = try? Data(contentsOf: path, options: .dataReadingMapped),
             let model = try? JSONDecoder().decode(CollectionReleasesResponse.self,
                                                  from: data) {
             let releases = model.releases
-            completion(releases)
+            return releases
         } else {
-            completion([])
+            return []
         }
-
     }
     
-    func getDetail(for release: ReleaseViewModel) async -> DCReleaseDetailModel? {
+    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
         if let path = Bundle.main.url(forResource: "Details", withExtension: "json"),
            let data = try? Data(contentsOf: path, options: .dataReadingMapped),
            let detailArray = try? JSONDecoder().decode([DCReleaseDetailModel].self,
@@ -100,12 +99,12 @@ final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
     }
     
     // MARK: last.fm proxy
-    func getLastFmUserSession(username: String, password: String, completion: @escaping ((LFSession?) -> Void)) {
+    func getLastFmUserSession(username: String, password: String) async -> LFSession? {
         let session: LFSession = .init(subscriber: 1,
                                        name: "Test Matt",
                                        key: "12345abcde")
         
-        completion(session)
+        return session
     }
     
     func scrobbleRelease(_ release: ReleaseViewModel) {

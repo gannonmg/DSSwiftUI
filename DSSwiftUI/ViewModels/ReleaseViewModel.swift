@@ -56,7 +56,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
             return
         }
         
-        if let details = await RemoteClientManager.getDetail(for: self) {
+        if let details = try! await RemoteClientManager.getDetail(for: self) {
             DispatchQueue.main.async {
                 self.tracklist = Array(details.tracklist)
                 RealmManager.shared.add(detail: details)
