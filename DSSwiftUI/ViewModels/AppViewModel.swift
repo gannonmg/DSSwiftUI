@@ -26,8 +26,8 @@ class AppViewModel: ObservableObject {
 
     func logIn() throws {
         Task {
-            try await RemoteClientManager.userLoginProcess()
-            let releases = try await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
+            try await RemoteClientManager.shared.userLoginProcess()
+            let releases = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
             RealmManager.shared.update(with: releases)
         }
     }
@@ -39,7 +39,7 @@ class AppViewModel: ObservableObject {
         KeychainManager.shared.remove(key: .lastFmSessionKey)
         
         RealmManager.shared.deleteAllReleases()
-        RemoteClientManager.resetOauth()
+        RemoteClientManager.shared.resetOauth()
     }
     
     func logOutLastFm() {

@@ -14,6 +14,7 @@ struct DSSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
             AppMainView()
+                .onAppear(perform: AppEnvironment.shared.resetTestApp)
                 .onOpenURL { url in
                     if url.host == "oauth-callback" {
                         OAuthSwift.handle(url: url)

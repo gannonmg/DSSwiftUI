@@ -62,7 +62,7 @@ class ReleaseListViewModel: ObservableObject {
     
     func getRemoteReleases() throws {
         Task {
-            let releases = try await RemoteClientManager.getAllReleasesForUser(forceRefresh: false)
+            let releases = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
             RealmManager.shared.update(with: releases)
         }
     }

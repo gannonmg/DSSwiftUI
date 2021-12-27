@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2D000A7B276C11DD00ED3634 /* DSSwiftUIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D000A7A276C11DD00ED3634 /* DSSwiftUIUITests.swift */; };
-		2D000A7D276C11DD00ED3634 /* DSSwiftUIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D000A7C276C11DD00ED3634 /* DSSwiftUIUITestsLaunchTests.swift */; };
 		2D000A84276C13B700ED3634 /* RemoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D000A83276C13B700ED3634 /* RemoteClient.swift */; };
 		2D000A86276D07A400ED3634 /* SingleRelease.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D000A85276D07A400ED3634 /* SingleRelease.json */; };
 		2D000A88276D07B600ED3634 /* Details.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D000A87276D07B600ED3634 /* Details.json */; };
@@ -54,6 +53,8 @@
 		C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */; };
 		C92BB3C027502226001C82C5 /* ShortResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = C92BB3BF27502226001C82C5 /* ShortResponse.json */; };
 		C98D31B3276F862A00C039AF /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D31B2276F862A00C039AF /* ErrorHandling.swift */; };
+		C9E38FA027793EED009522FC /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38F9F27793EED009522FC /* AppEnvironment.swift */; };
+		C9E38FAA277A7547009522FC /* UITestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38FA1277A1B86009522FC /* UITestHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,7 +98,6 @@
 /* Begin PBXFileReference section */
 		2D000A78276C11DD00ED3634 /* DSSwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSSwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D000A7A276C11DD00ED3634 /* DSSwiftUIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSSwiftUIUITests.swift; sourceTree = "<group>"; };
-		2D000A7C276C11DD00ED3634 /* DSSwiftUIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSSwiftUIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2D000A83276C13B700ED3634 /* RemoteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteClient.swift; sourceTree = "<group>"; };
 		2D000A85276D07A400ED3634 /* SingleRelease.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SingleRelease.json; sourceTree = "<group>"; };
 		2D000A87276D07B600ED3634 /* Details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Details.json; sourceTree = "<group>"; };
@@ -145,6 +145,8 @@
 		C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		C92BB3BF27502226001C82C5 /* ShortResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShortResponse.json; sourceTree = "<group>"; };
 		C98D31B2276F862A00C039AF /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		C9E38F9F27793EED009522FC /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		C9E38FA1277A1B86009522FC /* UITestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +187,8 @@
 		2D000A79276C11DD00ED3634 /* DSSwiftUIUITests */ = {
 			isa = PBXGroup;
 			children = (
+				C9E38FA1277A1B86009522FC /* UITestHelpers.swift */,
 				2D000A7A276C11DD00ED3634 /* DSSwiftUIUITests.swift */,
-				2D000A7C276C11DD00ED3634 /* DSSwiftUIUITestsLaunchTests.swift */,
 			);
 			path = DSSwiftUIUITests;
 			sourceTree = "<group>";
@@ -254,6 +256,7 @@
 				2DC892CB274ACCFA00010F6C /* DSSwiftUITests */,
 				2D000A79276C11DD00ED3634 /* DSSwiftUIUITests */,
 				2D44EFA426B4CD3800E4A1FE /* Products */,
+				C9E38FA3277A6F6C009522FC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -297,6 +300,7 @@
 		2D44EFC826B5C22200E4A1FE /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				C9E38F9F27793EED009522FC /* AppEnvironment.swift */,
 				2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */,
 				2D44EFD126B5C66100E4A1FE /* Common.swift */,
 				2DE2CD242769474700F90A4D /* ColorHelper.swift */,
@@ -350,6 +354,13 @@
 			path = DSSwiftUITests;
 			sourceTree = "<group>";
 		};
+		C9E38FA3277A6F6C009522FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -367,6 +378,8 @@
 				2D000A7F276C11DD00ED3634 /* PBXTargetDependency */,
 			);
 			name = DSSwiftUIUITests;
+			packageProductDependencies = (
+			);
 			productName = DSSwiftUIUITests;
 			productReference = 2D000A78276C11DD00ED3634 /* DSSwiftUIUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -547,7 +560,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D000A7B276C11DD00ED3634 /* DSSwiftUIUITests.swift in Sources */,
-				2D000A7D276C11DD00ED3634 /* DSSwiftUIUITestsLaunchTests.swift in Sources */,
+				C9E38FAA277A7547009522FC /* UITestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +587,7 @@
 				2D44EFBD26B4D2F600E4A1FE /* DCManager.swift in Sources */,
 				2D44EFA726B4CD3800E4A1FE /* DSSwiftUIApp.swift in Sources */,
 				C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */,
+				C9E38FA027793EED009522FC /* AppEnvironment.swift in Sources */,
 				2DE2CD252769474700F90A4D /* ColorHelper.swift in Sources */,
 				2D44EFCB26B5C28200E4A1FE /* ViewExtensions.swift in Sources */,
 				C98D31B3276F862A00C039AF /* ErrorHandling.swift in Sources */,
@@ -634,8 +648,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D5295S9Y6Q;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gannon.matt.VinylShuffler.DSSwiftUIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -653,7 +668,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D5295S9Y6Q;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gannon.matt.VinylShuffler.DSSwiftUIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -798,6 +813,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gannon.matt.VinylShuffler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -823,6 +839,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gannon.matt.VinylShuffler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -905,7 +922,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z7TD764G3G;
+				DEVELOPMENT_TEAM = D5295S9Y6Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -913,7 +930,6 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_SWIFT_FLAGS = "-D TEST";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gannon.matt.DSSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -930,7 +946,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z7TD764G3G;
+				DEVELOPMENT_TEAM = D5295S9Y6Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -938,7 +954,6 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_SWIFT_FLAGS = "-D TEST";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gannon.matt.DSSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

@@ -16,7 +16,7 @@ extension NSNotification.Name {
 
 class KeychainManager {
     
-    enum KeychainKey: String {
+    enum KeychainKey: String, CaseIterable {
         case discogsUserToken, discogsUserSecret, discogsUsername, lastFmSessionKey, testKey
     }
     
@@ -37,6 +37,10 @@ class KeychainManager {
     func remove(key: KeychainKey) {
         remove(key: key.rawValue)
         NotificationCenter.default.post(name: .keychainUpdated, object: key.rawValue)
+    }
+    
+    func clearAll() {
+        KeychainKey.allCases.forEach { remove(key: $0) }
     }
 
     @discardableResult

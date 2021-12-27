@@ -21,11 +21,17 @@ protocol DiscogsProxy {
 
 protocol RemoteClientProtocol: DiscogsProxy, LastFmProxy {}
 
-#if TEST
-let RemoteClientManager: RemoteClientProtocol = MockRemoteClientManager.shared
-#else
-let RemoteClientManager: RemoteClientProtocol = TrueRemoteClientManager.shared
-#endif
+class RemoteClientManager {
+    
+    static var shared: RemoteClientProtocol = {
+        if AppEnvironment.shared.isTesting {
+            return MockRemoteClientManager.shared
+        } else {
+            return TrueRemoteClientManager.shared
+        }
+    }()
+    
+}
 
 final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     
@@ -67,7 +73,9 @@ final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
 
     // MARK: Discogs proxy
     func userLoginProcess() async throws {
-        // What to do here
+        KeychainManager.shared.save(key: .discogsUsername, string: "gannonm")
+        KeychainManager.shared.save(key: .discogsUserToken, string: "123")
+        KeychainManager.shared.save(key: .discogsUserSecret, string: "456")
     }
 
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {

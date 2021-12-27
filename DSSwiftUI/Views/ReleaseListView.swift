@@ -228,7 +228,7 @@ struct SelectedReleaseView: View {
             
             if appViewModel.lastFmKey != nil {
                 Button("Scrobble Album") {
-                    RemoteClientManager.scrobbleRelease(release)
+                    RemoteClientManager.shared.scrobbleRelease(release)
                 }
             }
             
