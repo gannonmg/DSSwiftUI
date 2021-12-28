@@ -66,6 +66,8 @@
 		C9E38FBF277B92B8009522FC /* UITestIdentifiersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38FBE277B92B8009522FC /* UITestIdentifiersTests.swift */; };
 		C9E38FC1277B9CF0009522FC /* ReleaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38FC0277B9CF0009522FC /* ReleaseDetailView.swift */; };
 		C9E38FC5277B9D4D009522FC /* ReleaseDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38FC3277B9D4D009522FC /* ReleaseDetailScreen.swift */; };
+		C9E38FC7277BB9D6009522FC /* UITestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38FC6277BB9D6009522FC /* UITestable.swift */; };
+		C9E38FC8277BB9D6009522FC /* UITestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E38FC6277BB9D6009522FC /* UITestable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +170,7 @@
 		C9E38FBE277B92B8009522FC /* UITestIdentifiersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestIdentifiersTests.swift; sourceTree = "<group>"; };
 		C9E38FC0277B9CF0009522FC /* ReleaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDetailView.swift; sourceTree = "<group>"; };
 		C9E38FC3277B9D4D009522FC /* ReleaseDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDetailScreen.swift; sourceTree = "<group>"; };
+		C9E38FC6277BB9D6009522FC /* UITestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +213,7 @@
 			children = (
 				C9E38FAB277B6BBA009522FC /* UITestCase.swift */,
 				C9E38FBB277B8243009522FC /* UITestIdentifiers.swift */,
+				C9E38FC6277BB9D6009522FC /* UITestable.swift */,
 				C9E38FB1277B715A009522FC /* Screens */,
 				C9E38FB2277B7165009522FC /* Tests */,
 			);
@@ -615,6 +619,7 @@
 				C9E38FBA277B7E44009522FC /* LastFmLoginTests.swift in Sources */,
 				C9E38FB6277B7264009522FC /* ReleaseListScreenTest.swift in Sources */,
 				C9E38FB4277B7201009522FC /* FilterCategoryScreen.swift in Sources */,
+				C9E38FC8277BB9D6009522FC /* UITestable.swift in Sources */,
 				C9E38FB8277B76A3009522FC /* LastFmLoginScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -632,6 +637,7 @@
 				C9E38FBC277B8243009522FC /* UITestIdentifiers.swift in Sources */,
 				2DCC292E26BC42040062B56F /* RemoteImage.swift in Sources */,
 				2D44EFD226B5C66100E4A1FE /* Common.swift in Sources */,
+				C9E38FC7277BB9D6009522FC /* UITestable.swift in Sources */,
 				2D3B37AC2765AC760053CADF /* LFLoginView.swift in Sources */,
 				2D3B37B32767EA520053CADF /* AppViewModel.swift in Sources */,
 				2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */,

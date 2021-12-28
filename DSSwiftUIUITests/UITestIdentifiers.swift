@@ -7,49 +7,35 @@
 
 import SwiftUI
 
-protocol UITestIdentifier {
+// MARK: - UITestIdentifier Protocol
+protocol UITestIdentifier where Self: RawRepresentable, Self.RawValue: StringProtocol {
     var identifierString: String { get }
 }
 
-extension UITestIdentifier where Self: RawRepresentable, Self.RawValue == String {
+extension UITestIdentifier {
     var identifierString: String {
         "\(Self.self).\(rawValue)"
     }
 }
 
+// MARK: - Screen Identifiers
 enum LoginIdentifier: String, UITestIdentifier {
-    
     case loginButton
-    
 }
 
 enum ReleaseListIdentifier: String, UITestIdentifier {
-    
     case settingsButton,
          shuffleButton,
          filterButton,
          releaseList
-
 }
 
 enum ReleaseDetailIdentifier: String, UITestIdentifier {
-    
     case scrobbleButton
-    
 }
 
 enum LastFmIdentifier: String, UITestIdentifier {
-    
     case usernameField,
          passwordField,
          loginButton
-    
-}
-
-extension View {
-    
-    func testIdentifier(_ identifier: UITestIdentifier) -> some View {
-        return self.accessibilityIdentifier(identifier.identifierString)
-    }
-    
 }

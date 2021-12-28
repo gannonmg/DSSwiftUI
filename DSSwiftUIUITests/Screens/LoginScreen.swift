@@ -9,15 +9,17 @@ import XCTest
 
 protocol Screen {
     var app: XCUIApplication { get }
+    associatedtype IdentifierEnum: UITestIdentifier
 }
 
 struct LoginScreen: Screen {
     
+    typealias IdentifierEnum = LoginIdentifier
     let app: XCUIApplication
 
     // MARK: - Actions
     func tapLogin() -> ReleaseListScreen {
-        app.buttons["Log In"].tap()
+        app.buttons[IdentifierEnum.loginButton].tap()
         return ReleaseListScreen(app: app)
     }
     

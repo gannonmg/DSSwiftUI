@@ -9,6 +9,7 @@ import XCTest
 
 struct ReleaseListScreen: Screen {
     
+    typealias IdentifierEnum = ReleaseListIdentifier
     let app: XCUIApplication
     
     // MARK: - Verifications
@@ -38,7 +39,7 @@ struct ReleaseListScreen: Screen {
     }
     
     func tapFirstListItem() -> ReleaseDetailScreen {
-        app.tables.testIdentifier(ReleaseListIdentifier.releaseList).tap()
+        app.tables[IdentifierEnum.releaseList].tap()
         return ReleaseDetailScreen(app: app)
     }
     

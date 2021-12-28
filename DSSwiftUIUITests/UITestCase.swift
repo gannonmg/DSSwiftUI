@@ -43,8 +43,8 @@ extension XCUIApplication {
 
 extension XCUIElementQuery {
     
-    func testIdentifier(_ identifier: UITestIdentifier) -> XCUIElement {
-        return self[identifier.identifierString]
+    subscript<T: UITestIdentifier>(_ testIdentifier: T) -> XCUIElement {
+        get { self[testIdentifier.identifierString] }
     }
     
 }
