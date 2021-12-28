@@ -84,19 +84,11 @@ struct FilterSelectionView: View {
     @StateObject var filterController: FilterViewModel
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                let categoryOptions = filterController.filterOptions[category] ?? []
-                ForEach(categoryOptions, id: \.self) { option in
-                    VStack {
-                        FilterOptionView(option: option) {
-                            filterController.tappedOption(option)
-                        }
-                        Color.black
-                            .opacity(0.2)
-                            .frame(height: 1)
-                            .padding(.horizontal, 8)
-                    }
+        List {
+            let categoryOptions = filterController.filterOptions[category] ?? []
+            ForEach(categoryOptions, id: \.self) { option in
+                FilterOptionView(option: option) {
+                    filterController.tappedOption(option)
                 }
             }
         }
@@ -132,10 +124,6 @@ struct FilterCategoryView: View {
     let title: String
     
     var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Text("(\(0))")
-        }
+        Text(title)
     }
 }

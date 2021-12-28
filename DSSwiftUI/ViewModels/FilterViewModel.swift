@@ -165,7 +165,6 @@ extension FilterViewModel {
         } else {
             let conjunction = exclusiveFilter ? "AND" : "OR"
             let predicateString = predicates.joined(separator: " \(conjunction) ")
-            print("Predicate string is \(predicateString)")
             predicate = NSPredicate(format: predicateString)
         }
     }

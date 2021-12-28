@@ -1,0 +1,24 @@
+//
+//  LoginScreen.swift
+//  DSSwiftUIUITests
+//
+//  Created by Matt Gannon on 12/28/21.
+//
+
+import XCTest
+
+protocol Screen {
+    var app: XCUIApplication { get }
+}
+
+struct LoginScreen: Screen {
+    
+    let app: XCUIApplication
+
+    // MARK: - Actions
+    func tapLogin() -> ReleaseListScreen {
+        app.buttons["Log In"].tap()
+        return ReleaseListScreen(app: app)
+    }
+    
+}

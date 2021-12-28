@@ -24,7 +24,7 @@ struct ReleaseListView: View {
                 .background { Color.secondaryBackground }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    leadingItem
+                    settingsItem
                     shuffleItem
                     ToolbarItem(placement: .principal, content: { Text("Collection") })
                     trailingItem
@@ -71,6 +71,7 @@ struct ReleaseListView: View {
             }
         }
         .refreshable { refresh() }
+        .testIdentifier(ReleaseListIdentifier.releaseList)
     }
     
     var searchView: some View {
@@ -100,7 +101,7 @@ struct ReleaseListView: View {
         }
     }
     
-    var leadingItem: some ToolbarContent {
+    var settingsItem: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             Menu {
                 Button("Log Out", role: .destructive,
@@ -111,6 +112,7 @@ struct ReleaseListView: View {
             } label: {
                 Image(systemName: "gearshape.fill")
             }
+            .testIdentifier(ReleaseListIdentifier.settingsButton)
         }
     }
     
@@ -182,99 +184,6 @@ struct ReleaseListItemView: View {
                 .font(.caption)
             Text("Descriptions: " + release.descriptions.joined(separator: ", "))
                 .font(.caption)
-        }
-    }
-    
-}
-
-struct SelectedReleaseView: View {
-    
-    @EnvironmentObject var realmListViewModel: ReleaseListViewModel
-    @EnvironmentObject var appViewModel: AppViewModel
-    @EnvironmentObject var errorHandling: ErrorHandling
-    @Environment(\.colorScheme) var colorScheme
-    @ObservedObject var release: ReleaseViewModel
-    
-    var body: some View {
-        ZStack {
-            (colorScheme == .light ? Color.black : Color.white)
-                .opacity(0.3)
-                .ignoresSafeArea()
-            content
-        }
-        .onAppear(perform: getDetail)
-    }
-    
-    var content: some View {
-        VStack(alignment: .leading) {
-            ZStack(alignment: .topTrailing) {
-                HStack {
-                    RemoteImageView(url: URL(string: release.coverImage),
-                                    placeholder: UIImage(systemName: "photo")!)
-                        .height(80)
-                        .width(80)
-                    
-                    VStack(alignment: .leading) {
-                        Text(release.title)
-                        Text(release.artists.first!.name)
-                            .font(.callout)
-                    }
-                    
-                    Spacer()
-                }
-                
-                closeButton
-            }
-            
-            if appViewModel.lastFmKey != nil {
-                Button("Scrobble Album") {
-                    RemoteClientManager.shared.scrobbleRelease(release)
-                }
-            }
-            
-            VStack {
-                ForEach(release.tracklist) { track in
-                    HStack(alignment: .top) {
-                        Text("\(track.title)")
-                        Spacer()
-                        if !track.duration.isEmpty {
-                            Text("\(track.duration)")
-                        }
-                    }
-                }
-            }
-            .padding()
-        }
-        .background { Color.secondaryBackground }
-        .padding(.horizontal, 20)
-    }
-    
-    var closeButton: some View {
-        Button {
-            realmListViewModel.removeRandomeRelease()
-        } label: {
-            Image(systemName: "x.circle.fill")
-                .height(28)
-                .width(28)
-                .foregroundColor(.white)
-                .background {
-                    Color.black
-                        .height(28)
-                        .width(28)
-                        .cornerRadius(14)
-                }
-                .padding(.top, 8)
-                .padding(.trailing, 8)
-        }
-    }
-    
-    func getDetail() {
-        Task {
-            do {
-                try await release.getDetail()
-            } catch {
-                errorHandling.handle(error: error)
-            }
         }
     }
     

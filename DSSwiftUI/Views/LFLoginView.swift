@@ -16,14 +16,17 @@ struct LFLoginView: View {
         VStack {
             Text("Last.FM Login")
             TextField("Username", text: $viewModel.username, prompt: Text("Enter Username"))
+                .testIdentifier(LastFmIdentifier.usernameField)
                 .disableAutocorrection(true)
                 .textInputAutocapitalization(.never)
             SecureField("Password", text: $viewModel.password, prompt: Text("Enter Password"))
+                .testIdentifier(LastFmIdentifier.passwordField)
             TryButton("Login") {
                 try viewModel.login {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }
+            .testIdentifier(LastFmIdentifier.loginButton)
         }
     }
     
