@@ -165,7 +165,7 @@ struct ReleaseListItemView: View {
         VStack(alignment: .leading) {
             
             HStack(alignment: .top) {
-                RemoteImageView(url: URL(string: release.coverImage),
+                RemoteImageView(url: URL(string: release.thumbnailImage),
                                 placeholder: UIImage(systemName: "photo")!)
                     .height(40)
                     .width(40)

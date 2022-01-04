@@ -16,6 +16,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     let year: Int
     let artists: [DCArtistModel]
     let coverImage: String
+    let thumbnailImage: String
     let resourceURL: String
     
     let formats: [String]
@@ -40,6 +41,7 @@ class ReleaseViewModel: ObservableObject, Identifiable {
         self.year = release.basicInformation.year
         self.artists = Array(release.basicInformation.artists)
         self.coverImage = release.basicInformation.coverImage
+        self.thumbnailImage = release.basicInformation.thumbnailImage
         self.resourceURL = release.basicInformation.resourceURL
         
         self.genres = Array(release.basicInformation.genres)

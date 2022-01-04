@@ -78,6 +78,7 @@ class DCBasicInformationModel: Object, Codable {
     @Persisted private(set) var year: Int
     @Persisted private(set) var artists: List<DCArtistModel>
     @Persisted private(set) var coverImage: String
+    @Persisted private(set) var thumbnailImage: String
     @Persisted private(set) var resourceURL: String
     @Persisted private(set) var formats: List<DCFormatModel>
     @Persisted private(set) var genres: List<String>
@@ -92,6 +93,7 @@ class DCBasicInformationModel: Object, Codable {
     enum CodingKeys: String, CodingKey {
         case title, year, artists, genres, styles, formats
         case coverImage = "cover_image"
+        case thumbnailImage = "thumb"
         case resourceURL = "resource_url"
     }
 
