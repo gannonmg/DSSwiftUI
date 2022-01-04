@@ -13,12 +13,12 @@ struct ReleaseDetailScreen: Screen {
     
     // MARK: - Verifications
     func verifyScrobbleButtonShowing() {
-        let scrobbleButtonExists = app.buttons.testIdentifier(ReleaseDetailIdentifier.scrobbleButton).exists
+        let scrobbleButtonExists = app.buttons[ReleaseDetailIdentifier.scrobbleButton].exists
         XCTAssert(scrobbleButtonExists)
     }
     
     func verifyScrobbleButtonHidden() {
-        let scrobbleButtonExists = app.buttons.testIdentifier(ReleaseDetailIdentifier.scrobbleButton).exists
+        let scrobbleButtonExists = app.buttons[ReleaseDetailIdentifier.scrobbleButton].exists
         XCTAssertFalse(scrobbleButtonExists)
     }
     

@@ -14,7 +14,7 @@ struct LastFmLoginScreen: Screen {
     // MARK: - Actions
     func typeUsername() -> Self {
         _ = app.textFields["username"].waitForExistence(timeout: 1)
-        let userField = app.textFields.testIdentifier(LastFmIdentifier.usernameField)
+        let userField = app.textFields[LastFmIdentifier.usernameField]
         userField.tap()
         userField.typeText("username")
         return self
@@ -22,14 +22,14 @@ struct LastFmLoginScreen: Screen {
     
     func typePassword() -> Self {
         _ = app.textFields["password"].waitForExistence(timeout: 1)
-        let passField = app.secureTextFields.testIdentifier(LastFmIdentifier.passwordField)
+        let passField = app.secureTextFields[LastFmIdentifier.passwordField]
         passField.tap()
         passField.typeText("password")
         return self
     }
     
     func tapLoginButton() -> ReleaseListScreen {
-        app.buttons.testIdentifier(LastFmIdentifier.loginButton).tap()
+        app.buttons[LastFmIdentifier.loginButton].tap()
         return ReleaseListScreen(app: app)
     }
     

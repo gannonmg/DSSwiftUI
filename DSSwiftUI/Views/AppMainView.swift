@@ -24,6 +24,7 @@ struct AppMainView: View {
                     .font(.body)
                 TryButton("Log In", action: viewModel.logIn)
                     .buttonStyle(.bordered)
+                    .testIdentifier(LoginIdentifier.loginButton)
             }
         }
     }
