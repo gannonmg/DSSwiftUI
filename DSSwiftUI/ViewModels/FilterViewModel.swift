@@ -170,14 +170,23 @@ extension FilterViewModel {
     }
     
     func turnOffAllFilters() {
-        self.exclusiveFilter = true
         
-        for key in filterOptions.keys {
-            let count = filterOptions[key]?.count ?? 0
-            for index in 0..<count {
-                filterOptions[key]?[index].selected = false
+        var freshFilterOptions: [FilterCategory: [FilterOption]] = [:]
+        
+        for category in FilterCategory.allCases {
+            for option in filterOptions[category] ?? [] {
+                let freshOption = FilterOption(title: option.title)
+                if freshFilterOptions[category] == nil {
+                    freshFilterOptions[category] = [freshOption]
+                } else {
+                    freshFilterOptions[category]?.append(freshOption)
+                }
             }
         }
+
+        self.exclusiveFilter = true
+        self.filterOptions = freshFilterOptions
+        
     }
     
 }
