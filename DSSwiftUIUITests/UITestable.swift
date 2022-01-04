@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//MARK: - UITestable Protocol
+// MARK: - UITestable Protocol
 protocol UITestable: View {
     associatedtype IdentifierEnum: UITestIdentifier
 }

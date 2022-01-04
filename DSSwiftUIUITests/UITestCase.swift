@@ -16,7 +16,7 @@ class UITestCase: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         app = XCUIApplication.testable()
-        //app.launchArguments = ["testing"]
+        // app.launchArguments = ["testing"]
         app.launch()
     }
     
@@ -44,7 +44,7 @@ extension XCUIApplication {
 extension XCUIElementQuery {
     
     subscript<T: UITestIdentifier>(_ testIdentifier: T) -> XCUIElement {
-        get { self[testIdentifier.identifierString] }
+        self[testIdentifier.identifierString]
     }
     
 }

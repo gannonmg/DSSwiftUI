@@ -33,7 +33,7 @@ class RemoteClientManager {
     
 }
 
-final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
+final private class TrueRemoteClientManager: RemoteClientProtocol {
     
     static var shared: RemoteClientProtocol = TrueRemoteClientManager.init()
     private init() {}
@@ -66,7 +66,7 @@ final fileprivate class TrueRemoteClientManager: RemoteClientProtocol {
     
 }
 
-final fileprivate class MockRemoteClientManager: RemoteClientProtocol {
+final private class MockRemoteClientManager: RemoteClientProtocol {
     
     static var shared: RemoteClientProtocol = MockRemoteClientManager.init()
     private init() {}

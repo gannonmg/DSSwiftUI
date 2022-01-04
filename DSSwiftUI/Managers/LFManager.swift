@@ -92,7 +92,7 @@ class LFManager {
         request.url = urlComponents.url
         
         return try await withCheckedThrowingContinuation { continuation in
-            let task = session.dataTask(with: request) { (data, response, error) in
+            let task = session.dataTask(with: request) { (data, _, error) in
                 do {
                     if let data = data {
                         let session = try JSONDecoder().decode(LFSessionResponse.self, from: data)
