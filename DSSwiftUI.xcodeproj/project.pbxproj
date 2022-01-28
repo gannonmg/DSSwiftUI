@@ -11,6 +11,8 @@
 		2D000A84276C13B700ED3634 /* RemoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D000A83276C13B700ED3634 /* RemoteClient.swift */; };
 		2D000A86276D07A400ED3634 /* SingleRelease.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D000A85276D07A400ED3634 /* SingleRelease.json */; };
 		2D000A88276D07B600ED3634 /* Details.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D000A87276D07B600ED3634 /* Details.json */; };
+		2D1CD27127A386D200885811 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1CD27027A386D200885811 /* Secret.swift */; };
+		2D1CD27427A3B43E00885811 /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 2D1CD27327A3B43E00885811 /* CoreStore */; };
 		2D3B37AA27629E8E0053CADF /* ReleaseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */; };
 		2D3B37AC2765AC760053CADF /* LFLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37AB2765AC760053CADF /* LFLoginView.swift */; };
 		2D3B37B12767E90A0053CADF /* ReleaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */; };
@@ -47,7 +49,6 @@
 		2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */; };
 		2DE2CD252769474700F90A4D /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2CD242769474700F90A4D /* ColorHelper.swift */; };
 		C9244D70274ED13000AAFFE1 /* ReleaseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9244D6F274ED13000AAFFE1 /* ReleaseListView.swift */; };
-		C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9244D73274ED14400AAFFE1 /* Secret.swift */; };
 		C92BB3BA274FF467001C82C5 /* DCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3B9274FF467001C82C5 /* DCModels.swift */; };
 		C92BB3BC274FF48C001C82C5 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BB274FF48C001C82C5 /* RealmManager.swift */; };
 		C92BB3BE274FF4AA001C82C5 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */; };
@@ -114,6 +115,7 @@
 		2D000A83276C13B700ED3634 /* RemoteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteClient.swift; sourceTree = "<group>"; };
 		2D000A85276D07A400ED3634 /* SingleRelease.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SingleRelease.json; sourceTree = "<group>"; };
 		2D000A87276D07B600ED3634 /* Details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Details.json; sourceTree = "<group>"; };
+		2D1CD27027A386D200885811 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseListViewModel.swift; sourceTree = "<group>"; };
 		2D3B37AB2765AC760053CADF /* LFLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFLoginView.swift; sourceTree = "<group>"; };
 		2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseViewModel.swift; sourceTree = "<group>"; };
@@ -152,7 +154,6 @@
 		2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartSearchMatcher.swift; sourceTree = "<group>"; };
 		2DE2CD242769474700F90A4D /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
 		C9244D6F274ED13000AAFFE1 /* ReleaseListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseListView.swift; sourceTree = "<group>"; };
-		C9244D73274ED14400AAFFE1 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		C92BB3B9274FF467001C82C5 /* DCModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCModels.swift; sourceTree = "<group>"; };
 		C92BB3BB274FF48C001C82C5 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C92BB3BD274FF4AA001C82C5 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 				2D66A30D273DD86C00473FAA /* RealmSwift in Frameworks */,
 				2D66A30B273DD86C00473FAA /* Realm in Frameworks */,
 				2DCAF99B272871B900649636 /* OAuthSwift in Frameworks */,
+				2D1CD27427A3B43E00885811 /* CoreStore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */,
-				C9244D73274ED14400AAFFE1 /* Secret.swift */,
+				2D1CD27027A386D200885811 /* Secret.swift */,
 				2D3B37B42767EAAD0053CADF /* Managers */,
 				2D3B37AF2767E7B20053CADF /* Models */,
 				2D3B37AD2767E7A40053CADF /* Views */,
@@ -455,6 +457,7 @@
 				2DCAF99A272871B900649636 /* OAuthSwift */,
 				2D66A30A273DD86C00473FAA /* Realm */,
 				2D66A30C273DD86C00473FAA /* RealmSwift */,
+				2D1CD27327A3B43E00885811 /* CoreStore */,
 			);
 			productName = DSSwiftUI;
 			productReference = 2D44EFA326B4CD3800E4A1FE /* DSSwiftUI.app */;
@@ -533,6 +536,7 @@
 				2DCAF999272871B900649636 /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 				2D66A309273DD86C00473FAA /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				2D54AF77276ABC0100F01254 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				2D1CD27227A3B43E00885811 /* XCRemoteSwiftPackageReference "CoreStore" */,
 			);
 			productRefGroup = 2D44EFA426B4CD3800E4A1FE /* Products */;
 			projectDirPath = "";
@@ -628,8 +632,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */,
 				2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */,
+				2D1CD27127A386D200885811 /* Secret.swift in Sources */,
 				2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */,
 				2D3B37B62767EBF50053CADF /* LFLoginViewModel.swift in Sources */,
 				C9244D70274ED13000AAFFE1 /* ReleaseListView.swift in Sources */,
@@ -1078,6 +1082,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2D1CD27227A3B43E00885811 /* XCRemoteSwiftPackageReference "CoreStore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnEstropia/CoreStore";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		2D54AF77276ABC0100F01254 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint";
@@ -1105,6 +1117,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2D1CD27327A3B43E00885811 /* CoreStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2D1CD27227A3B43E00885811 /* XCRemoteSwiftPackageReference "CoreStore" */;
+			productName = CoreStore;
+		};
 		2D66A30A273DD86C00473FAA /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2D66A309273DD86C00473FAA /* XCRemoteSwiftPackageReference "realm-cocoa" */;
