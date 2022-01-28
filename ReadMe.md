@@ -44,8 +44,8 @@ struct LFAuthInfo {
 - [x] Store Release tracks in CoreData
 - [x] Save user credentials in Keychain instead of user defaults
 - [x] Bug: Collection list scrolls to top after closing detail view
-- [ ] Add welcome screen
-- [ ] Smooth out user flow from login to release loading.
-- [ ] Add Scrobble button to release detail view
+- [x] Add welcome screen
+- [x] Smooth out user flow from login to release loading.
+- [x] Add Scrobble button to release detail view
 - [ ] Use Matched Geometry Effect to present ReleaseDetailView in style
-- [ ] Explore @FetchRequest property wrapper for CoreData
+- [ ] Explore CoreStore package to use CoreData instead of Realm
