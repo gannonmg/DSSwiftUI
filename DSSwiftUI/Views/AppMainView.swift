@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppMainView: View {
     
-    @StateObject var viewModel = AppViewModel()
+    @StateObject var viewModel: AppViewModel = .init()
     
     var body: some View {
         if viewModel.loggedIn {

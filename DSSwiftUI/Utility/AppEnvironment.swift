@@ -7,14 +7,13 @@
 
 import Foundation
 
-class AppEnvironment {
+final class AppEnvironment {
     
     static let shared: AppEnvironment = .init()
     private init() {}
     
     lazy var isTesting: Bool = {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil || ProcessInfo.processInfo.environment["UITesting"] == "YES"
-
     }()
 
     func resetTestApp() {

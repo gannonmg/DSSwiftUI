@@ -14,7 +14,7 @@ class LFLoginViewModel: ObservableObject {
     
     func login(completion: @escaping (() -> Void)) throws {
         Task {
-            let session = try await RemoteClientManager.shared.getLastFmUserSession(username: username, password: password)
+            let session: LFSession? = try await RemoteClientManager.shared.getLastFmUserSession(username: username, password: password)
             if let session = session {
                 KeychainManager.shared.save(key: .lastFmSessionKey, string: session.key)
                 completion()

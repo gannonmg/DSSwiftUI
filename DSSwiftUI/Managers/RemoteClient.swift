@@ -21,7 +21,7 @@ protocol DiscogsProxy {
 
 protocol RemoteClientProtocol: DiscogsProxy, LastFmProxy {}
 
-class RemoteClientManager {
+final class RemoteClientManager {
     
     static var shared: RemoteClientProtocol = {
         if AppEnvironment.shared.isTesting {

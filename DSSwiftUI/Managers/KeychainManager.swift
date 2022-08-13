@@ -71,14 +71,16 @@ class KeychainManager {
     }
     
     private func remove(key: String) {
-        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
-                                    kSecAttrAccount as String: key]
-
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key
+        ]
+        
         // Delete any existing items
         let status = SecItemDelete(query as CFDictionary)
         if status == errSecSuccess {
             print("Successfully removed key \(key)")
-        } else if let err = SecCopyErrorMessageString(status, nil) {
+        } else if let err: CFString = SecCopyErrorMessageString(status, nil) {
             print("Remove failed for key \(key): \(err)")
         } else {
             print("Remove failed for key \(key)")
@@ -88,7 +90,6 @@ class KeychainManager {
 }
 
 extension Data {
-
     init<T>(from value: T) {
         self = withUnsafePointer(to: value) { (ptr: UnsafePointer<T>) -> Data in
             return Data(buffer: UnsafeBufferPointer(start: ptr, count: 1))
