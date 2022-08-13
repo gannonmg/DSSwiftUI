@@ -32,11 +32,11 @@
 		2D66A30B273DD86C00473FAA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2D66A30A273DD86C00473FAA /* Realm */; };
 		2D66A30D273DD86C00473FAA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2D66A30C273DD86C00473FAA /* RealmSwift */; };
 		2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 2D6EE05C26E7EAF300F98B43 /* ReadMe.md */; };
-		2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EE06226E9413500F98B43 /* KeychainManager.swift */; };
+		2D70CFBC28A732F600B3423E /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2D70CFBB28A732F600B3423E /* OAuthSwift */; };
+		2D70CFC028A733CA00B3423E /* MGKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 2D70CFBF28A733CA00B3423E /* MGKeychain */; };
 		2D8922CA274C3DC30013C9F4 /* AppMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922C9274C3DC30013C9F4 /* AppMainView.swift */; };
 		2D8922CC274C4CD20013C9F4 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */; };
 		2DC892D4274ACD4400010F6C /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC892D3274ACD4400010F6C /* KeychainManagerTests.swift */; };
-		2DCAF99B272871B900649636 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2DCAF99A272871B900649636 /* OAuthSwift */; };
 		2DCC292E26BC42040062B56F /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC292D26BC42040062B56F /* RemoteImage.swift */; };
 		2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2F7D426BDB699006D8F40 /* FilterView.swift */; };
 		2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2F7D626BDB6F2006D8F40 /* SmartSearchMatcher.swift */; };
@@ -122,7 +122,7 @@
 		2D44EFD126B5C66100E4A1FE /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2D44EFD526B5C7ED00E4A1FE /* LFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFModels.swift; sourceTree = "<group>"; };
 		2D6EE05C26E7EAF300F98B43 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
-		2D6EE06226E9413500F98B43 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		2D70CFBD28A7335C00B3423E /* MGKeychain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MGKeychain; path = ../packages/MGKeychain; sourceTree = "<group>"; };
 		2D8922C9274C3DC30013C9F4 /* AppMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMainView.swift; sourceTree = "<group>"; };
 		2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelTests.swift; sourceTree = "<group>"; };
 		2DC892CA274ACCFA00010F6C /* DSSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,7 +167,8 @@
 			files = (
 				2D66A30D273DD86C00473FAA /* RealmSwift in Frameworks */,
 				2D66A30B273DD86C00473FAA /* Realm in Frameworks */,
-				2DCAF99B272871B900649636 /* OAuthSwift in Frameworks */,
+				2D70CFC028A733CA00B3423E /* MGKeychain in Frameworks */,
+				2D70CFBC28A732F600B3423E /* OAuthSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,7 +234,6 @@
 				2D44EFBC26B4D2F600E4A1FE /* DCManager.swift */,
 				2D44EFCC26B5C4A400E4A1FE /* LFManager.swift */,
 				C92BB3BB274FF48C001C82C5 /* RealmManager.swift */,
-				2D6EE06226E9413500F98B43 /* KeychainManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -253,10 +253,11 @@
 			children = (
 				2D6EE05C26E7EAF300F98B43 /* ReadMe.md */,
 				2D44EFA526B4CD3800E4A1FE /* DSSwiftUI */,
+				2D70CFB728A7324400B3423E /* Packages */,
 				2DC892CB274ACCFA00010F6C /* DSSwiftUITests */,
 				2D000A79276C11DD00ED3634 /* DSSwiftUIUITests */,
 				2D44EFA426B4CD3800E4A1FE /* Products */,
-				C9E38FA3277A6F6C009522FC /* Frameworks */,
+				2D70CFBE28A733CA00B3423E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -308,6 +309,21 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		2D70CFB728A7324400B3423E /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				2D70CFBD28A7335C00B3423E /* MGKeychain */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		2D70CFBE28A733CA00B3423E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2DA3BB2326BF04AC00AEAB48 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,13 +347,6 @@
 				C9E38FBE277B92B8009522FC /* UITestIdentifiersTests.swift */,
 			);
 			path = DSSwiftUITests;
-			sourceTree = "<group>";
-		};
-		C9E38FA3277A6F6C009522FC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C9E38FB1277B715A009522FC /* Screens */ = {
@@ -401,9 +410,10 @@
 			);
 			name = DSSwiftUI;
 			packageProductDependencies = (
-				2DCAF99A272871B900649636 /* OAuthSwift */,
 				2D66A30A273DD86C00473FAA /* Realm */,
 				2D66A30C273DD86C00473FAA /* RealmSwift */,
+				2D70CFBB28A732F600B3423E /* OAuthSwift */,
+				2D70CFBF28A733CA00B3423E /* MGKeychain */,
 			);
 			productName = DSSwiftUI;
 			productReference = 2D44EFA326B4CD3800E4A1FE /* DSSwiftUI.app */;
@@ -459,9 +469,9 @@
 			);
 			mainGroup = 2D44EF9A26B4CD3700E4A1FE;
 			packageReferences = (
-				2DCAF999272871B900649636 /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 				2D66A309273DD86C00473FAA /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				2D54AF77276ABC0100F01254 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				2D70CFBA28A732F600B3423E /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 			);
 			productRefGroup = 2D44EFA426B4CD3800E4A1FE /* Products */;
 			projectDirPath = "";
@@ -559,7 +569,6 @@
 				C9E38FC7277BB9D6009522FC /* UITestable.swift in Sources */,
 				2D3B37AC2765AC760053CADF /* LFLoginView.swift in Sources */,
 				2D3B37B32767EA520053CADF /* AppViewModel.swift in Sources */,
-				2D6EE06326E9413500F98B43 /* KeychainManager.swift in Sources */,
 				2D3B37AA27629E8E0053CADF /* ReleaseListViewModel.swift in Sources */,
 				2D3B37B12767E90A0053CADF /* ReleaseViewModel.swift in Sources */,
 				2D44EFD626B5C7ED00E4A1FE /* LFModels.swift in Sources */,
@@ -920,12 +929,12 @@
 				minimumVersion = 10.12.0;
 			};
 		};
-		2DCAF999272871B900649636 /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
+		2D70CFBA28A732F600B3423E /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift";
+			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
+				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -941,10 +950,14 @@
 			package = 2D66A309273DD86C00473FAA /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
 		};
-		2DCAF99A272871B900649636 /* OAuthSwift */ = {
+		2D70CFBB28A732F600B3423E /* OAuthSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2DCAF999272871B900649636 /* XCRemoteSwiftPackageReference "OAuthSwift" */;
+			package = 2D70CFBA28A732F600B3423E /* XCRemoteSwiftPackageReference "OAuthSwift" */;
 			productName = OAuthSwift;
+		};
+		2D70CFBF28A733CA00B3423E /* MGKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MGKeychain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

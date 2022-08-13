@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MGKeychain
 
 protocol LastFmProxy {
     func getLastFmUserSession(username: String, password: String) async throws -> LFSession?
@@ -79,27 +80,31 @@ final private class MockRemoteClientManager: RemoteClientProtocol {
     }
 
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
-        if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {
-            let data = try Data(contentsOf: path, options: .dataReadingMapped)
-            let model = try JSONDecoder().decode(CollectionReleasesResponse.self,
-                                                 from: data)
-            let releases = model.releases
-            return releases
-        } else {
-            return []
+        guard let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") else {
+            throw URLError(.badURL)
         }
+        
+        let data: Data = try .init(contentsOf: path, options: .dataReadingMapped)
+        let model: CollectionReleasesResponse = try JSONDecoder().decode(
+            CollectionReleasesResponse.self,
+            from: data
+        )
+
+        return model.releases
     }
     
     func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
-        if let path = Bundle.main.url(forResource: "Details", withExtension: "json") {
-            let data = try Data(contentsOf: path, options: .dataReadingMapped)
-            let detailArray = try JSONDecoder().decode([DCReleaseDetailModel].self,
-                                                       from: data)
-            let detail = detailArray.first(where: { $0.id == release.id })
-            return detail
+        guard let path = Bundle.main.url(forResource: "Details", withExtension: "json") else {
+            throw URLError(.badURL)
         }
         
-        return nil
+        let data: Data = try .init(contentsOf: path, options: .dataReadingMapped)
+        let detailArray: [DCReleaseDetailModel] = try JSONDecoder().decode(
+            [DCReleaseDetailModel].self, from: data
+        )
+
+        return detailArray.first(where: { $0.id == release.id })
+        
     }
     
     func resetOauth() {
@@ -119,4 +124,23 @@ final private class MockRemoteClientManager: RemoteClientProtocol {
         // nothing to see here
     }
     
+}
+
+#warning("Interim Code")
+enum KeychainKey: String, CaseIterable {
+    case discogsUserToken, discogsUserSecret, discogsUsername, lastFmSessionKey, testKey
+}
+
+extension KeychainManager {
+    func save(key: KeychainKey, string: String) {
+        try? save(key: key.rawValue, value: string)
+    }
+    
+    func get(for key: KeychainKey) -> String? {
+        return try? get(for: key.rawValue)
+    }
+    
+    func remove(key: KeychainKey) {
+        try? remove(key: key.rawValue)
+    }
 }

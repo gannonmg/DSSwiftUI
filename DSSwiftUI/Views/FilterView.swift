@@ -21,7 +21,7 @@ struct FilterView: View {
                 Toggle("Filter Exclusively", isOn: $filterController.exclusiveFilter)
                 
                 ForEach(filterController.categories, id: \.self) { category in
-                    let filterCategory = FilterCategory(rawValue: category.lowercased())!
+                    let filterCategory: FilterCategory = FilterCategory(rawValue: category.lowercased())!
                     NavigationLink(destination: FilterSelectionView(category: filterCategory,
                                                                     filterController: filterController)) {
                         FilterCategoryView(title: category)
@@ -85,7 +85,7 @@ struct FilterSelectionView: View {
     
     var body: some View {
         List {
-            let categoryOptions = filterController.filterOptions[category] ?? []
+            let categoryOptions: [FilterOption] = filterController.filterOptions[category] ?? []
             ForEach(categoryOptions, id: \.self) { option in
                 FilterOptionView(option: option) {
                     filterController.tappedOption(option)
@@ -108,7 +108,7 @@ struct FilterOptionView: View {
                 HStack {
                     Text(option.title)
                     Spacer()
-                    let imageName = option.selected ? "checkmark.square.fill" : "checkmark.square"
+                    let imageName: String = option.selected ? "checkmark.square.fill" : "checkmark.square"
                     Image(systemName: imageName)
                 }
                 .padding(.horizontal, 16)
@@ -120,7 +120,6 @@ struct FilterOptionView: View {
 }
 
 struct FilterCategoryView: View {
-    
     let title: String
     
     var body: some View {

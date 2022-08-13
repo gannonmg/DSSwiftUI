@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import MGKeychain
 import OAuthSwift
 
 class DCManager {
     
     private var oauthSwift: OAuth1Swift!
-    static let shared = DCManager()
+    static let shared: DCManager = .init()
     
     private init() {
         self.oauthSwift = OAuth1Swift(consumerKey: DCAuthInfo.key,
@@ -20,8 +21,8 @@ class DCManager {
                                       authorizeUrl: "https://www.discogs.com/oauth/authorize",
                                       accessTokenUrl: "https://api.discogs.com/oauth/access_token")
         
-        if let userToken = KeychainManager.shared.get(for: .discogsUserToken),
-           let userTokenSecret = KeychainManager.shared.get(for: .discogsUserSecret) {
+        if let userToken: String = KeychainManager.shared.get(for: .discogsUserToken),
+           let userTokenSecret: String = KeychainManager.shared.get(for: .discogsUserSecret) {
             oauthSwift.client.credential.oauthToken = userToken
             oauthSwift.client.credential.oauthTokenSecret = userTokenSecret
         }
@@ -56,7 +57,7 @@ class DCManager {
                 switch result {
                 case .success(let response):
                     do {
-                        let user = try JSONDecoder().decode(DCUser.self, from: response.data)
+                        let user: DCUser = try JSONDecoder().decode(DCUser.self, from: response.data)
                         KeychainManager.shared.save(key: .discogsUsername, string: user.username)
                         continuation.resume(returning: ())
                     } catch {
@@ -83,14 +84,14 @@ class DCManager {
             throw AppError.messageError("No discogs username stored")
         }
         
-        let initialPageUrl = "https://api.discogs.com/users/\(username)/collection/folders/0/releases?per_page=100"
+        let initialPageUrl: String = "https://api.discogs.com/users/\(username)/collection/folders/0/releases?per_page=100"
         return try await getAllReleases(initialUrl: initialPageUrl)
     }
     
     private func getAllReleases(initialUrl: String) async throws -> [DCReleaseModel] {
         var releases: [DCReleaseModel] = []
-        var url = URL(string: initialUrl)
-        while let pageUrl = url {
+        var url: URL? = .init(string: initialUrl)
+        while let pageUrl: URL = url {
             let response: CollectionReleasesResponse = try await getReleases(from: pageUrl)
             releases += response.releases
             url = URL(optionalString: response.pagination.urls.next)
@@ -105,8 +106,11 @@ class DCManager {
                 switch result {
                 case .success(let response):
                     do {
-                        let response = try JSONDecoder().decode(CollectionReleasesResponse.self,
-                                                                from: response.data)
+                        let response: CollectionReleasesResponse = try JSONDecoder().decode(
+                            CollectionReleasesResponse.self,
+                            from: response.data
+                        )
+                        
                         continuation.resume(returning: response)
                     } catch {
                         continuation.resume(throwing: error)
@@ -124,8 +128,11 @@ class DCManager {
                 switch result {
                 case .success(let response):
                     do {
-                        let detail = try JSONDecoder().decode(DCReleaseDetailModel.self,
-                                                              from: response.data)
+                        let detail: DCReleaseDetailModel = try JSONDecoder().decode(
+                            DCReleaseDetailModel.self,
+                            from: response.data
+                        )
+                        
                         continuation.resume(returning: detail)
                     } catch {
                         continuation.resume(throwing: error)

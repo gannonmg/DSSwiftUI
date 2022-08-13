@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LFLoginView: View {
     
-    @Environment(\.presentationMode) var presentationMode
-    @StateObject private var viewModel = LFLoginViewModel()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @StateObject private var viewModel: LFLoginViewModel = .init()
     
     var body: some View {
         VStack {

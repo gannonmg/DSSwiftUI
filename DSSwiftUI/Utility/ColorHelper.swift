@@ -10,12 +10,12 @@ import SwiftUI
 // From: https://stackoverflow.com/a/62207329/11556801
 extension Color {
     #if os(macOS)
-    static let background = Color(NSColor.windowBackgroundColor)
-    static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
-    static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
+    static let background: Color = .init(NSColor.windowBackgroundColor)
+    static let secondaryBackground: Color = .init(NSColor.underPageBackgroundColor)
+    static let tertiaryBackground: Color = .init(NSColor.controlBackgroundColor)
     #else
-    static let background = Color(UIColor.systemBackground)
-    static let secondaryBackground = Color(UIColor.secondarySystemBackground)
-    static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
+    static let background: Color = .init(UIColor.systemBackground)
+    static let secondaryBackground: Color = .init(UIColor.secondarySystemBackground)
+    static let tertiaryBackground: Color = .init(UIColor.tertiarySystemBackground)
     #endif
 }

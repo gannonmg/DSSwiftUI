@@ -13,12 +13,15 @@ class ReleaseViewModelTests: XCTestCase {
     var sut: ReleaseViewModel!
     
     override func setUpWithError() throws {
-        if let path = Bundle.main.url(forResource: "SingleRelease", withExtension: "json") {
-            let data = try Data(contentsOf: path, options: .dataReadingMapped)
-            let model = try JSONDecoder().decode(DCReleaseModel.self,
-                                                 from: data)
-            sut = ReleaseViewModel(from: model)
+        guard let path: URL = Bundle.main.url(forResource: "SingleRelease", withExtension: "json") else {
+            throw URLError(.badURL)
         }
+        
+        let data: Data = try Data(contentsOf: path, options: .dataReadingMapped)
+        let model: DCReleaseModel = try JSONDecoder().decode(DCReleaseModel.self,
+                                                             from: data)
+        
+        sut = ReleaseViewModel(from: model)
     }
 
     func testArtistList() throws {

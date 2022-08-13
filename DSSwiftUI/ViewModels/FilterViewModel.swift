@@ -46,6 +46,8 @@ class FilterViewModel: ObservableObject {
     
 }
 
+typealias FilterMap = [FilterCategory: [FilterOption]]
+
 // MARK: - Computed Properties
 extension FilterViewModel {
     
@@ -75,7 +77,7 @@ extension FilterViewModel {
     
     func tappedOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
-            let count = filterOptions[key]?.count ?? 0
+            let count: Int = filterOptions[key]?.count ?? 0
             for index in 0..<count {
                 guard filterOptions[key]?[index].id == tappedOption.id else { continue }
                 filterOptions[key]?[index].selected.toggle()
@@ -85,7 +87,7 @@ extension FilterViewModel {
 
     func removeOption(_ tappedOption: FilterOption) {
         for key in filterOptions.keys {
-            let count = filterOptions[key]?.count ?? 0
+            let count: Int = filterOptions[key]?.count ?? 0
             for index in 0..<count {
                 guard filterOptions[key]?[index].id == tappedOption.id else { continue }
                 filterOptions[key]?[index].selected = false
@@ -134,7 +136,7 @@ extension FilterViewModel {
     func updateFilters(for newReleases: [ReleaseViewModel]) {
         
         // Get the filters for the releases like normal
-        var newFilters = FilterViewModel.getFilters(for: newReleases)
+        var newFilters: FilterMap = FilterViewModel.getFilters(for: newReleases)
         
         // Search for filter matches in the old filters and update selected status
         for key in newFilters.keys {
@@ -154,7 +156,7 @@ extension FilterViewModel {
         var predicates: [String] = []
 
         for category in FilterCategory.allCases {
-            let selected = filterOptions[category]?.selected ?? []
+            let selected: [FilterOption] = filterOptions[category]?.selected ?? []
             for option in selected {
                 predicates.append("ANY \(category.keyPath) CONTAINS[dc] '\(option.title)'")
             }
@@ -163,8 +165,8 @@ extension FilterViewModel {
         if predicates.isEmpty {
             predicate = nil
         } else {
-            let conjunction = exclusiveFilter ? "AND" : "OR"
-            let predicateString = predicates.joined(separator: " \(conjunction) ")
+            let conjunction: String = exclusiveFilter ? "AND" : "OR"
+            let predicateString: String = predicates.joined(separator: " \(conjunction) ")
             predicate = NSPredicate(format: predicateString)
         }
     }
@@ -175,7 +177,7 @@ extension FilterViewModel {
         
         for category in FilterCategory.allCases {
             for option in filterOptions[category] ?? [] {
-                let freshOption = FilterOption(title: option.title)
+                let freshOption: FilterOption = .init(title: option.title)
                 if freshFilterOptions[category] == nil {
                     freshFilterOptions[category] = [freshOption]
                 } else {
@@ -186,9 +188,7 @@ extension FilterViewModel {
 
         self.exclusiveFilter = true
         self.filterOptions = freshFilterOptions
-        
     }
-    
 }
 
 extension Array where Element == FilterOption {

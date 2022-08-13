@@ -5,6 +5,7 @@
 //  Created by Matt Gannon on 12/13/21.
 //
 
+import MGKeychain
 import SwiftUI
 
 class AppViewModel: ObservableObject {
@@ -27,7 +28,7 @@ class AppViewModel: ObservableObject {
     func logIn() throws {
         Task {
             try await RemoteClientManager.shared.userLoginProcess()
-            let releases = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
+            let releases: [DCReleaseModel] = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
             RealmManager.shared.update(with: releases)
         }
     }

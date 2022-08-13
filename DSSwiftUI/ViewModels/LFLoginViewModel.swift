@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MGKeychain
 
 class LFLoginViewModel: ObservableObject {
     
@@ -15,7 +16,7 @@ class LFLoginViewModel: ObservableObject {
     func login(completion: @escaping (() -> Void)) throws {
         Task {
             let session: LFSession? = try await RemoteClientManager.shared.getLastFmUserSession(username: username, password: password)
-            if let session = session {
+            if let session: LFSession = session {
                 KeychainManager.shared.save(key: .lastFmSessionKey, string: session.key)
                 completion()
             }

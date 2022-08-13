@@ -110,7 +110,8 @@ class DCFormatModel: Object, Codable {
     
     required convenience init(from decoder: Decoder) throws {
         self.init()
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        typealias Container = KeyedDecodingContainer<DCFormatModel.CodingKeys>
+        let container: Container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.descriptions = try container.decodeIfPresent(List<String>.self, forKey: .descriptions) ?? List<String>()
     }
@@ -127,7 +128,8 @@ class DCReleaseDetailModel: Object, Codable {
 
     required convenience init(from decoder: Decoder) throws {
         self.init()
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        typealias Container = KeyedDecodingContainer<DCReleaseDetailModel.CodingKeys>
+        let container: Container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.tracklist = try container.decodeIfPresent(List<DCTrackModel>.self, forKey: .tracklist) ?? List<DCTrackModel>()
     }
@@ -136,7 +138,7 @@ class DCReleaseDetailModel: Object, Codable {
 
 class DCTrackModel: Object, Codable, Identifiable {
     
-    let id = UUID()
+    let id: UUID = .init()
     
     @Persisted private(set) var position: String
     @Persisted private(set) var type: String
@@ -152,8 +154,8 @@ class DCTrackModel: Object, Codable, Identifiable {
     
     required convenience init(from decoder: Decoder) throws {
         self.init()
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        typealias Container = KeyedDecodingContainer<DCTrackModel.CodingKeys>
+        let container: Container = try decoder.container(keyedBy: CodingKeys.self)
         self.type = try container.decode(String.self, forKey: .type)
         self.title = try container.decode(String.self, forKey: .title)
         self.duration = try container.decode(String.self, forKey: .duration)

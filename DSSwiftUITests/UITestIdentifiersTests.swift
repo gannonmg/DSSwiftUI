@@ -11,7 +11,7 @@ import XCTest
 class UITestIdentifiersTests: XCTestCase {
 
     func testIdentifierValue() throws {
-        let identifierString = LoginIdentifier.loginButton.identifierString
+        let identifierString: String = LoginIdentifier.loginButton.identifierString
         XCTAssertEqual(identifierString, "LoginIdentifier.loginButton")
     }
 

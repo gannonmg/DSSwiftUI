@@ -11,7 +11,7 @@ import Foundation
 
 class ReleaseListViewModel: ObservableObject {
     
-    @ObservedResults(DCReleaseModel.self) private var releasesResults
+    @ObservedResults(DCReleaseModel.self) private var releasesResults: Results<DCReleaseModel>
     @Published private(set) var releases: [ReleaseViewModel] = []
     
     @Published private(set) var selectedRelease: ReleaseViewModel?
@@ -20,7 +20,7 @@ class ReleaseListViewModel: ObservableObject {
         didSet { searchChanged() }
     }
     
-    private(set) var filterController = FilterViewModel(releases: [])
+    private(set) var filterController: FilterViewModel = .init(releases: [])
     
     var trulyEmpty: Bool {
         return releasesResults.freeze().isEmpty
@@ -51,7 +51,7 @@ class ReleaseListViewModel: ObservableObject {
     }
     
     func handleNewResults(_ results: Results<DCReleaseModel>) {
-        let releases = Array(results).map { ReleaseViewModel(from: $0) }
+        let releases: [ReleaseViewModel] = Array(results).map { .init(from: $0) }
         self.setSortedReleases(releases)
         self.filterController.updateFilters(for: releases)
     }
@@ -62,7 +62,7 @@ class ReleaseListViewModel: ObservableObject {
     
     func getRemoteReleases() throws {
         Task {
-            let releases = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
+            let releases: [DCReleaseModel] = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
             RealmManager.shared.update(with: releases)
         }
     }
@@ -86,16 +86,17 @@ class ReleaseListViewModel: ObservableObject {
     func filterUpdated(predicate: NSPredicate?) {
         var releases: [ReleaseViewModel] = []
         
-        if let predicate = predicate {
-            let results = self.releasesResults.filter(predicate)
+        if let predicate: NSPredicate = predicate {
+            let results: Results<DCReleaseModel> = self.releasesResults.filter(predicate)
             releases = Array(results).map { ReleaseViewModel(from: $0) }
         } else {
             releases = Array(releasesResults).map { ReleaseViewModel(from: $0) }
         }
         
-        let smartSearch = SmartSearchMatcher(searchString: searchQuery)
+        let smartSearch: SmartSearchMatcher = .init(searchString: searchQuery)
         releases = releases.filter { release in
-            let filterableTitle = release.title + " " + (release.artists.map { $0 }.first?.name ?? "")
+            let artist: String = release.artists.first?.name ?? ""
+            let filterableTitle: String = release.title + " " + artist
             return smartSearch.matches(filterableTitle)
         }
         

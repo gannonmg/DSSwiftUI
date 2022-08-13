@@ -41,18 +41,21 @@ struct SmartSearchMatcher {
         guard !searchTokens.isEmpty else { return true }
 
         // Split `candidateString` into tokens by whitespace
-        var candidateStringTokens = candidateString.split(whereSeparator: { $0.isWhitespace })
+        var candidateStringTokens: [String.SubSequence] = candidateString.split(whereSeparator: { $0.isWhitespace })
 
         // Iterate over each search token
         for searchToken in searchTokens {
             // We haven't matched this search token yet
-            var matchedSearchToken = false
+            var matchedSearchToken: Bool = false
 
             // Iterate over each candidate string token
             for (candidateStringTokenIndex, candidateStringToken) in candidateStringTokens.enumerated() {
                 // Does `candidateStringToken` start with `searchToken`?
-                if let range = candidateStringToken.range(of: searchToken, options: [.caseInsensitive, .diacriticInsensitive]),
-                   range.lowerBound == candidateStringToken.startIndex {
+                if let range: Range<Substring.Index> = candidateStringToken.range(
+                    of: searchToken,
+                    options: [.caseInsensitive, .diacriticInsensitive]
+                ), range.lowerBound == candidateStringToken.startIndex {
+                    
                     matchedSearchToken = true
 
                     // Remove the candidateStringToken so we don't match it again against a different searchToken.

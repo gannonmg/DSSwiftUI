@@ -14,30 +14,28 @@ import typealias CommonCrypto.CC_LONG
 
 // MARK: - String
 extension String {
-    
     func utf8EncodedString() -> String {
-        let messageData = self.data(using: .nonLossyASCII)
-        let text = String(data: messageData!, encoding: .utf8) ?? ""
+        let messageData: Data? = self.data(using: .nonLossyASCII)
+        let text: String = .init(data: messageData!, encoding: .utf8) ?? ""
         return text
     }
     
     func md5String() -> String {
-        let data = Data(self.utf8)
-        let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+        let data: Data = .init(self.utf8)
+        let hash: [UInt8] = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+            var hash: [UInt8] = .init(repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
             CC_MD5(bytes.baseAddress, CC_LONG(data.count), &hash)
             return hash
         }
         return hash.map { String(format: "%02x", $0) }.joined()
     }
-    
 }
 
 // MARK: - Array
 extension Array where Element: Hashable {
     var uniques: Array {
-        var buffer = Array()
-        var added = Set<Element>()
+        var buffer: [Element] = []
+        var added: Set<Element> = []
         for elem in self {
             if !added.contains(elem) {
                 buffer.append(elem)

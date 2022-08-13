@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MGKeychain
 
 enum HTTPMethod {
     case get, post
@@ -38,28 +39,28 @@ enum LFMethod {
 class LFManager {
     
     private init() {}
-    static let shared = LFManager()
+    static let shared: LFManager = .init()
     
     // MARK: Variables
-    private let baseRequestUrl = URL(string: "https://ws.audioscrobbler.com/2.0/")!
+    private let baseRequestUrl: URL = .init(string: "https://ws.audioscrobbler.com/2.0/")!
     
     lazy private var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
+        let configuration: URLSessionConfiguration = .default
         configuration.timeoutIntervalForRequest = 10
         return URLSession(configuration: configuration)
     }()
     
     // MARK: Parameter building for calls
     private func getApiSignature(from params: [String: Any]) -> String {
-        var alphabetizedParams = ""
-        let sortedKeys = params.keys.sorted(by: <)
+        var alphabetizedParams: String = ""
+        let sortedKeys: [String] = params.keys.sorted(by: <)
         sortedKeys.forEach { key in
             guard let value = params[key] else { return }
             alphabetizedParams += "\(key)\(value)"
         }
         
-        let utf8EncodedStr = alphabetizedParams.utf8EncodedString()
-        let secretAppended = utf8EncodedStr + LFAuthInfo.apiSecret
+        let utf8EncodedStr: String = alphabetizedParams.utf8EncodedString()
+        let secretAppended: String = utf8EncodedStr + LFAuthInfo.apiSecret
         return secretAppended.md5String()
     }
     
@@ -84,20 +85,20 @@ class LFManager {
                                             "password": password,
                                             "username": username]
         
-        var request = URLRequest(url: baseRequestUrl)
+        var request: URLRequest = .init(url: baseRequestUrl)
         request.httpMethod = HTTPMethod.post.method
         
-        var urlComponents = URLComponents(url: baseRequestUrl, resolvingAgainstBaseURL: true)!
+        var urlComponents: URLComponents = .init(url: baseRequestUrl, resolvingAgainstBaseURL: true)!
         urlComponents.queryItems = getQueryItems(from: authParams)
         request.url = urlComponents.url
         
         return try await withCheckedThrowingContinuation { continuation in
-            let task = session.dataTask(with: request) { (data, _, error) in
+            let task: URLSessionDataTask = session.dataTask(with: request) { (data, _, error) in
                 do {
-                    if let data = data {
-                        let session = try JSONDecoder().decode(LFSessionResponse.self, from: data)
+                    if let data: Data = data {
+                        let session: LFSessionResponse = try JSONDecoder().decode(LFSessionResponse.self, from: data)
                         continuation.resume(returning: session.session)
-                    } else if let error = error {
+                    } else if let error: Error = error {
                         continuation.resume(throwing: error)
                     } else {
                         let error: Error = AppError.messageError("LFSession failed without error")
@@ -114,12 +115,12 @@ class LFManager {
     
     // MARK: Scrobbling
     func scrobbleRelease(_ release: ReleaseViewModel) {
-        let tracklist = release.tracklist
+        let tracklist: [DCTrackModel] = release.tracklist
         guard !release.tracklist.isEmpty,
               let key = KeychainManager.shared.get(for: .lastFmSessionKey)
         else { return }
         
-        var timestamp = Date.now.timeIntervalSince1970
+        var timestamp: TimeInterval = Date.now.timeIntervalSince1970
         for track in tracklist {
             scrobbleTrack(album: release.title,
                           artist: release.artists.first?.name ?? "",
@@ -129,7 +130,7 @@ class LFManager {
             
             // If unable to get track duration (not always available in discogs data)
             // set to three minutes
-            let trackLength = Double(track.duration) ?? 180
+            let trackLength: Double = .init(track.duration) ?? 180
             timestamp += trackLength
         }
     }
@@ -144,15 +145,15 @@ class LFManager {
                                      "track": track,
                                      "timestamp": "\(timestamp)"]
         
-        var request = URLRequest(url: baseRequestUrl)
+        var request: URLRequest = .init(url: baseRequestUrl)
         request.httpMethod = HTTPMethod.post.method
         
-        var urlComponents = URLComponents(url: baseRequestUrl, resolvingAgainstBaseURL: true)!
+        var urlComponents: URLComponents = .init(url: baseRequestUrl, resolvingAgainstBaseURL: true)!
         urlComponents.queryItems = getQueryItems(from: params)
         request.url = urlComponents.url
         
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let data = data {
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data, response, error) in
+            if let data: Data = data {
                 print("Got data")
                 print(String(decoding: data, as: UTF8.self))
             } else {

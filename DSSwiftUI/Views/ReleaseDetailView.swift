@@ -12,7 +12,7 @@ struct SelectedReleaseView: View {
     @EnvironmentObject var realmListViewModel: ReleaseListViewModel
     @EnvironmentObject var appViewModel: AppViewModel
     @EnvironmentObject var errorHandling: ErrorHandling
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @ObservedObject var release: ReleaseViewModel
     
     var body: some View {

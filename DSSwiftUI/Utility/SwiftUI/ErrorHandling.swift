@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ErrorAlert: Identifiable {
-    var id = UUID()
+    var id: UUID = .init()
     var message: String
     var dismissAction: (() -> Void)?
 }
@@ -23,7 +23,7 @@ class ErrorHandling: ObservableObject {
 }
 
 struct HandleErrorsByShowingAlertViewModifier: ViewModifier {
-    @StateObject var errorHandling = ErrorHandling()
+    @StateObject var errorHandling: ErrorHandling = .init()
 
     func body(content: Content) -> some View {
         content

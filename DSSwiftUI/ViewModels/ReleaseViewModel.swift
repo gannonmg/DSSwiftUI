@@ -52,13 +52,12 @@ class ReleaseViewModel: ObservableObject, Identifiable {
     }
     
     func getDetail() async throws {
-        
-        if let details = RealmManager.shared.get(for: discogsId) {
+        if let details: DCReleaseDetailModel = RealmManager.shared.get(for: discogsId) {
             tracklist = Array(details.tracklist)
             return
         }
         
-        if let details = try await RemoteClientManager.shared.getDetail(for: self) {
+        if let details: DCReleaseDetailModel = try await RemoteClientManager.shared.getDetail(for: self) {
             DispatchQueue.main.async {
                 self.tracklist = Array(details.tracklist)
                 RealmManager.shared.add(detail: details)

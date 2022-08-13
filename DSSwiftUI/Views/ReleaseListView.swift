@@ -11,7 +11,7 @@ struct ReleaseListView: View {
     
     @EnvironmentObject var appViewModel: AppViewModel
     @EnvironmentObject var errorHandling: ErrorHandling
-    @StateObject var viewModel = ReleaseListViewModel()
+    @StateObject var viewModel: ReleaseListViewModel = .init()
     @State private var showingLastFmLogin: Bool = false
     
     var body: some View {
@@ -31,7 +31,7 @@ struct ReleaseListView: View {
                 }
             }
             
-            if let selectedRelease = viewModel.selectedRelease {
+            if let selectedRelease: ReleaseViewModel = viewModel.selectedRelease {
                 SelectedReleaseView(release: selectedRelease)
                     .environmentObject(viewModel)
             }
@@ -79,7 +79,7 @@ struct ReleaseListView: View {
             TextField("Search", text: $viewModel.searchQuery)
                 .textFieldStyle(.roundedBorder)
             HStack {
-                let resultsCount = viewModel.releases.count
+                let resultsCount: Int = viewModel.releases.count
                 Text("\(resultsCount) \(resultsCount == 1 ? "Result" : "Results")")
                     .font(.caption)
                 Spacer()

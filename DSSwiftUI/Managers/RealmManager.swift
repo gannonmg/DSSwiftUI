@@ -10,12 +10,12 @@ import RealmSwift
 
 class RealmManager {
     
-    static let shared = RealmManager()
+    static let shared: RealmManager = .init()
     private init() {}
     
     func deleteAllReleases() {
         do {
-            let realm = try Realm()
+            let realm: Realm = try .init()
             try realm.write {
                 realm.deleteAll()
             }
@@ -26,7 +26,7 @@ class RealmManager {
     
     func add(releases: [DCReleaseModel]) {
         do {
-            let realm = try Realm()
+            let realm: Realm = try .init()
             try realm.write {
                 realm.add(releases)
             }
@@ -37,7 +37,7 @@ class RealmManager {
     
     func add(detail: DCReleaseDetailModel) {
         do {
-            let realm = try Realm()
+            let realm: Realm = try .init()
             try realm.write {
                 realm.add(detail)
             }
@@ -48,7 +48,7 @@ class RealmManager {
     
     func get(for discogsId: Int) -> DCReleaseDetailModel? {
         do {
-            let realm = try Realm()
+            let realm: Realm = try .init()
             return realm.object(ofType: DCReleaseDetailModel.self,
                                 forPrimaryKey: discogsId)
         } catch {
@@ -59,7 +59,7 @@ class RealmManager {
     
     func getAllReleases() -> [DCReleaseModel]? {
         do {
-            let realm = try Realm()
+            let realm: Realm = try .init()
             return Array(realm.objects(DCReleaseModel.self))
         } catch {
             print("Failed to get detail")
@@ -69,10 +69,14 @@ class RealmManager {
     
     func update(with releases: [DCReleaseModel]) {
         do {
-            let realm = try Realm()
+            let realm: Realm = try .init()
             try realm.write {
                 for release in releases {
-                    let object = realm.object(ofType: DCReleaseModel.self, forPrimaryKey: release.instanceId)
+                    let object: DCReleaseModel? = realm.object(
+                        ofType: DCReleaseModel.self,
+                        forPrimaryKey: release.instanceId
+                    )
+                    
                     if object == nil {
                         realm.add(release)
                     } else {
