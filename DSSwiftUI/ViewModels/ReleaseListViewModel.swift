@@ -62,8 +62,13 @@ class ReleaseListViewModel: ObservableObject {
     
     func getRemoteReleases() throws {
         Task {
-            let releases: [DCReleaseModel] = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
-            RealmManager.shared.update(with: releases)
+            do {
+                let releases: [DCReleaseModel] = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: true)
+                RealmManager.shared.update(with: releases)
+            } catch {
+                print("Failed to get realeses. Error: \(error)")
+                throw error
+            }
         }
     }
     

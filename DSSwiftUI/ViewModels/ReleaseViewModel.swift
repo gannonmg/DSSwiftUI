@@ -57,11 +57,10 @@ class ReleaseViewModel: ObservableObject, Identifiable {
             return
         }
         
-        if let details: DCReleaseDetailModel = try await RemoteClientManager.shared.getDetail(for: self) {
-            DispatchQueue.main.async {
-                self.tracklist = Array(details.tracklist)
-                RealmManager.shared.add(detail: details)
-            }
+        let details: DCReleaseDetailModel = try await DCManager.shared.getResource(from: resourceURL)
+        DispatchQueue.main.async {
+            self.tracklist = Array(details.tracklist)
+            RealmManager.shared.add(detail: details)
         }
     }
     

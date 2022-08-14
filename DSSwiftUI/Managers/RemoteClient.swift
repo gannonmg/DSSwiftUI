@@ -14,9 +14,9 @@ protocol LastFmProxy {
 }
 
 protocol DiscogsProxy {
-    func userLoginProcess() async throws
+//    func userLoginProcess() async throws
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel]
-    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel?
+//    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel?
     func resetOauth()
 }
 
@@ -40,20 +40,24 @@ final private class TrueRemoteClientManager: RemoteClientProtocol {
     private init() {}
 
     // MARK: Discogs proxy
-    func userLoginProcess() async throws {
-        try await DCManager.shared.userLoginProcess()
-    }
+//    func userLoginProcess() async throws {
+//        try await DCManager.shared.userLoginProcess()
+//    }
 
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
         return try await DCManager.shared.getAllReleasesForUser(forceRefresh: forceRefresh)
     }
     
-    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
-        return try await DCManager.shared.getDetail(for: release.resourceURL)
-    }
+//    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
+//        return try await DCManager.shared.getDetail(for: release.resourceURL)
+//    }
     
     func resetOauth() {
-        DCManager.shared.resetOauth()
+        do {
+            try DCManager.shared.resetOauth()
+        } catch {
+            print("Failed to clear oauth credentials")
+        }
     }
     
     // MARK: last.fm proxy
@@ -75,8 +79,8 @@ final private class MockRemoteClientManager: RemoteClientProtocol {
     // MARK: Discogs proxy
     func userLoginProcess() async throws {
         KeychainManager.shared.save(key: .discogsUsername, string: "gannonm")
-        KeychainManager.shared.save(key: .discogsUserToken, string: "123")
-        KeychainManager.shared.save(key: .discogsUserSecret, string: "456")
+//        KeychainManager.shared.save(key: .discogsUserToken, string: "123")
+//        KeychainManager.shared.save(key: .discogsUserSecret, string: "456")
     }
 
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel] {
@@ -128,7 +132,7 @@ final private class MockRemoteClientManager: RemoteClientProtocol {
 
 #warning("Interim Code")
 enum KeychainKey: String, CaseIterable {
-    case discogsUserToken, discogsUserSecret, discogsUsername, lastFmSessionKey, testKey
+    case discogsUsername, lastFmSessionKey, testKey
 }
 
 extension KeychainManager {

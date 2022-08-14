@@ -1,51 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "brightfutures",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Thomvis/BrightFutures.git",
-      "state" : {
-        "revision" : "fa66fa183dce7196d431244d0215748cd14c5758",
-        "version" : "8.2.0"
-      }
-    },
-    {
-      "identity" : "erik",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/phimage/Erik.git",
-      "state" : {
-        "revision" : "109a130e9cdb00789a43a7a625293eeb12d22989",
-        "version" : "5.1.0"
-      }
-    },
-    {
-      "identity" : "filekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nvzqz/FileKit.git",
-      "state" : {
-        "revision" : "826d9161b184509f80d85c28cd612d630646de98",
-        "version" : "6.0.0"
-      }
-    },
-    {
-      "identity" : "kanna",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tid-kijyun/Kanna.git",
-      "state" : {
-        "revision" : "f9e4922223dd0d3dfbf02ca70812cf5531fc0593",
-        "version" : "5.2.7"
-      }
-    },
-    {
-      "identity" : "oauthswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OAuthSwift/OAuthSwift.git",
-      "state" : {
-        "revision" : "d85964b96dbce94df961f28b996187c835089903",
-        "version" : "2.2.0"
-      }
-    },
-    {
       "identity" : "realm-cocoa",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-cocoa.git",
@@ -61,69 +16,6 @@
       "state" : {
         "revision" : "e72b3078bfc5c3f69a0b18f7a220be27e28c463f",
         "version" : "11.2.0"
-      }
-    },
-    {
-      "identity" : "sourcekitten",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jpsim/SourceKitten.git",
-      "state" : {
-        "revision" : "558628392eb31d37cb251cfe626c53eafd330df6",
-        "version" : "0.31.1"
-      }
-    },
-    {
-      "identity" : "swift-argument-parser",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
-      "state" : {
-        "revision" : "e1465042f195f374b94f915ba8ca49de24300a0d",
-        "version" : "1.0.2"
-      }
-    },
-    {
-      "identity" : "swifter",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/httpswift/swifter.git",
-      "state" : {
-        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
-        "version" : "1.5.0"
-      }
-    },
-    {
-      "identity" : "swiftlint",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/SwiftLint",
-      "state" : {
-        "branch" : "master",
-        "revision" : "027bdcdc95d14565199cbf29373547d058375602"
-      }
-    },
-    {
-      "identity" : "swiftytexttable",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/scottrhoyt/SwiftyTextTable.git",
-      "state" : {
-        "revision" : "c6df6cf533d120716bff38f8ff9885e1ce2a4ac3",
-        "version" : "0.9.0"
-      }
-    },
-    {
-      "identity" : "swxmlhash",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/drmohundro/SWXMLHash.git",
-      "state" : {
-        "revision" : "9183170d20857753d4f331b0ca63f73c60764bf3",
-        "version" : "5.0.2"
-      }
-    },
-    {
-      "identity" : "yams",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jpsim/Yams.git",
-      "state" : {
-        "revision" : "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
-        "version" : "4.0.6"
       }
     }
   ],

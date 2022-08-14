@@ -10,13 +10,13 @@ import SwiftUI
 
 class AppViewModel: ObservableObject {
     
-    @Published private(set) var discogsToken: String?
+//    @Published private(set) var discogsToken: String?
     @Published private(set) var lastFmKey: String?
-    var loggedIn: Bool { discogsToken != nil }
+//    var loggedIn: Bool { discogsToken != nil }
     var loggedInToLastFm: Bool { lastFmKey != nil }
     
     init() {
-        discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
+//        discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
         lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
         
         NotificationCenter.default.addObserver(self,
@@ -25,18 +25,18 @@ class AppViewModel: ObservableObject {
                                                object: nil)
     }
 
-    func logIn() throws {
-        Task {
-            try await RemoteClientManager.shared.userLoginProcess()
-            let releases: [DCReleaseModel] = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
-            RealmManager.shared.update(with: releases)
-        }
-    }
+//    func logIn() throws {
+//        Task {
+//            try await RemoteClientManager.shared.userLoginProcess()
+//            let releases: [DCReleaseModel] = try await RemoteClientManager.shared.getAllReleasesForUser(forceRefresh: false)
+//            RealmManager.shared.update(with: releases)
+//        }
+//    }
     
     func logOutAll() {
         KeychainManager.shared.remove(key: .discogsUsername)
-        KeychainManager.shared.remove(key: .discogsUserToken)
-        KeychainManager.shared.remove(key: .discogsUserSecret)
+//        KeychainManager.shared.remove(key: .discogsUserToken)
+//        KeychainManager.shared.remove(key: .discogsUserSecret)
         KeychainManager.shared.remove(key: .lastFmSessionKey)
         
         RealmManager.shared.deleteAllReleases()
@@ -49,7 +49,7 @@ class AppViewModel: ObservableObject {
     
     @objc func keychainUpdated() {
         DispatchQueue.main.async {
-            self.discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
+//            self.discogsToken = KeychainManager.shared.get(for: .discogsUserToken)
             self.lastFmKey = KeychainManager.shared.get(for: .lastFmSessionKey)
         }
     }

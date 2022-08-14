@@ -46,17 +46,6 @@ extension Array where Element: Hashable {
     }
 }
 
-// MARK: - URL
-extension URL {
-    init?(optionalString: String?) {
-        guard let string = optionalString else {
-            return nil
-        }
-        
-        self.init(string: string)
-    }
-}
-
 // MARK: - Error
 enum AppError: Error {
     case messageError(String)
