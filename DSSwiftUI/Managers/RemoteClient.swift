@@ -8,6 +8,10 @@
 import Foundation
 import MGKeychain
 
+enum RemoteError: Error {
+    case failedToGetDetails(resource: String)
+}
+
 protocol LastFmProxy {
     func getLastFmUserSession(username: String, password: String) async throws -> LFSession?
     func scrobbleRelease(_ release: ReleaseViewModel)
@@ -16,7 +20,7 @@ protocol LastFmProxy {
 protocol DiscogsProxy {
     func userLoginProcess() async throws
     func getAllReleasesForUser(forceRefresh: Bool) async throws -> [DCReleaseModel]
-    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel?
+    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel
     func resetOauth()
 }
 
@@ -31,7 +35,6 @@ final class RemoteClientManager {
             return TrueRemoteClientManager.shared
         }
     }()
-    
 }
 
 final private class TrueRemoteClientManager: RemoteClientProtocol {
@@ -48,7 +51,7 @@ final private class TrueRemoteClientManager: RemoteClientProtocol {
         return try await DCManager.shared.getAllReleasesForUser(forceRefresh: forceRefresh)
     }
     
-    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
+    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel {
         return try await DCManager.shared.getDetail(for: release.resourceURL)
     }
     
@@ -93,7 +96,7 @@ final private class MockRemoteClientManager: RemoteClientProtocol {
         return model.releases
     }
     
-    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel? {
+    func getDetail(for release: ReleaseViewModel) async throws -> DCReleaseDetailModel {
         guard let path = Bundle.main.url(forResource: "Details", withExtension: "json") else {
             throw URLError(.badURL)
         }
@@ -103,7 +106,11 @@ final private class MockRemoteClientManager: RemoteClientProtocol {
             [DCReleaseDetailModel].self, from: data
         )
 
-        return detailArray.first(where: { $0.id == release.id })
+        guard let detail: DCReleaseDetailModel = detailArray.first(where: { $0.id == release.id }) else {
+            throw RemoteError.failedToGetDetails(resource: release.title)
+        }
+        
+        return detail
         
     }
     

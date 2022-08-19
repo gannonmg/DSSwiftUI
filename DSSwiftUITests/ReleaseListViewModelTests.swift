@@ -68,7 +68,7 @@ internal enum TestingError: Error {
     case runtimeError(String)
 }
 
-internal extension ReleaseListViewModel {
+extension ReleaseListViewModel {
     
     static func getTestable() throws -> ReleaseListViewModel {
         if let path = Bundle.main.url(forResource: "ShortResponse", withExtension: "json") {

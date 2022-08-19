@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+
 import var CommonCrypto.CC_MD5_DIGEST_LENGTH
 import func CommonCrypto.CC_MD5
 import typealias CommonCrypto.CC_LONG
@@ -61,3 +62,7 @@ extension URL {
 enum AppError: Error {
     case messageError(String)
 }
+
+// MARK: - Device Size
+let DEVICE_WIDTH = UIScreen.main.bounds.size.width // swiftlint:disable:this identifier_name
+let DEVICE_HEIGHT = UIScreen.main.bounds.size.height // swiftlint:disable:this identifier_name

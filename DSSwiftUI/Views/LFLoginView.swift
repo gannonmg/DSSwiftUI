@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LFLoginView: View {
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.dismiss) var dismiss: DismissAction
     @StateObject private var viewModel: LFLoginViewModel = .init()
     
     var body: some View {
@@ -23,7 +23,7 @@ struct LFLoginView: View {
                 .testIdentifier(LastFmIdentifier.passwordField)
             TryButton("Login") {
                 try viewModel.login {
-                    self.presentationMode.wrappedValue.dismiss()
+                    self.dismiss()
                 }
             }
             .testIdentifier(LastFmIdentifier.loginButton)

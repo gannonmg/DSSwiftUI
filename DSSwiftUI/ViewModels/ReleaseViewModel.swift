@@ -7,10 +7,12 @@
 
 import Foundation
 
-class ReleaseViewModel: ObservableObject, Identifiable {
+class ReleaseViewModel: ObservableObject, Identifiable, ListItemDisplayable {
     
-    let id: Int // This is the instance id from discogs and is unique even among duplicate albums
-    let discogsId: Int // This is unique to the release, but not instances of the release
+    /// This is the instance id from discogs and is unique even among duplicate albums
+    let id: Int
+    /// This is unique to the release, but not instances of the release
+    let discogsId: Int
     
     let title: String
     let year: Int
@@ -57,20 +59,16 @@ class ReleaseViewModel: ObservableObject, Identifiable {
             return
         }
         
-        if let details: DCReleaseDetailModel = try await RemoteClientManager.shared.getDetail(for: self) {
-            DispatchQueue.main.async {
-                self.tracklist = Array(details.tracklist)
-                RealmManager.shared.add(detail: details)
-            }
+        let details: DCReleaseDetailModel = try await RemoteClientManager.shared.getDetail(for: self)
+        DispatchQueue.main.async {
+            self.tracklist = Array(details.tracklist)
+            RealmManager.shared.add(detail: details)
         }
     }
-    
 }
 
 extension ReleaseViewModel: Equatable {
-    
     static func == (lhs: ReleaseViewModel, rhs: ReleaseViewModel) -> Bool {
         return lhs.id == rhs.id
     }
-    
 }

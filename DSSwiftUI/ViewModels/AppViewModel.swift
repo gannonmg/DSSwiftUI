@@ -12,6 +12,8 @@ class AppViewModel: ObservableObject {
     
     @Published private(set) var discogsToken: String?
     @Published private(set) var lastFmKey: String?
+    @Published var showingLastFmLogin: Bool = false
+
     var loggedIn: Bool { discogsToken != nil }
     var loggedInToLastFm: Bool { lastFmKey != nil }
     

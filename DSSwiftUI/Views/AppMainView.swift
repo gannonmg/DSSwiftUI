@@ -13,7 +13,7 @@ struct AppMainView: View {
     
     var body: some View {
         if viewModel.loggedIn {
-            ReleaseListView()
+            HomeView()
                 .environmentObject(viewModel)
                 .withErrorHandling()
         } else {

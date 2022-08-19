@@ -122,7 +122,7 @@ class DCManager {
         }
     }
         
-    func getDetail(for resourceUrl: String) async throws -> DCReleaseDetailModel? {
+    func getDetail(for resourceUrl: String) async throws -> DCReleaseDetailModel {
         return try await withCheckedThrowingContinuation { continuation in
             oauthSwift.client.get(resourceUrl) { result in
                 switch result {

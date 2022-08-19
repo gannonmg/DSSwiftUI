@@ -14,7 +14,7 @@ class ReleaseListViewModel: ObservableObject {
     @ObservedResults(DCReleaseModel.self) private var releasesResults: Results<DCReleaseModel>
     @Published private(set) var releases: [ReleaseViewModel] = []
     
-    @Published private(set) var selectedRelease: ReleaseViewModel?
+    @Published var selectedRelease: ReleaseViewModel?
     @Published var showingFilters: Bool = false
     @Published var searchQuery: String = "" {
         didSet { searchChanged() }

@@ -22,8 +22,8 @@ enum FilterCategory: String, CaseIterable {
     
 }
 
-struct FilterOption: Hashable {
-    let id: UUID = UUID()
+struct FilterOption: Hashable, Identifiable {
+    let id: UUID = .init()
     let title: String
     var selected: Bool = false
 }
@@ -39,6 +39,9 @@ class FilterViewModel: ObservableObject {
     @Published private(set) var filterOptions: [FilterCategory: [FilterOption]] {
         didSet { setPredicate() }
     }
+    
+    /// Used for navigation scheme in filter selection process
+    @Published var filterDetail: FilterCategory?
     
     init(releases: [ReleaseViewModel]) {
         self.filterOptions = FilterViewModel.getFilters(for: releases)
