@@ -92,7 +92,7 @@ struct FilterToggleView: View {
         HStack {
             Text("Filter Exclusively")
                 .appFont(.robotoMedium, size: 18)
-                .foregroundColor(.vsPrimaryDark)
+                .foregroundColor(.vsDarkText)
             Spacer()
             Toggle("", isOn: $option)
         }
@@ -112,10 +112,10 @@ struct FilterCategoryView: View {
         HStack {
             Text(category)
                 .appFont(.robotoMedium, size: 18)
-                .foregroundColor(.vsPrimaryDark)
+                .foregroundColor(.vsDarkText)
             Spacer()
             Image.rightArrow
-                .foregroundColor(.vsPrimaryDark)
+                .foregroundColor(.vsDarkText)
         }
         .padding(.horizontal, 12)
         .frame(maxWidth: .infinity, minHeight: 44, idealHeight: 44)
@@ -157,11 +157,11 @@ struct SelectedFiltersView: View {
         var body: some View {
             HStack {
                 Button(action: action) {
-                    Image.closeIcon.foregroundColor(.vsPrimaryDark)
+                    Image.closeIcon.foregroundColor(.vsDarkText)
                 }
                 Text(title)
                     .appFont(.robotoMedium, size: 16)
-                    .foregroundColor(.vsPrimaryDark)
+                    .foregroundColor(.vsDarkText)
             }
             .padding(.horizontal, 12)
             .frame(minHeight: 32, idealHeight: 32)

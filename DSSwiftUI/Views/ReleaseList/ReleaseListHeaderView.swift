@@ -13,34 +13,37 @@ struct ReleaseListHeaderView: View {
     @EnvironmentObject private var viewModel: ReleaseListViewModel
     
     var body: some View {
-        ZStack {
-            Color.vsPrimaryDark
-                .ignoresSafeArea()
-            VStack {
-                HStack {
-                    Text("Vinyl Space")
-                        .appFont(.lobster, size: 28)
-                        .foregroundColor(.white)
-                    Spacer()
-                    
-                    Menu {
-                        Button("Log Out", role: .destructive,
-                               action: appViewModel.logOutAll)
-                        Button("Delete Collection", role: .destructive,
-                               action: RealmManager.shared.deleteAllReleases)
-                        lastFmButton
-                    } label: {
-                        Image.settingsIcon
-                            .foregroundColor(.white)
-                    }
-                    .testIdentifier(ReleaseListIdentifier.settingsButton)
-
-                }
+        VStack {
+            HStack {
+                Text("Vinyl Space")
+                    .appFont(.lobster, size: 28)
+                    .foregroundColor(.white)
+                    .vsShadow(verticalSpread: 2)
                 
-                ButtonedSearchField()
+                Spacer()
+                
+                Menu {
+                    Button("Log Out", role: .destructive,
+                           action: appViewModel.logOutAll)
+                    Button("Delete Collection", role: .destructive,
+                           action: RealmManager.shared.deleteAllReleases)
+                    lastFmButton
+                } label: {
+                    Image.settingsIcon
+                        .foregroundColor(.white)
+                }
+                .testIdentifier(ReleaseListIdentifier.settingsButton)
+                
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(16)
+            
+            ButtonedSearchField()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(16)
+        .background {
+            Rectangle()
+                .ignoresSafeArea()
+                .foregroundColor(.vsPrimaryDark)
         }
     }
     
@@ -66,6 +69,7 @@ struct ButtonedSearchField: View {
                 .foregroundColor(.white)
             
             TextField("", text: $viewModel.searchQuery)
+                .submitLabel(.done)
                 .appFont(.robotoRegular, size: 16)
                 .foregroundColor(.white)
                 .placeholder(when: viewModel.searchQuery.isEmpty) {
@@ -89,19 +93,6 @@ struct ButtonedSearchField: View {
         .background {
             Color.vsBackground
                 .cornerRadius(10)
-        }
-    }
-}
-
-extension View {
-    func placeholder<Content: View>(
-        when shouldShow: Bool,
-        alignment: Alignment = .leading,
-        @ViewBuilder placeholder: () -> Content
-    ) -> some View {
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
         }
     }
 }

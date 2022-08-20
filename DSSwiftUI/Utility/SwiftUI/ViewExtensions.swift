@@ -8,6 +8,7 @@
 import SwiftUI
 
 typealias StandardAction = (() -> Void)
+typealias ThrowingAction = (() throws -> Void)
 
 // MARK: - Common
 extension View {

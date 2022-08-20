@@ -12,6 +12,7 @@
 		2D000A86276D07A400ED3634 /* SingleRelease.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D000A85276D07A400ED3634 /* SingleRelease.json */; };
 		2D000A88276D07B600ED3634 /* Details.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D000A87276D07B600ED3634 /* Details.json */; };
 		2D2FA2E028AE8DDE007B7917 /* FilterSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2FA2DF28AE8DDE007B7917 /* FilterSelectionView.swift */; };
+		2D2FA2E328AF3DE4007B7917 /* DCLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2FA2E228AF3DE4007B7917 /* DCLoginView.swift */; };
 		2D3B37AA27629E8E0053CADF /* ReleaseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */; };
 		2D3B37AC2765AC760053CADF /* LFLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37AB2765AC760053CADF /* LFLoginView.swift */; };
 		2D3B37B12767E90A0053CADF /* ReleaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */; };
@@ -35,7 +36,6 @@
 		2D6EE05D26E7EAF300F98B43 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 2D6EE05C26E7EAF300F98B43 /* ReadMe.md */; };
 		2D70CFBC28A732F600B3423E /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2D70CFBB28A732F600B3423E /* OAuthSwift */; };
 		2D70CFC028A733CA00B3423E /* MGKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 2D70CFBF28A733CA00B3423E /* MGKeychain */; };
-		2D8922CA274C3DC30013C9F4 /* AppMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922C9274C3DC30013C9F4 /* AppMainView.swift */; };
 		2D8922CC274C4CD20013C9F4 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */; };
 		2DA13E2128A9A71600E21500 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA13E1E28A9A71600E21500 /* Roboto-Bold.ttf */; };
 		2DA13E2228A9A71600E21500 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA13E1F28A9A71600E21500 /* Roboto-Regular.ttf */; };
@@ -111,6 +111,7 @@
 		2D000A85276D07A400ED3634 /* SingleRelease.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SingleRelease.json; sourceTree = "<group>"; };
 		2D000A87276D07B600ED3634 /* Details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Details.json; sourceTree = "<group>"; };
 		2D2FA2DF28AE8DDE007B7917 /* FilterSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSelectionView.swift; sourceTree = "<group>"; };
+		2D2FA2E228AF3DE4007B7917 /* DCLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCLoginView.swift; sourceTree = "<group>"; };
 		2D3B37A927629E8E0053CADF /* ReleaseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseListViewModel.swift; sourceTree = "<group>"; };
 		2D3B37AB2765AC760053CADF /* LFLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFLoginView.swift; sourceTree = "<group>"; };
 		2D3B37B02767E90A0053CADF /* ReleaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseViewModel.swift; sourceTree = "<group>"; };
@@ -133,7 +134,6 @@
 		2D44EFD526B5C7ED00E4A1FE /* LFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFModels.swift; sourceTree = "<group>"; };
 		2D6EE05C26E7EAF300F98B43 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		2D70CFBD28A7335C00B3423E /* MGKeychain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MGKeychain; path = ../packages/MGKeychain; sourceTree = "<group>"; };
-		2D8922C9274C3DC30013C9F4 /* AppMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMainView.swift; sourceTree = "<group>"; };
 		2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelTests.swift; sourceTree = "<group>"; };
 		2DA13E1E28A9A71600E21500 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		2DA13E1F28A9A71600E21500 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -212,13 +212,21 @@
 			path = DSSwiftUIUITests;
 			sourceTree = "<group>";
 		};
+		2D2FA2E428AF3DE9007B7917 /* LoginViews */ = {
+			isa = PBXGroup;
+			children = (
+				2D2FA2E228AF3DE4007B7917 /* DCLoginView.swift */,
+				2D3B37AB2765AC760053CADF /* LFLoginView.swift */,
+			);
+			path = LoginViews;
+			sourceTree = "<group>";
+		};
 		2D3B37AD2767E7A40053CADF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2D8922C9274C3DC30013C9F4 /* AppMainView.swift */,
+				2D2FA2E428AF3DE9007B7917 /* LoginViews */,
 				2DA13E2828A9B1EF00E21500 /* ReleaseList */,
 				2DCF33C328AB1ED100863E14 /* Filters */,
-				2D3B37AB2765AC760053CADF /* LFLoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -609,9 +617,9 @@
 				C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */,
 				2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */,
 				2DD2F7D726BDB6F2006D8F40 /* SmartSearchMatcher.swift in Sources */,
+				2D2FA2E328AF3DE4007B7917 /* DCLoginView.swift in Sources */,
 				2D3B37B62767EBF50053CADF /* LFLoginViewModel.swift in Sources */,
 				C9244D70274ED13000AAFFE1 /* ReleaseListView.swift in Sources */,
-				2D8922CA274C3DC30013C9F4 /* AppMainView.swift in Sources */,
 				C9E38FBC277B8243009522FC /* UITestIdentifiers.swift in Sources */,
 				2DCC292E26BC42040062B56F /* RemoteImage.swift in Sources */,
 				2D44EFD226B5C66100E4A1FE /* Common.swift in Sources */,

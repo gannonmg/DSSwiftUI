@@ -71,7 +71,7 @@ struct FilterOptionView: View {
                 checkboxView
                 Text(option.title)
                     .appFont(.robotoMedium, size: 18)
-                    .foregroundColor(.vsPrimaryDark)
+                    .foregroundColor(.vsDarkText)
                 Spacer()
             }
             .padding(12)
@@ -89,7 +89,7 @@ struct FilterOptionView: View {
             return AnyView(
                 ZStack {
                     Circle()
-                        .foregroundColor(.vsPrimaryDark)
+                        .foregroundColor(.vsDarkText)
                         .frame(width: 20, height: 20)
                     Image.checkmarkIcon
                         .foregroundColor(.white)

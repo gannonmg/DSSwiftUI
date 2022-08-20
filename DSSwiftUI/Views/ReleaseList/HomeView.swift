@@ -64,13 +64,7 @@ struct HomeView: View {
                 .foregroundColor(.white)
                 .padding(.horizontal, 20)
             
-            VSSecondaryButton("Get Releases") {
-                do {
-                    try viewModel.getRemoteReleases()
-                } catch {
-                    errorHandling.handle(error: error)
-                }
-            }
+            VSSecondaryButton("Get Releases", action: viewModel.getRemoteReleases)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
@@ -102,7 +96,7 @@ struct HomeView: View {
         Button(action: viewModel.pickRandomRelease) {
             ZStack {
                 Circle().frame(width: 48, height: 48).foregroundColor(.white)
-                Image.shuffleIcon.foregroundColor(.vsPrimaryDark)
+                Image.shuffleIcon.foregroundColor(.vsDarkText)
             }
         }
         .shadow(
