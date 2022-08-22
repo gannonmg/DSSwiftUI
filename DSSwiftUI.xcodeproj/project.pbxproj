@@ -37,10 +37,12 @@
 		2D70CFBC28A732F600B3423E /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2D70CFBB28A732F600B3423E /* OAuthSwift */; };
 		2D70CFC028A733CA00B3423E /* MGKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 2D70CFBF28A733CA00B3423E /* MGKeychain */; };
 		2D8922CC274C4CD20013C9F4 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */; };
+		2D9DBD6D28B1982700D01256 /* Design+Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DBD6C28B1982700D01256 /* Design+Buttons.swift */; };
+		2D9DBD6F28B1989500D01256 /* Design+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DBD6E28B1989500D01256 /* Design+Helpers.swift */; };
 		2DA13E2128A9A71600E21500 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA13E1E28A9A71600E21500 /* Roboto-Bold.ttf */; };
 		2DA13E2228A9A71600E21500 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA13E1F28A9A71600E21500 /* Roboto-Regular.ttf */; };
 		2DA13E2328A9A71600E21500 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA13E2028A9A71600E21500 /* Roboto-Medium.ttf */; };
-		2DA13E2528A9AAF800E21500 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA13E2428A9AAF800E21500 /* DesignSystem.swift */; };
+		2DA13E2528A9AAF800E21500 /* Design+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA13E2428A9AAF800E21500 /* Design+Constants.swift */; };
 		2DA13E2728A9AB9F00E21500 /* Lobster-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA13E2628A9AB9F00E21500 /* Lobster-Regular.ttf */; };
 		2DA13E2A28A9B20200E21500 /* ReleaseListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA13E2928A9B20200E21500 /* ReleaseListItemView.swift */; };
 		2DA13E2C28A9B6F200E21500 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA13E2B28A9B6F200E21500 /* HomeView.swift */; };
@@ -135,10 +137,12 @@
 		2D6EE05C26E7EAF300F98B43 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		2D70CFBD28A7335C00B3423E /* MGKeychain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MGKeychain; path = ../packages/MGKeychain; sourceTree = "<group>"; };
 		2D8922CB274C4CD20013C9F4 /* AppViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelTests.swift; sourceTree = "<group>"; };
+		2D9DBD6C28B1982700D01256 /* Design+Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Design+Buttons.swift"; sourceTree = "<group>"; };
+		2D9DBD6E28B1989500D01256 /* Design+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Design+Helpers.swift"; sourceTree = "<group>"; };
 		2DA13E1E28A9A71600E21500 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		2DA13E1F28A9A71600E21500 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		2DA13E2028A9A71600E21500 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		2DA13E2428A9AAF800E21500 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		2DA13E2428A9AAF800E21500 /* Design+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Design+Constants.swift"; sourceTree = "<group>"; };
 		2DA13E2628A9AB9F00E21500 /* Lobster-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lobster-Regular.ttf"; sourceTree = "<group>"; };
 		2DA13E2928A9B20200E21500 /* ReleaseListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseListItemView.swift; sourceTree = "<group>"; };
 		2DA13E2B28A9B6F200E21500 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -300,11 +304,11 @@
 			children = (
 				2D44EFA626B4CD3800E4A1FE /* DSSwiftUIApp.swift */,
 				C9244D73274ED14400AAFFE1 /* Secret.swift */,
-				2DA13E2428A9AAF800E21500 /* DesignSystem.swift */,
 				2D3B37B42767EAAD0053CADF /* Managers */,
 				2D3B37AF2767E7B20053CADF /* Models */,
 				2D3B37AD2767E7A40053CADF /* Views */,
 				2D3B37AE2767E7AB0053CADF /* ViewModels */,
+				2D9DBD6B28B197C800D01256 /* Design */,
 				2D44EFC826B5C22200E4A1FE /* Utility */,
 				2D3B37BD27680A450053CADF /* Testing */,
 				2DA13E1D28A9A6E900E21500 /* Fonts */,
@@ -341,6 +345,16 @@
 				2D70CFBD28A7335C00B3423E /* MGKeychain */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		2D9DBD6B28B197C800D01256 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				2DA13E2428A9AAF800E21500 /* Design+Constants.swift */,
+				2D9DBD6C28B1982700D01256 /* Design+Buttons.swift */,
+				2D9DBD6E28B1989500D01256 /* Design+Helpers.swift */,
+			);
+			path = Design;
 			sourceTree = "<group>";
 		};
 		2DA13E1D28A9A6E900E21500 /* Fonts */ = {
@@ -612,7 +626,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DA13E2528A9AAF800E21500 /* DesignSystem.swift in Sources */,
+				2DA13E2528A9AAF800E21500 /* Design+Constants.swift in Sources */,
+				2D9DBD6F28B1989500D01256 /* Design+Helpers.swift in Sources */,
 				2DA13E2A28A9B20200E21500 /* ReleaseListItemView.swift in Sources */,
 				C9244D74274ED14400AAFFE1 /* Secret.swift in Sources */,
 				2DD2F7D526BDB699006D8F40 /* FilterView.swift in Sources */,
@@ -638,6 +653,7 @@
 				2DA13E2E28A9BD1D00E21500 /* ReleaseListHeaderView.swift in Sources */,
 				C9E38FA027793EED009522FC /* AppEnvironment.swift in Sources */,
 				2DE2CD252769474700F90A4D /* ColorHelper.swift in Sources */,
+				2D9DBD6D28B1982700D01256 /* Design+Buttons.swift in Sources */,
 				C9E38FC1277B9CF0009522FC /* ReleaseDetailView.swift in Sources */,
 				2D44EFCB26B5C28200E4A1FE /* ViewExtensions.swift in Sources */,
 				C98D31B3276F862A00C039AF /* ErrorHandling.swift in Sources */,

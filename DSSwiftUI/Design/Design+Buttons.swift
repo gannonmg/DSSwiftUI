@@ -1,62 +1,11 @@
 //
-//  DesignSystem.swift
+//  Design+Buttons.swift
 //  DSSwiftUI
 //
-//  Created by Matt Gannon on 8/14/22.
+//  Created by Matt Gannon on 8/20/22.
 //
 
-import Foundation
 import SwiftUI
-
-extension Color {
-    static let vsPrimaryDark: Color = Color("PrimaryDark")
-    static let vsAccent: Color = Color("Accent")
-    static let vsBackground: Color = Color("Background")
-    static let vsShadowColor: Color = .black.opacity(0.25)
-    static let vsDarkText: Color = Color("DarkText")
-}
-
-enum AppFont {
-    case lobster
-    case robotoRegular
-    case robotoMedium
-    case robotoBold
-
-    var name: String {
-        switch self {
-        case .lobster: return "Lobster-Regular"
-        case .robotoRegular: return "Roboto-Regular"
-        case .robotoMedium: return "Roboto-Medium"
-        case .robotoBold: return "Roboto-Bold"
-        }
-    }
-}
-
-extension Text {
-    func appFont(_ appFont: AppFont, size: CGFloat) -> Text {
-        let uiFont: UIFont = UIFont(name: appFont.name, size: size)!
-        let font: Font = .init(uiFont)
-        return self.font(font)
-    }
-}
-
-extension View {
-    func appFont(_ appFont: AppFont, size: CGFloat) -> some View {
-        let uiFont: UIFont = UIFont(name: appFont.name, size: size)!
-        let font: Font = .init(uiFont)
-        return self.font(font)
-    }
-}
-
-extension Image {
-    static let filterIcon: Image = .init("filters")
-    static let searchIcon: Image = .init("search")
-    static let settingsIcon: Image = .init("settings")
-    static let shuffleIcon: Image = .init("shuffle")
-    static let closeIcon: Image = .init("close")
-    static let checkmarkIcon: Image = .init("checkmark")
-    static let rightArrow: Image = .init("right arrow")
-}
 
 // swiftlint:disable statement_position
 struct VSButton: View {
@@ -170,27 +119,86 @@ struct VSUnderlineButton: View {
         }
     }
 }
+/*
+enum VSButtonStyle {
+    case large(theme: VSButtonTheme)
+    case small
+    case underline
+    
+    enum VSButtonTheme {
+        case light, dark
+        
+        var fontColor: Color { (self == .light) ? .vsDarkText : .white }
+        var backgroundColor: Color { (self == .light) ? .white : .vsPrimaryDark }
+    }
+    
+}
 
-extension View {
-    func vsShadow(verticalSpread: CGFloat = 4) -> some View {
-        return self.shadow(
-            color: .vsShadowColor,
-            radius: verticalSpread,
-            x: verticalSpread * 3/4,
-            y: verticalSpread
-        )
+struct LargeButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .appFont(.robotoMedium, size: 14)
+            .foregroundColor(.vsDarkText)
+            .padding(.horizontal, 8)
+            .frame(minWidth: 72, idealWidth: 72, minHeight: 28, idealHeight: 28)
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                .foregroundColor(.white)
+                .vsShadow()
+            }
     }
 }
 
-extension View {
-    func placeholder<Content: View>(
-        when shouldShow: Bool,
-        alignment: Alignment = .leading,
-        @ViewBuilder placeholder: () -> Content
-    ) -> some View {
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
+struct TryButton<Label>: View where Label: View {
+    var action: () throws -> Void
+    @ViewBuilder var label: () -> Label
+    @EnvironmentObject var errorHandling: ErrorHandling
+    
+    var body: some View {
+        Button(action: {
+                do {
+                    try action()
+                } catch {
+                    self.errorHandling.handle(error: error)
+                }
+            },
+            label: label)
+    }
+}
+
+extension TryButton where Label == Text {
+    init(_ title: String, buttonStyle: VSButtonStyle, action: @escaping ThrowingAction) {
+        self.init(action: action) {
+            Text(title)
         }
     }
 }
+
+extension TryButton where Label == Text {
+    init(_ titleKey: LocalizedStringKey, action: @escaping () throws -> Void) {
+        self.init(action: action, label: { Text(titleKey) })
+    }
+
+    init<S>(_ title: S, action: @escaping () throws -> Void) where S: StringProtocol {
+        self.init(action: action, label: { Text(title) })
+    }
+}
+
+extension Button where Label == Text {
+    init<S: StringProtocol>(_ title: S, style: VSButtonStyle, action: @escaping StandardAction) {
+        self.init {
+            action()
+        } label: {
+            Text(title)
+        }
+    }
+    
+    init<S: StringProtocol>(_ title: S, style: VSButtonStyle, action: @escaping ThrowingAction) {
+        self.init {
+            action()
+        } label: {
+            Text(title)
+        }
+    }
+}
+ */
