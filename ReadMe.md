@@ -1,4 +1,4 @@
-# DSSwiftUI (Discogs Shuffler)
+# DSSwiftUI (Vinyl Space)
 
 DSSwiftUI is a purely SwiftUI version of my Discogs Shuffler app. This app allows users to store their Discogs vinyl collections on their device, pick a random album from their collection, filter potential albums to "shuffle", and Scrobble their listens by connecting a Last.fm account.
 
